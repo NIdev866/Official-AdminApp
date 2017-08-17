@@ -1,0 +1,62 @@
+{
+  "campaigns": [
+    { "id": 13445,
+      "sector": "Industrial",
+      "position":"Warehouse Opeartive",
+      "work_postalcode": "UB6-8UH",
+      "description":"Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.",
+      "terms":"Temporary",
+      "salary":"7.50",
+      "start_date":"02-05-2017"
+    },
+    { "id": 13343,
+      "sector": "Industrial",
+      "position":"Warehouse Opeartive",
+      "work_postalcode": "SL2-1TP",
+      "description":"Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.",
+      "terms":"Temporary",
+      "salary":"7.50",
+      "start_date":"02-05-2017"
+    },
+    { "id": 18976,
+      "sector": "Logistics",
+      "position":"Warehouse Opeartive",
+      "work_postalcode": "UB6-8UH",
+      "description":"Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.",
+      "terms":"Temp-Perm",
+      "salary":"8.50",
+      "start_date":"04-06-2017"
+    },
+    { "id": 23734,
+      "sector": "Logistics",
+      "position":"Delivery Driver",
+      "work_postalcode": "UB6-8UH",
+      "description":"Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.",
+      "terms":"Temporary",
+      "salary":"10.50",
+      "start_date":"02-05-2017"
+    },
+    { "id": 78768,
+      "sector": "Industrial",
+      "position":"Warehouse Opeartive",
+      "work_postalcode": "UB6-8UH",
+      "description":"Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.",
+      "terms":"Temporary",
+      "salary":"7.50",
+      "start_date":"02-05-2017"
+    },
+    { "id": 24569,
+      "sector": "Industrial",
+      "position":"Warehouse Opeartive",
+      "work_postalcode": "UB6-8UH",
+      "description":"Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.",
+      "terms":"Temporary",
+      "salary":"7.50",
+      "start_date":"02-05-2017"
+    }
+  ],
+  "comments": [
+    { "id": 1, "body": "some comment", "postId": 1 }
+  ],
+  "profile": { "name": "typicode" }
+}

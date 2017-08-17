@@ -1,0 +1,70 @@
+body {
+  margin: 0;
+  padding: 0;
+  font-family: sans-serif;
+  text-align: center;
+}
+
+.red{
+  color: red;
+}
+.form-container{
+  /*max-width: 90%;
+  width: 50%;
+  margin: 100px auto;*/
+}
+
+@media (max-width: 600px) {
+  .form-container{
+    padding: 0 10px 0 10px;
+  }
+}
+
+.z9000{
+  position: absolute;
+  height:500px;
+  width: auto;
+  margin-top: 200px;
+  z-index: 9999;
+}
+
+.slide{
+  animation: slide 1s ease-in forwards;
+}
+@keyframes slide {
+  0%{
+    transform: translateX(-20%);
+  }
+  100%{
+    transform: translateX(0%);
+  }
+}
+
+
+.fade-enter{
+  opacity:0;
+
+}
+.fade-enter-active{
+  opacity:1;
+  transition: opacity 500ms ease-out;
+
+}
+.fade-leave{
+  opacity:1;
+  display: none;
+
+}
+.fade-leave-active{
+  opacity:0;
+  display: none;
+}
+.fade-appear{
+  opacity: 0;
+
+}
+.fade-appear-active{
+  opacity:1;
+  transition: opacity 500ms ease-out;
+
+}
