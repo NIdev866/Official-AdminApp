@@ -9,16 +9,16 @@ body {
   color: red;
 }
 .form-container{
-  /*max-width: 90%;
-  width: 50%;
-  margin: 100px auto;*/
+  max-width: 700px;
+  margin: 0 auto;
+  padding: 0 30px;
 }
 
-@media (max-width: 600px) {
+/*@media (max-width: 600px) {
   .form-container{
     padding: 0 10px 0 10px;
   }
-}
+}*/
 
 .z9000{
   position: absolute;
@@ -67,4 +67,8 @@ body {
   opacity:1;
   transition: opacity 500ms ease-out;
 
+}
+
+.finishedStep{
+  background-color: "blue";
 }

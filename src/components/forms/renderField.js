@@ -11,15 +11,23 @@ const styles = {
   }
 };
 
-const renderField = ({ input, label, type, meta: { touched, error } }) => (
+const renderField = ({ input, label, type, meta: { touched, error } }) => {
 
-  <TextField
-    floatingLabelText={label}
-    floatingLabelStyle={styles.floatingLabelStyle}
-    floatingLabelFocusStyle={styles.floatingLabelFocusStyle}
-    fullWidth={true}
-    {...input}
-  />
-)
+  return(
+    <div>
+      <TextField
+        floatingLabelText={label}
+        floatingLabelStyle={styles.floatingLabelStyle}
+        floatingLabelFocusStyle={styles.floatingLabelFocusStyle}
+        fullWidth={true}
+        primary={true}
+        {...input}
+      />
+      <div style={{color: "red"}}>
+        {touched ? <span>{error}</span> : ""}
+      </div>
+    </div>
+  )
+}
 
 export default renderField
