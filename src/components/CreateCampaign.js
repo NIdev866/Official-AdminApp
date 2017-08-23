@@ -5,6 +5,8 @@ import FormThirdPage from './forms/form_3'
 import FormFourthPage from './forms/form_4'
 import FormFifthPage from './forms/form_5'
 import FormSixthPage from "./forms/form_6"
+import FormSeventhPage from "./forms/form_7"
+import FormEithPage from "./forms/form_8"
 import RaisedButton from 'material-ui/RaisedButton'
 import Animation from 'react-addons-css-transition-group'
 import { Grid, Row, Col } from 'react-flexbox-grid';
@@ -101,11 +103,16 @@ class CreateCampaign extends Component {
                       previousPage={this.previousPage}
                       onSubmit={this.nextPage}
                     />}
-
-                    {/*<FormFifthPage
+                  {page === 8 &&
+                    <FormSeventhPage 
+                      previousPage={this.previousPage}
+                      onSubmit={this.nextPage}
+                    />}
+                  {page === 9 &&
+                    <FormEithPage 
                       previousPage={this.previousPage}
                       onSubmit={onSubmit}
-                    />}*/}
+                    />}
                 </Animation>
             </Col>
           </Row>

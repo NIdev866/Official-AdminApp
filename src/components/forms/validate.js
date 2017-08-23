@@ -40,6 +40,28 @@ const validate = values => {
     errors.emailOne = ''
     errors.emailTwo = 'Emails don\'t match'
   }
+  if (!values.student) {
+    errors.student = 'Required'
+  }
+  if (!values.first_work_in_uk) {
+    errors.first_work_in_uk = 'Required'
+  }
+  if (!values.self_employed) {
+    errors.self_employed = 'Required'
+  }
+  if (!values.willing_to_travel) {
+    errors.willing_to_travel = 'Required'
+  }
+  if (!values.when_can_start) {
+    errors.when_can_start = 'Required'
+  }
+
+
+
+
+
+
+
   if (!values.favoriteColor) {
     errors.favoriteColor = 'Required'
   }

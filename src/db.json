@@ -72,8 +72,8 @@
       "student": "Yes",
       "first_work_in_uk": "No",
       "self_employed": "No",    //4: 1
-      "willing_to_travel_to_other_places": "No",
-      "when_can_you_start": "This Sunday",  //4: 2
+      "willing_to_travel": "No",
+      "when_can_start": "This Sunday",  //4: 2
       //"CV": //FILE IN HERE    //5
     },
   ]

@@ -1,40 +1,27 @@
-import React, { Component } from "react"
-import { withGoogleMap, GoogleMap, Marker } from "react-google-maps"
-import Maps from "./Maps"
+import React, { Component } from 'react'
 import { Field, reduxForm } from 'redux-form'
-//import validate from './validate'
-//import renderField from './renderField'
+import validate from './validate'
+import renderField from './renderField'
 import RaisedButton from 'material-ui/RaisedButton'
 import styles from './form_material_styles'
 import { Grid, Row, Col } from 'react-flexbox-grid';
 
+import { connect } from "react-redux"
+import { registerJobseeker } from "../../actionCreators" 
 
-class FormSix extends Component {
+class FormSecondPage extends Component {
+
+  onSubmit(values) {
+    this.props.registerJobseeker(values)
+  }
 
   render(){
-    
-    const markers = [
-      {
-        location: {
-          lat: 51.54318,
-          lng: -0.359016
-        }
-      }
-    ]
-
     const { handleSubmit, previousPage } = this.props
     return (
-      <form onSubmit={handleSubmit}>
-        <Row style={{height: 360}}>
-          <Field 
-            markers={markers}
-            component={Maps} 
-            zoom={8}
-            center={{ lat: 51.537452, lng: -0.497681}} //UB6-8UH
-            containerElement={<div style={{height: 100+"%"}} />}
-            mapElement={<div style={{height: 100+"%"}} />}
-          />
-        </Row>
+      <form onSubmit={handleSubmit(this.onSubmit.bind(this))}>
+        <div style={{height: 360}}>
+          <button type="button">Upload CV</button>
+        </div>
         <Row center="xs">
           <Col xs={12} sm={6} md={3} lg={5}>
             <RaisedButton
@@ -46,7 +33,7 @@ class FormSix extends Component {
             />
             <RaisedButton
               type="submit"
-              label="Next"
+              label="Submit"
               primary={true}
               style={styles.raisedButtonStyle}
             />
@@ -60,5 +47,7 @@ export default reduxForm({
   form: 'wizard', //Form name is same
   destroyOnUnmount: false,
   forceUnregisterOnUnmount: true, // <------ unregister fields on unmount
-  //validate
-})(FormSix)
+  validate
+})(
+  connect(null, { registerJobseeker })(FormSecondPage)
+)

@@ -51,7 +51,7 @@ const FormSecondPage = props => {
         <Col xs={12} sm={6} md={3} lg={5}>
           <div style={{marginTop: "40px"}}>
             <label>Gender</label>
-            <div>
+            <div style={{marginTop: "5px"}}>
               <label>
                 <Field name="gender" component="input" type="radio" value="male" />
                 {' '}

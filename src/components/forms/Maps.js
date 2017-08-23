@@ -11,7 +11,6 @@ class Map extends Component {
 
       const marker = {
         position: {
-          //UB6-8UH
           lat: venue.location.lat,
           lng: venue.location.lng
         }
