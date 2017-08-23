@@ -23,7 +23,7 @@ ReactDOM.render(
     <MuiThemeProvider>
       <BrowserRouter>
         <div>
-          <Route path="/create-campaign" component={CreateCampaign} />
+          <Route path="/register" component={CreateCampaign} />
         </div>
       </BrowserRouter>
     </MuiThemeProvider>

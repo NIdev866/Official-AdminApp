@@ -4,6 +4,7 @@ import FormSecondPage from './forms/form_2'
 import FormThirdPage from './forms/form_3'
 import FormFourthPage from './forms/form_4'
 import FormFifthPage from './forms/form_5'
+import FormFifthPageEDITED from './forms/form_5EDITED'
 import FormSixthPage from "./forms/form_6"
 import FormSeventhPage from "./forms/form_7"
 import FormEithPage from "./forms/form_8"
@@ -93,8 +94,13 @@ class CreateCampaign extends Component {
                       previousPage={this.previousPage}
                       onSubmit={this.nextPage}
                     />}
-                  {page === 6 &&
+                  {page === 6666666 &&
                     <FormFifthPage
+                      previousPage={this.previousPage}
+                      onSubmit={this.nextPage}
+                    />}
+                  {page === 6 &&
+                    <FormFifthPageEDITED
                       previousPage={this.previousPage}
                       onSubmit={this.nextPage}
                     />}

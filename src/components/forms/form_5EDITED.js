@@ -2,23 +2,17 @@ import React, { Component } from "react"
 import { withGoogleMap, GoogleMap, Marker } from "react-google-maps"
 import Maps from "./Maps"
 import { Field, reduxForm } from 'redux-form'
-//import validate from './validate'
+import validate from './validate'
 //import renderField from './renderField'
 import RaisedButton from 'material-ui/RaisedButton'
 import styles from './form_material_styles'
 import { Grid, Row, Col } from 'react-flexbox-grid';
 
 
-import MapsAutocomplete from "./mapsAutocomplete"
+import MapsAutocompleteEDITED from "./mapsAutocompleteEDITED"
 
 
 class FormFive extends Component {
-
-
-
-
-
-
 
   render(){
     
@@ -50,7 +44,11 @@ class FormFive extends Component {
             mapElement={<div style={{height: 100+"%"}} />}
           />
           <div style={inputStyling}>
-            <MapsAutocomplete/>
+            <Field 
+              name="address"
+              type="text"
+              component={MapsAutocompleteEDITED}
+            />
           </div>
         </Row>
         <Row center="xs">
@@ -78,5 +76,5 @@ export default reduxForm({
   form: 'wizard', //Form name is same
   destroyOnUnmount: false,
   forceUnregisterOnUnmount: true, // <------ unregister fields on unmount
-  //validate
+  validate
 })(FormFive)

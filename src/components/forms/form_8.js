@@ -9,7 +9,20 @@ import { Grid, Row, Col } from 'react-flexbox-grid';
 import { connect } from "react-redux"
 import { registerJobseeker } from "../../actionCreators" 
 
+
+
+
+
 class FormSecondPage extends Component {
+
+
+
+  handleChange(event) {
+    console.log('Selected file:', event.target.files[0]);
+  }
+
+
+
 
   onSubmit(values) {
     this.props.registerJobseeker(values)
@@ -20,7 +33,10 @@ class FormSecondPage extends Component {
     return (
       <form onSubmit={handleSubmit(this.onSubmit.bind(this))}>
         <div style={{height: 360}}>
-          <button type="button">Upload CV</button>
+
+          <h4>Upload CV</h4>
+          <input name="CV" id="CV" type="file" accept=".doc,.rtf,.wps,.odt,.wpd,.txt,.pdf,.docx,.xml,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document"/>
+
         </div>
         <Row center="xs">
           <Col xs={12} sm={6} md={3} lg={5}>
@@ -42,6 +58,26 @@ class FormSecondPage extends Component {
       </form>
     )}
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 export default reduxForm({
   form: 'wizard', //Form name is same

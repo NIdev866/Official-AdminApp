@@ -61,20 +61,20 @@
   "profile": { "name": "typicode" },
   "applicants": [
     { "first_name": "foo",
-      "last_name": "foo",  //1: 1
-      "age_range": "16-21",
+      "last_name": "foo",
+      "age_range": "16-23",
       "gender": "male",
-      "nationality": "Somalian", //1: 2
+      "nationality": "Country",
       "mobile_number": 1234,
-      "landline_number": 1234,  //2: 1
-      "email": "foo@foo.com", //HAS to be entered twice  //2: 2
-      "postcode": "SL2-211",  //3
+      "landline_number": 1234,
+      "email": "foo@foo.com",
+      "address": "34 belmont SL2-1ST UK",
       "student": "Yes",
       "first_work_in_uk": "No",
-      "self_employed": "No",    //4: 1
+      "self_employed": "No",
       "willing_to_travel": "No",
-      "when_can_start": "This Sunday",  //4: 2
-      //"CV": //FILE IN HERE    //5
+      "when_can_start": "This Sunday",
+      //"CV": //FILE IN HERE
     },
   ]
 }
