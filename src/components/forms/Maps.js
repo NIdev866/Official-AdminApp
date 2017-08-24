@@ -5,17 +5,18 @@ import _ from "lodash";
 class Map extends Component {
 
   render(){
-    const allMarkers = this.props.markers || []
 
-    const markers = allMarkers.map((venue, i) => {
+    const allMarkers = [
+      ...this.props.workMarkers, this.props.userMarker
+    ]
 
+    const mappedMarkers = allMarkers.map((venue, i) => {
       const marker = {
         position: {
-          lat: venue.location.lat,
-          lng: venue.location.lng
+          lat: venue.position.lat,
+          lng: venue.position.lng
         }
       }
-
       return (
         <Marker 
           key={i} 
@@ -23,23 +24,16 @@ class Map extends Component {
         />
       )
     })
-
-
-
-
-
-
     return(
       <GoogleMap
         defaultZoom={this.props.zoom}
         defaultCenter={this.props.center}
         onMarkerClick={_.noop}
         options={{streetViewControl: false, mapTypeControl: false,}}>
-        {markers}
+        {mappedMarkers}
       </GoogleMap>
     )
   }
 }
-
 
 export default withGoogleMap(Map)

@@ -40,6 +40,9 @@ const validate = values => {
     errors.emailOne = ''
     errors.emailTwo = 'Emails don\'t match'
   }
+  if(!values.address){
+    errors.address = 'Required'
+  }
   if (!values.student) {
     errors.student = 'Required'
   }
