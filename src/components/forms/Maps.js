@@ -2,6 +2,9 @@ import React, { Component } from "react"
 import { withGoogleMap, GoogleMap, Marker } from "react-google-maps"
 import _ from "lodash";
 
+import geolib from "geolib" //distance calculator
+
+
 class Map extends Component {
 
   render(){

@@ -8,6 +8,7 @@ import { Grid, Row, Col } from 'react-flexbox-grid';
 
 
 
+import submit from "./submit"
 
 
 const ageRanges = ['16-23', '24-31', '32-39', '40-47', '48+']

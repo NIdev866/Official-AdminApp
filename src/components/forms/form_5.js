@@ -8,6 +8,9 @@ import styles from './form_material_styles'
 import { Grid, Row, Col } from 'react-flexbox-grid';
 import MapsAutocomplete from "./mapsAutocomplete"
 
+import geolib from "geolib" //distance calculator
+
+
 class FormFive extends Component {
 
   constructor(props){
@@ -24,6 +27,11 @@ class FormFive extends Component {
         }
       ]
     }
+
+    /*document.write(geolib.getDistance(
+      {latitude: 51.527479, longitude: -0.62388}, 
+      {latitude: 51.528743, longitude: -0.620324}
+    )) */  //IT WORKS RIGHT. IT IS IN METERS! (TESTED)
   }
 
   render(){

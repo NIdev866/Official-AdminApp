@@ -14,6 +14,9 @@ import styles from './forms/form_material_styles'
 import TopCounter from "./topCounter"
 
 
+import geolib from "geolib" //distance calculator
+
+
 import { config } from "dotenv"
 config()
 
@@ -86,7 +89,7 @@ class CreateCampaign extends Component {
                     transitionAppear={true}
                     transitionAppearTimeout={500}
                 >
-                  {page === 222222 &&
+                  {page === 2 &&
                     <FormFirstPage 
                       previousPage={this.previousPage}
                       onSubmit={this.nextPage} 
@@ -106,7 +109,7 @@ class CreateCampaign extends Component {
                       previousPage={this.previousPage}
                       onSubmit={this.nextPage}
                     />}
-                  {page === 2 &&
+                  {page === 6 &&
                     <FormFifthPage
                       previousPage={this.previousPage}
                       onSubmit={this.nextPage}
@@ -123,7 +126,7 @@ class CreateCampaign extends Component {
                       previousPage={this.previousPage}
                       onSubmit={this.nextPage}
                     />}
-                  {page === 22222 &&
+                  {page === 9 &&
                     <FormEithPage 
                       previousPage={this.previousPage}
                       onSubmit={onSubmit}

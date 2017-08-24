@@ -58,15 +58,8 @@ const validate = values => {
   if (!values.when_can_start) {
     errors.when_can_start = 'Required'
   }
-
-
-
-
-
-
-
-  if (!values.favoriteColor) {
-    errors.favoriteColor = 'Required'
+  if (!values.CV) {
+    errors.CV = 'Required'
   }
   return errors
 }
