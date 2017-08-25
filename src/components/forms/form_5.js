@@ -11,21 +11,17 @@ import MapsAutocomplete from "./mapsAutocomplete"
 import geolib from "geolib" //distance calculator
 
 
+
+const google = window.google;
+
+
 class FormFive extends Component {
 
   constructor(props){
     super(props)
 
     this.state = {
-      markerOn: false,
-      workMarkers: [
-        {
-          position: {   //UB6-8UH, ADD EXTRA TO THIS ARRAY
-            lat: 51.54318,
-            lng: -0.359016
-          }
-        }
-      ]
+      markerOn: false
     }
 
     /*document.write(geolib.getDistance(
@@ -33,6 +29,7 @@ class FormFive extends Component {
       {latitude: 51.528743, longitude: -0.620324}
     )) */  //IT WORKS RIGHT. IT IS IN METERS! (TESTED)
   }
+
 
   render(){
 
@@ -47,7 +44,8 @@ class FormFive extends Component {
       <form onSubmit={handleSubmit}>
         <Row style={{height: 360}}>
           <Field 
-            workMarkers={this.state.workMarkers}
+            directions={this.props.directions}
+            workMarkers={this.props.workMarkers}
             userMarker={this.props.userMarker}
             component={Maps} 
             zoom={8}
@@ -57,6 +55,7 @@ class FormFive extends Component {
           />
         <div style={inputStyling}>
           <Field 
+            createRoute={this.props.createRoute}
             name="address"
             type="text"
             component={MapsAutocomplete}

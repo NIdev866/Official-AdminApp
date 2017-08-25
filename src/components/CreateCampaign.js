@@ -21,6 +21,8 @@ import { config } from "dotenv"
 config()
 
 
+const google = window.google
+
 
 class CreateCampaign extends Component {
   constructor(props) {
@@ -28,6 +30,7 @@ class CreateCampaign extends Component {
     this.nextPage = this.nextPage.bind(this)
     this.previousPage = this.previousPage.bind(this)
     this.updateMarker = this.updateMarker.bind(this)
+    this.createRoute = this.createRoute.bind(this)
     this.state = {
       page: 1,
       slide: false,
@@ -36,9 +39,27 @@ class CreateCampaign extends Component {
           lat: 0,
           lng: 0
         }
-      }
+      },
+      workMarkers: [
+        {
+          position: {   //UB6-8UH, ADD EXTRA TO THIS ARRAY
+            lat: 51.54318,
+            lng: -0.359016
+          }
+        }/*,
+        {
+          position: {   
+            lat: 51.64318,
+            lng: -0.459016
+          }
+        }*/
+      ],
+      origin: null,
+      destination: null,
+      directions: null,
     }
   }
+
   nextPage() {
     this.setState({ page: this.state.page + 1, slide: true })
   }
@@ -52,6 +73,43 @@ class CreateCampaign extends Component {
       userMarker: newMarker
     })
   }
+
+
+
+  createRoute(){
+
+    this.setState({
+      origin: this.state.userMarker.position,
+      destination: this.state.workMarkers[0].position,
+      directions: null,
+    }, () => {
+
+    const DirectionsService = new google.maps.DirectionsService();
+
+    DirectionsService.route({
+      origin: this.state.origin,
+      destination: this.state.destination,
+      travelMode: google.maps.TravelMode.DRIVING,
+    }, (result, status) => {
+
+
+      if (status === google.maps.DirectionsStatus.OK) {
+        this.setState({
+          directions: result,
+        }, () => {
+          console.log("success")
+          //document.write(JSON.stringify(this.state.directions))
+        });
+      } else {
+        //document.write(JSON.stringify(this.state.directions))
+        console.error(`error fetching directions ${result}`);
+      }
+    });
+
+    })
+  }
+
+
 
   render() {
     const { onSubmit } = this.props
@@ -111,9 +169,12 @@ class CreateCampaign extends Component {
                     />}
                   {page === 6 &&
                     <FormFifthPage
+                      createRoute={this.createRoute}
+                      directions={this.state.directions}
                       previousPage={this.previousPage}
                       onSubmit={this.nextPage}
                       userMarker={this.state.userMarker}
+                      workMarkers={this.state.workMarkers}
                       updateMarker={this.updateMarker}
                     />}
                   {page === 7 &&

@@ -1,8 +1,8 @@
 import React, { Component } from "react"
-import { withGoogleMap, GoogleMap, Marker } from "react-google-maps"
+import { withGoogleMap, GoogleMap, Marker, DirectionsRenderer } from "react-google-maps"
 import _ from "lodash";
 
-import geolib from "geolib" //distance calculator
+import geolib from "geolib" //distance calculator (straight line in meters though)
 
 
 class Map extends Component {
@@ -10,7 +10,7 @@ class Map extends Component {
   render(){
 
     const allMarkers = [
-      ...this.props.workMarkers, this.props.userMarker
+      ...this.props.workMarkers, //this.props.userMarker
     ]
 
     const mappedMarkers = allMarkers.map((venue, i) => {
@@ -34,6 +34,7 @@ class Map extends Component {
         onMarkerClick={_.noop}
         options={{streetViewControl: false, mapTypeControl: false,}}>
         {mappedMarkers}
+        {this.props.directions && <DirectionsRenderer directions={this.props.directions} />}
       </GoogleMap>
     )
   }
