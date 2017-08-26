@@ -46,17 +46,17 @@ class CreateCampaign extends Component {
             lat: 51.54318,
             lng: -0.359016
           }
-        }/*,
+        },
         {
-          position: {   
-            lat: 51.64318,
-            lng: -0.459016
+          position: {        //SL4
+            lat: 51.460677,
+            lng: -0.648235
           }
-        }*/
+        }
       ],
-      origin: null,
-      destination: null,
-      directions: null,
+      origin: null,   //LEAVE IT AS USER ALWAYS
+      destination: null, //MAKE IT ALSO ARRAY
+      directions: null,    //WORK WITH THIS STATE HERE TO MAKE MULTIPLE ROUTES , MAKE IT ARRAY
     }
   }
 
@@ -78,33 +78,63 @@ class CreateCampaign extends Component {
 
   createRoute(){
 
+    let destinationsArray = []
+    destinationsArray = this.state.workMarkers.map((venue, i) => {
+      return venue.position
+    })
+
     this.setState({
       origin: this.state.userMarker.position,
-      destination: this.state.workMarkers[0].position,
+      destination: destinationsArray,
       directions: null,
     }, () => {
+      let directionsArray = []
 
-    const DirectionsService = new google.maps.DirectionsService();
-
-    DirectionsService.route({
-      origin: this.state.origin,
-      destination: this.state.destination,
-      travelMode: google.maps.TravelMode.DRIVING,
-    }, (result, status) => {
+      let lengthToMap = this.state.destination.length
+      let mappedAlready = 0
 
 
-      if (status === google.maps.DirectionsStatus.OK) {
-        this.setState({
-          directions: result,
-        }, () => {
-          console.log("success")
-          //document.write(JSON.stringify(this.state.directions))
-        });
-      } else {
-        //document.write(JSON.stringify(this.state.directions))
-        console.error(`error fetching directions ${result}`);
-      }
-    });
+      this.state.destination.map((venue, i) => {
+        const DirectionsService = new google.maps.DirectionsService();
+        DirectionsService.route({
+          origin: this.state.origin,
+          destination: venue,
+          travelMode: google.maps.TravelMode.DRIVING,
+        }, (result, status) => { 
+
+          if(this.state.userMarker.position.lat !== 0){
+            directionsArray.push(result)
+          }
+
+          mappedAlready++
+
+          if(mappedAlready === lengthToMap){
+            setDirections()
+          }
+
+
+          if(status === google.maps.DirectionsStatus.OK) {
+            console.log("okay")
+          }else{
+            console.error(`error fetching directions ${result}`);
+          }
+        })
+      })
+
+
+
+      let setDirections = ()=>{
+        if(directionsArray.length >= 1){
+
+         this.setState({
+           directions: directionsArray,
+         }, ()=>{})
+       }
+     }
+
+
+
+
 
     })
   }
@@ -147,7 +177,7 @@ class CreateCampaign extends Component {
                     transitionAppear={true}
                     transitionAppearTimeout={500}
                 >
-                  {page === 2 &&
+                  {page === 2222 &&
                     <FormFirstPage 
                       previousPage={this.previousPage}
                       onSubmit={this.nextPage} 
@@ -167,7 +197,7 @@ class CreateCampaign extends Component {
                       previousPage={this.previousPage}
                       onSubmit={this.nextPage}
                     />}
-                  {page === 6 &&
+                  {page === 2 &&
                     <FormFifthPage
                       createRoute={this.createRoute}
                       directions={this.state.directions}
