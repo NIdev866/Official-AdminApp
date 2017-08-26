@@ -74,6 +74,7 @@ class FormFive extends Component {
         {this.props.display_work_box && <div style={workBoxStyling}>
                   <Field 
                     routes={this.props.routes}
+                    durations={this.props.durations}
                     workMarkers={this.props.workMarkers}
                     zoom={8}
                     userMarker={this.props.userMarker}

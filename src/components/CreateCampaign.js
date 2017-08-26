@@ -43,14 +43,14 @@ class CreateCampaign extends Component {
       },
       workMarkers: [
         {
-          //name: "WORK_1_NAME",
+          name: "Staples incorporated",
           position: {   //UB6-8UH, ADD EXTRA TO THIS ARRAY
             lat: 51.54318,
             lng: -0.359016
           }
         },
         {
-          //name: "WORK_2_NAME",
+          name: "Work_2_name",
           position: {        //SL4
             lat: 51.460677,
             lng: -0.648235
@@ -60,7 +60,7 @@ class CreateCampaign extends Component {
       origin: null,
       destination: null,
       routes: null,
-      display_work_box: true, //change to false after production
+      display_work_box: false, //change to false after production
       durations: null,  //THIS WILL CONTAIN DistanceMatrixService() results
 
     }
@@ -118,10 +118,10 @@ class CreateCampaign extends Component {
 
           if(this.state.userMarker.position.lat !== 0){
             routesArray.push(result)
-            //this.handleWorkBoxDisplay(true)
+            this.handleWorkBoxDisplay(true)
           }
           else{
-            //this.handleWorkBoxDisplay(false)
+            this.handleWorkBoxDisplay(false)
           }
 
           routesMappedAlready++
@@ -138,23 +138,6 @@ class CreateCampaign extends Component {
           }
         })
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
         const DurationService = new google.maps.DistanceMatrixService();
 
         DurationService.getDistanceMatrix({
@@ -165,23 +148,10 @@ class CreateCampaign extends Component {
             avoidTolls: false,
           }, (result, status) => { 
 
-
-            //CODE DOESNT GET TO HERE ;_;
-
-
-
-            var node = document.createElement("LI");                 // Create a <li> node
+/*            var node = document.createElement("LI");                 // Create a <li> node
             var textnode = document.createTextNode(JSON.stringify(result));         // Create a text node
             node.appendChild(textnode);                              // Append the text to <li>
-            document.getElementById("root").appendChild(node);     // Append <li> to <ul> with id="myList"
-
-
-
-
-
-
-
-
+            document.getElementById("root").appendChild(node);     // Append <li> to <ul> with id="myList"*/
 
 
           if(this.state.userMarker.position.lat !== 0){
@@ -190,38 +160,17 @@ class CreateCampaign extends Component {
 
           durationsMappedAlready++
 
-
-
-
-
-
-
-
           if(durationsMappedAlready === lengthToMap){
             setDurations()
           }
 
-
           if(status === google.maps.DirectionsStatus.OK) {
             console.log("okay")
-
-            //THIS CODE RIGHT HERE BELOW
-
-            //MIGHT NOT BE NEEDED. MIGHT HAVE TO USE 
-            //MATRIXRESPONSE() INSTEAD AS I NEED TIME
-            //AS WELL ETC
-
-            //THIS CALCULATES DISTANCE ONLY, I NEED DURATION!
 
           }else{
             console.error(`error fetching directions ${result}`);
           }
         });
-
-
-
-
-
       })
 
       let setRoutes = ()=>{
@@ -239,14 +188,6 @@ class CreateCampaign extends Component {
           }, ()=>{})
         }
       }
-
-
-
-
-
-
-
-
     })
   }
 
@@ -326,6 +267,7 @@ class CreateCampaign extends Component {
                       distances={this.state.distances}
                       createRoutesAndDuration={this.createRoutesAndDuration}
                       routes={this.state.routes}
+                      durations={this.state.durations}
                       previousPage={this.previousPage}
                       onSubmit={this.nextPage}
                       userMarker={this.state.userMarker}
