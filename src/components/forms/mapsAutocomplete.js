@@ -68,7 +68,7 @@ class SimpleForm extends React.Component {
   }
 
   handleUpdatingMarker(lat, lng){
-    const { createRoute } = this.props
+    const { createRoutesAndDuration } = this.props
 
     let newMarker = {
       position: {
@@ -77,7 +77,7 @@ class SimpleForm extends React.Component {
     }
 
     this.props.updateMarker(newMarker)
-    createRoute()
+    createRoutesAndDuration()
 
 
   }

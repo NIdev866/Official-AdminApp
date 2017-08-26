@@ -10,7 +10,6 @@ import MapsAutocomplete from "./mapsAutocomplete"
 
 import geolib from "geolib" //distance calculator
 
-import workBox from "./workBox"
 
 
 const google = window.google;
@@ -40,18 +39,12 @@ class FormFive extends Component {
       marginLeft: "4"
     }
 
-    const workBoxStyling = {
-      position: "absolute", 
-      top: "374", 
-      marginLeft: "2"
-    }
-
     const { handleSubmit, previousPage } = this.props
     return (
       <form onSubmit={handleSubmit}>
         <Row style={{height: 360}}>
           <Field 
-            routes={this.props.routes}
+            directions={this.props.directions}
             workMarkers={this.props.workMarkers}
             userMarker={this.props.userMarker}
             component={Maps} 
@@ -63,26 +56,13 @@ class FormFive extends Component {
         <div style={inputStyling}>
           <Field 
             userMarker={this.props.userMarker}
-            createRoutesAndDuration={this.props.createRoutesAndDuration}
+            createRoute={this.props.createRoute}
             name="address"
             type="text"
             component={MapsAutocomplete}
             updateMarker={this.props.updateMarker} //CAN DEFFO PASS TO FIELD!!
           />
         </div>
-
-        {this.props.display_work_box && <div style={workBoxStyling}>
-                  <Field 
-                    routes={this.props.routes}
-                    workMarkers={this.props.workMarkers}
-                    zoom={8}
-                    userMarker={this.props.userMarker}
-                    createRoutesAndDuration={this.props.createRoutesAndDuration}
-                    component={workBox}
-                    updateMarker={this.props.updateMarker} //CAN DEFFO PASS TO FIELD!!
-                  />
-                </div>}
-
       </Row>
       <Row center="xs">
         <Col xs={12} sm={6} md={3} lg={5}>

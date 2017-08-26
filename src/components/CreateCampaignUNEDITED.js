@@ -30,8 +30,7 @@ class CreateCampaign extends Component {
     this.nextPage = this.nextPage.bind(this)
     this.previousPage = this.previousPage.bind(this)
     this.updateMarker = this.updateMarker.bind(this)
-    this.createRoutesAndDuration = this.createRoutesAndDuration.bind(this)
-    this.handleWorkBoxDisplay = this.handleWorkBoxDisplay.bind(this)
+    this.createRoute = this.createRoute.bind(this)
     this.state = {
       page: 1,
       slide: false,
@@ -43,26 +42,21 @@ class CreateCampaign extends Component {
       },
       workMarkers: [
         {
-          //name: "WORK_1_NAME",
           position: {   //UB6-8UH, ADD EXTRA TO THIS ARRAY
             lat: 51.54318,
             lng: -0.359016
           }
         },
         {
-          //name: "WORK_2_NAME",
           position: {        //SL4
             lat: 51.460677,
             lng: -0.648235
           }
         }
       ],
-      origin: null,
-      destination: null,
-      routes: null,
-      display_work_box: true, //change to false after production
-      durations: null,  //THIS WILL CONTAIN DistanceMatrixService() results
-
+      origin: null,   //LEAVE IT AS USER ALWAYS
+      destination: null, //MAKE IT ALSO ARRAY
+      directions: null,    //WORK WITH THIS STATE HERE TO MAKE MULTIPLE ROUTES , MAKE IT ARRAY
     }
   }
 
@@ -80,13 +74,7 @@ class CreateCampaign extends Component {
     })
   }
 
-  handleWorkBoxDisplay(value){
-    this.setState({
-      display_work_box: value
-    })
-  }
-
-  createRoutesAndDuration(){
+  createRoute(){
 
     let destinationsArray = []
     destinationsArray = this.state.workMarkers.map((venue, i) => {
@@ -96,109 +84,36 @@ class CreateCampaign extends Component {
     this.setState({
       origin: this.state.userMarker.position,
       destination: destinationsArray,
-      routes: null,
+      directions: null,
     }, () => {
-      let routesArray = []
-      let durationsArray = []
+      let directionsArray = []
 
       let lengthToMap = this.state.destination.length
-      let routesMappedAlready = 0
-      let durationsMappedAlready = 0
+      let mappedAlready = 0
 
 
       this.state.destination.map((venue, i) => {
 
 
-        const RoutesService = new google.maps.DirectionsService();
-        RoutesService.route({
+
+        MIGHT HAVE TO WRAP THE BELOW AND DISTANCEMATRIXSERVICE() IN ONE
+
+
+        const DirectionsService = new google.maps.DirectionsService();
+        DirectionsService.route({
           origin: this.state.origin,
           destination: venue,
           travelMode: google.maps.TravelMode.DRIVING,
         }, (result, status) => { 
 
           if(this.state.userMarker.position.lat !== 0){
-            routesArray.push(result)
-            //this.handleWorkBoxDisplay(true)
-          }
-          else{
-            //this.handleWorkBoxDisplay(false)
+            directionsArray.push(result)
           }
 
-          routesMappedAlready++
+          mappedAlready++
 
-          if(routesMappedAlready === lengthToMap){
-            setRoutes()
-          }
-
-          if(status === google.maps.DirectionsStatus.OK) {
-            console.log("okay")
-
-          }else{
-            console.error(`error fetching directions ${result}`);
-          }
-        })
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        const DurationService = new google.maps.DistanceMatrixService();
-
-        DurationService.getDistanceMatrix({
-            origins: [this.state.userMarker.position],            //MAYBE NEEDS MULTIPLE
-            destinations: [this.state.workMarkers[1].position],                 //MAYBE NEEDS MULTIPLE
-            travelMode: 'DRIVING',
-            avoidHighways: false,
-            avoidTolls: false,
-          }, (result, status) => { 
-
-
-            //CODE DOESNT GET TO HERE ;_;
-
-
-
-            var node = document.createElement("LI");                 // Create a <li> node
-            var textnode = document.createTextNode(JSON.stringify(result));         // Create a text node
-            node.appendChild(textnode);                              // Append the text to <li>
-            document.getElementById("root").appendChild(node);     // Append <li> to <ul> with id="myList"
-
-
-
-
-
-
-
-
-
-
-          if(this.state.userMarker.position.lat !== 0){
-            durationsArray.push(result)
-          }
-
-          durationsMappedAlready++
-
-
-
-
-
-
-
-
-          if(durationsMappedAlready === lengthToMap){
-            setDurations()
+          if(mappedAlready === lengthToMap){
+            setDirections()
           }
 
 
@@ -211,41 +126,33 @@ class CreateCampaign extends Component {
             //MATRIXRESPONSE() INSTEAD AS I NEED TIME
             //AS WELL ETC
 
-            //THIS CALCULATES DISTANCE ONLY, I NEED DURATION!
+            var tDist = 0;
+            var nlegs = result.routes[0].legs.length;
+            for (var i = 0; i < nlegs; i++) {
+                tDist += result.routes[0].legs[i].distance.value;
+            }
+            //directionsRenderer.setDirections(result);
+            //alert("distance: "+tDist);
+
+            var node = document.createElement("LI");                 // Create a <li> node
+            var textnode = document.createTextNode(tDist);         // Create a text node
+            node.appendChild(textnode);                              // Append the text to <li>
+            document.getElementById("root").appendChild(node);     // Append <li> to <ul> with id="myList"
 
           }else{
             console.error(`error fetching directions ${result}`);
           }
-        });
-
-
-
-
-
+        })
       })
 
-      let setRoutes = ()=>{
-        if(routesArray.length >= 1){
-          this.setState({
-            routes: routesArray,
-          }, ()=>{})
-        }
-      }
+      let setDirections = ()=>{
+        if(directionsArray.length >= 1){
 
-      let setDurations = ()=>{
-        if(durationsArray.length >= 1){
-          this.setState({
-            durations: durationsArray,
-          }, ()=>{})
-        }
-      }
-
-
-
-
-
-
-
+         this.setState({
+           directions: directionsArray,
+         }, ()=>{})
+       }
+     }
 
     })
   }
@@ -253,21 +160,6 @@ class CreateCampaign extends Component {
   render() {
     const { onSubmit } = this.props
     const { page } = this.state
-
-
-
-
-
-/*    var node = document.createElement("LI");                 // Create a <li> node
-    var textnode = document.createTextNode(this.state.durations);         // Create a text node
-    node.appendChild(textnode);                              // Append the text to <li>
-    document.getElementById("root").appendChild(node);     // Append <li> to <ul> with id="myList"*/
-
-
-
-
-
-
     return (
       //<div className={`form-container ${this.state.slide ? 'slide' : ''}`}>
 
@@ -322,10 +214,8 @@ class CreateCampaign extends Component {
                     />}
                   {page === 2 &&
                     <FormFifthPage
-                      display_work_box={this.state.display_work_box}
-                      distances={this.state.distances}
-                      createRoutesAndDuration={this.createRoutesAndDuration}
-                      routes={this.state.routes}
+                      createRoute={this.createRoute}
+                      directions={this.state.directions}
                       previousPage={this.previousPage}
                       onSubmit={this.nextPage}
                       userMarker={this.state.userMarker}

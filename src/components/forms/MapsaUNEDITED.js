@@ -12,7 +12,7 @@ class Map extends Component {
       ...this.props.workMarkers, //this.props.userMarker
     ]
     let mappedMarkers = []
-    if(!this.props.routes){
+    if(!this.props.directions){
 
       mappedMarkers = allMarkers.map((venue, i) => {
         const marker = {
@@ -30,11 +30,11 @@ class Map extends Component {
       })
     }
 
-    let mappedRoutes = []
+    let mappedDirections = []
 
-    if(this.props.routes === {} || this.props.routes){
+    if(this.props.directions === {} || this.props.directions){
 
-      mappedRoutes = this.props.routes.map((venue, i) => {
+      mappedDirections = this.props.directions.map((venue, i) => {
 
 /*        var node = document.createElement("LI");                 // Create a <li> node
         var textnode = document.createTextNode(JSON.stringify(this.props.directions[0]));         // Create a text node
@@ -54,7 +54,7 @@ class Map extends Component {
         onMarkerClick={_.noop}
         options={{streetViewControl: false, mapTypeControl: false}}>
         {mappedMarkers}
-        {mappedRoutes}
+        {mappedDirections}
       </GoogleMap>
     )
   }
