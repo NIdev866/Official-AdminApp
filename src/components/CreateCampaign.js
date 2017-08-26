@@ -13,10 +13,6 @@ import { Grid, Row, Col } from 'react-flexbox-grid';
 import styles from './forms/form_material_styles'
 import TopCounter from "./topCounter"
 
-
-import geolib from "geolib" //distance calculator
-
-
 import { config } from "dotenv"
 config()
 
@@ -43,19 +39,33 @@ class CreateCampaign extends Component {
       },
       workMarkers: [
         {
-          name: "Staples incorporated",
+          name: "Ub8 hardcoded address",
           position: {   //UB6-8UH, ADD EXTRA TO THIS ARRAY
             lat: 51.54318,
             lng: -0.359016
           }
         },
         {
-          name: "Work_2_name",
+          name: "test of a very long employment place name",
           position: {        //SL4
             lat: 51.460677,
             lng: -0.648235
           }
-        }
+        },
+        {
+          name: "manchester work",
+          position: {
+            lat: 53.483959,
+            lng: -2.244644
+          }
+        },
+        {
+          name: "farnham shop",
+          position: { 
+            lat: 51.524832,
+            lng: -0.615393
+          }
+        },
       ],
       origin: null,
       destination: null,
@@ -140,9 +150,13 @@ class CreateCampaign extends Component {
 
         const DurationService = new google.maps.DistanceMatrixService();
 
+        const destinationsToGetDistance = this.state.workMarkers.map((value)=>{
+          return value.position
+        })
+
         DurationService.getDistanceMatrix({
-            origins: [this.state.userMarker.position],            //MAYBE NEEDS MULTIPLE
-            destinations: [this.state.workMarkers[1].position],                 //MAYBE NEEDS MULTIPLE
+            origins: [this.state.userMarker.position],
+            destinations: destinationsToGetDistance,
             travelMode: 'DRIVING',
             avoidHighways: false,
             avoidTolls: false,
@@ -195,104 +209,89 @@ class CreateCampaign extends Component {
     const { onSubmit } = this.props
     const { page } = this.state
 
-
-
-
-
-/*    var node = document.createElement("LI");                 // Create a <li> node
-    var textnode = document.createTextNode(this.state.durations);         // Create a text node
-    node.appendChild(textnode);                              // Append the text to <li>
-    document.getElementById("root").appendChild(node);     // Append <li> to <ul> with id="myList"*/
-
-
-
-
-
-
     return (
-      //<div className={`form-container ${this.state.slide ? 'slide' : ''}`}>
 
-        <Grid className='form-container'>
-          <Row center="xs">
-            <Col xs={13} sm={12} md={2} lg={8}>
-              {page === 1 && 
-                <div>
-                  <h2>PLEASE APPLY FOR THIS JOB BY REGISTERING WITH US.</h2>
-                  <h3>*select jobs you wish to apply for*</h3>
-                </div>
-              }
-              {page > 1 && 
-                <TopCounter 
-                  finishedStep={this.state.page}
-                />}
-            </Col>
-          </Row>
-          <Row center="xs">
-            <Col xs={12} sm={12} md={2} lg={8}>
-              {page === 1 && 
-                <RaisedButton primary={true} 
-                style={styles.raisedButtonStyle}
-                label="APPLY"
-                onClick={this.nextPage}/>}
-                <Animation
-                    transitionName='fade'
-                    transitionEnterTimeout={500}
-                    transitionLeaveTimeout={500}
-                    transitionAppear={true}
-                    transitionAppearTimeout={500}
-                >
-                  {page === 2222 &&
-                    <FormFirstPage 
-                      previousPage={this.previousPage}
-                      onSubmit={this.nextPage} 
-                    />}
-                  {page === 3 &&
-                    <FormSecondPage
-                      previousPage={this.previousPage}
-                      onSubmit={this.nextPage}
-                    />}
-                  {page === 4 &&
-                    <FormThirdPage
-                      previousPage={this.previousPage}
-                      onSubmit={this.nextPage}
-                    />}
-                  {page === 5 &&
-                    <FormFourthPage
-                      previousPage={this.previousPage}
-                      onSubmit={this.nextPage}
-                    />}
-                  {page === 2 &&
-                    <FormFifthPage
-                      display_work_box={this.state.display_work_box}
-                      distances={this.state.distances}
-                      createRoutesAndDuration={this.createRoutesAndDuration}
-                      routes={this.state.routes}
-                      durations={this.state.durations}
-                      previousPage={this.previousPage}
-                      onSubmit={this.nextPage}
-                      userMarker={this.state.userMarker}
-                      workMarkers={this.state.workMarkers}
-                      updateMarker={this.updateMarker}
-                    />}
-                  {page === 7 &&
-                    <FormSixthPage 
-                      previousPage={this.previousPage}
-                      onSubmit={this.nextPage}
-                    />}
-                  {page === 8 &&
-                    <FormSeventhPage 
-                      previousPage={this.previousPage}
-                      onSubmit={this.nextPage}
-                    />}
-                  {page === 9 &&
-                    <FormEithPage 
-                      previousPage={this.previousPage}
-                      onSubmit={onSubmit}
-                    />}
-                </Animation>
-            </Col>
-          </Row>
-        </Grid>
+      <Grid className='form-container'>
+        <Row center="xs">
+          <Col xs={13} sm={12} md={2} lg={8}>
+            {page === 1 && 
+              <div>
+                <h2>PLEASE APPLY FOR THIS JOB BY REGISTERING WITH US.</h2>
+                <h3>*select jobs you wish to apply for*</h3>
+              </div>
+            }
+            {page > 1 && 
+              <TopCounter 
+                finishedStep={this.state.page}
+              />}
+          </Col>
+        </Row>
+        <Row center="xs">
+          <Col xs={12} sm={12} md={2} lg={8}>
+            {page === 1 && 
+              <RaisedButton primary={true} 
+              style={styles.raisedButtonStyle}
+              label="APPLY"
+              onClick={this.nextPage}/>}
+              <Animation
+                  transitionName='fade'
+                  transitionEnterTimeout={500}
+                  transitionLeaveTimeout={500}
+                  transitionAppear={true}
+                  transitionAppearTimeout={500}
+              >
+                {page === 2222 &&
+                  <FormFirstPage 
+                    previousPage={this.previousPage}
+                    onSubmit={this.nextPage} 
+                  />}
+                {page === 3 &&
+                  <FormSecondPage
+                    previousPage={this.previousPage}
+                    onSubmit={this.nextPage}
+                  />}
+                {page === 4 &&
+                  <FormThirdPage
+                    previousPage={this.previousPage}
+                    onSubmit={this.nextPage}
+                  />}
+                {page === 5 &&
+                  <FormFourthPage
+                    previousPage={this.previousPage}
+                    onSubmit={this.nextPage}
+                  />}
+                {page === 2 &&
+                  <FormFifthPage
+                    display_work_box={this.state.display_work_box}
+                    distances={this.state.distances}
+                    createRoutesAndDuration={this.createRoutesAndDuration}
+                    routes={this.state.routes}
+                    durations={this.state.durations}
+                    previousPage={this.previousPage}
+                    onSubmit={this.nextPage}
+                    userMarker={this.state.userMarker}
+                    workMarkers={this.state.workMarkers}
+                    updateMarker={this.updateMarker}
+                  />}
+                {page === 7 &&
+                  <FormSixthPage 
+                    previousPage={this.previousPage}
+                    onSubmit={this.nextPage}
+                  />}
+                {page === 8 &&
+                  <FormSeventhPage 
+                    previousPage={this.previousPage}
+                    onSubmit={this.nextPage}
+                  />}
+                {page === 9 &&
+                  <FormEithPage 
+                    previousPage={this.previousPage}
+                    onSubmit={onSubmit}
+                  />}
+              </Animation>
+          </Col>
+        </Row>
+      </Grid>
     )
   }
 }

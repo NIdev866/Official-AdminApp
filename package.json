@@ -9,7 +9,6 @@
     "axios": "^0.16.1",
     "babel-preset-stage-1": "^6.24.1",
     "dotenv": "^4.0.0",
-    "geolib": "^2.0.23",
     "json-fs-store": "^1.0.1",
     "lodash": "^4.17.4",
     "material-ui": "^0.18.1",

@@ -7,7 +7,7 @@ class workBox extends React.Component {
     const MainBoxStylingOuter = {
       overflow: "hidden",
       width: "270px",
-      height: "60px",
+      height: "70px",
       border: "1px solid",
       background: "white",
       fontSize: "13px"
@@ -46,54 +46,46 @@ class workBox extends React.Component {
     if(this.props.durations){
 
       workSections = this.props.durations.map((duration, i)=>{
-
-
-
-
-
         const workNameStyle = {
           position: "absolute",
           marginLeft: "10px",
           marginTop: "12px",
         }
-
         const durationResultStyle = {
           position: "absolute",
           marginLeft: "140px",
           marginTop: "12px",
         }
-
         const cancelButtonStyle = {
           cursor: "pointer",
           fontSize: "20px",
           position: "absolute",
           marginLeft: "235px",
-          marginTop: "7px",
+          marginTop: "8px",
           width: "23px",
           height: "23px",
-          border: "1px solid"
         }
 
-
-/*        var node = document.createElement("LI");                 // Create a <li> node
-        var textnode = document.createTextNode(JSON.stringify(duration));         // Create a text node
-        node.appendChild(textnode);                              // Append the text to <li>
-        document.getElementById("root").appendChild(node);     // Append <li> to <ul> with id="myList"*/
 
         let durationResult = ""
         let workName = this.props.workMarkers[i].name
 
-        if(workName.length >= 15){
+        if(workName.length > 15){
           workName = workName.substring(0, 15) + "..."
         }
-
-
-        if(duration.rows[0].elements[0].duration){
-          durationResult = duration.rows[0].elements[0].duration.text
+        if(duration.rows[0].elements[i].duration){
+          durationResult = duration.rows[0].elements[i].duration.text
         }
-        //const workName = SOMEHOW CONNECT IT TO name PROPERTY OF EACH workMarker
 
     
+        if(duration.rows[0].elements[i].duration.value >= 7200){
+          workNameStyle.color = "rgb(170,0,0)"
+          durationResultStyle.color = "rgb(170,0,0)"
+          cancelButtonStyle.color = "rgb(170,0,0)"
+        }
+        //if more than 7200 sec (2h) make red
+
+
         return(
           <div style={workStyling}>
             <div style={workNameStyle}>{workName}</div>
