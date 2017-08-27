@@ -1,11 +1,6 @@
 import React from 'react'
 import PlacesAutocomplete, { geocodeByAddress, getLatLng } from 'react-places-autocomplete'
 
-
-import geolib from "geolib" //distance calculator
-
-
-
 class SimpleForm extends React.Component {
   constructor(props) {
     super(props)
@@ -31,9 +26,7 @@ class SimpleForm extends React.Component {
     this.handleSelect = this.handleSelect.bind(this)
     this.renderGeocodeFailure = this.renderGeocodeFailure.bind(this)
     this.renderGeocodeSuccess = this.renderGeocodeSuccess.bind(this)
-
   }
-
   handleSelect(address) {
     const { input: { value, onChange } } = this.props
     this.setState({
@@ -41,19 +34,15 @@ class SimpleForm extends React.Component {
       loading: true
     })
     onChange(address)
-
     geocodeByAddress(address)
       .then((results) => getLatLng(results[0]))
       .then(({ lat, lng }) => {
         document.write('Success Yay', { lat, lng })
-
         this.setState({
           geocodeResults: this.renderGeocodeSuccess(lat, lng),
           loading: false
         })
-
         this.handleUpdatingMarker(lat, lng)
-
       })
       .catch((error) => {
         console.log('Oh no!', error)
@@ -61,29 +50,20 @@ class SimpleForm extends React.Component {
           geocodeResults: this.renderGeocodeFailure(error),
           loading: false
         })
-
-        this.handleUpdatingMarker(0, 0)
-
+      this.handleUpdatingMarker(0, 0)
       })
   }
-
   handleUpdatingMarker(lat, lng){
     const { createRoutesAndDuration } = this.props
-
     let newMarker = {
       position: {
         lat, lng
       }
     }
-
     this.props.updateMarker(newMarker)
     createRoutesAndDuration()
-
-
   }
-
   renderGeocodeSuccess(lat, lng) {}
-
   renderGeocodeFailure(err) {
     return (
       <div 
@@ -95,9 +75,7 @@ class SimpleForm extends React.Component {
       </div>
     )
   }
-
   render() {
-
     const myStyles = {
       input: { padding: "6px"},
       autocompleteContainer: { backgroundColor: 'green', width: "100%"},
@@ -105,7 +83,6 @@ class SimpleForm extends React.Component {
       autocompleteItemActive: { color: '#00BCD4' },
       googleLogoImage: { width: "100px"}
     }
-
     const inputProps = {
       type: "text",
       value: this.state.address,
@@ -115,7 +92,6 @@ class SimpleForm extends React.Component {
       name: 'Demo__input',
       id: "my-input-id",
     }
-
     return (
       <div>
         <PlacesAutocomplete 

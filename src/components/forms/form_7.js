@@ -4,8 +4,7 @@ import validate from './validate'
 import renderField from './renderField'
 import RaisedButton from 'material-ui/RaisedButton'
 import styles from './form_material_styles'
-import { Grid, Row, Col } from 'react-flexbox-grid';
-
+import { Row, Col } from 'react-flexbox-grid'
 
 const renderRadioError = ({ input, meta: { touched, error } }) => (
   <div style={{color: "red"}}>
@@ -36,7 +35,6 @@ const FormSeventhPage = props => {
                 <Field name="willing_to_travel" component={renderRadioError} />
               </div>
             </div>
-
             <Field
               name="when_can_start"
               type="text"

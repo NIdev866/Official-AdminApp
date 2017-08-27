@@ -3,15 +3,13 @@ import { Field, reduxForm } from 'redux-form'
 import validate from './validate'
 import RaisedButton from 'material-ui/RaisedButton'
 import styles from './form_material_styles'
-import { Grid, Row, Col } from 'react-flexbox-grid'
+import { Row, Col } from 'react-flexbox-grid'
 import Dropzone from "./dropzone"
 import submit from "./submit"
 
 class FormFirstPage extends Component{
-
  render(){
   const { handleSubmit, previousPage } = this.props
-
     return (
       <form onSubmit={handleSubmit}>
         <Row center="xs" style={{height: 360}}>

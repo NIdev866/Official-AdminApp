@@ -1,51 +1,69 @@
 import React, { Component } from "react"
-import { withGoogleMap, GoogleMap, Marker } from "react-google-maps"
 import Maps from "./Maps"
 import { Field, reduxForm } from 'redux-form'
 import validate from './validate'
 import RaisedButton from 'material-ui/RaisedButton'
 import styles from './form_material_styles'
-import { Grid, Row, Col } from 'react-flexbox-grid';
+import { Row, Col } from 'react-flexbox-grid'
 import MapsAutocomplete from "./mapsAutocomplete"
-
-import geolib from "geolib" //distance calculator
-
 import workBox from "./workBox"
 
+const WorkBoxParent = (props)=>{
+  const workBoxStyling = {
+    position: "absolute", 
+    top: "364", 
+    marginLeft: "2"
+  }
+  return(
+    <div style={workBoxStyling}>
+    {props.display_work_box && <Field 
+        routes={props.routes}
+        durations={props.durations}
+        workMarkers={props.workMarkers}
+        zoom={props.zoom}
+        userMarker={props.userMarker}
+        createRoutesAndDuration={props.createRoutesAndDuration}
+        component={workBox}
+        updateMarker={props.updateMarker}
+      />}
+    </div>
+  )
+}
 
-const google = window.google;
+const MapsAutocompleteParent = (props)=>{
+  const inputStyling = {
+    position: "absolute", 
+    top: "80", 
+    marginLeft: "4"
+  }
+  return(
+      <div style={inputStyling}>
+        <Field 
+          userMarker={props.userMarker}
+          createRoutesAndDuration={props.createRoutesAndDuration}
+          name={props.name}
+          type={props.type}
+          component={MapsAutocomplete}
+          updateMarker={props.updateMarker} //CAN DEFFO PASS TO FIELD!!
+        />
+      </div>
+    )
+}
 
-
-class FormFive extends Component {
-
+class MapParent extends Component {
   constructor(props){
     super(props)
-
     this.state = {
-      markerOn: false
+      markerOn: false,
+      displayBoxes: false
     }
-
-    /*document.write(geolib.getDistance(
-      {latitude: 51.527479, longitude: -0.62388}, 
-      {latitude: 51.528743, longitude: -0.620324}
-    )) */  //IT WORKS RIGHT. IT IS IN METERS! (TESTED)
+    setTimeout(()=>{
+      this.setState({
+        displayBoxes: true
+      })
+    },700)
   }
-
-
   render(){
-
-    const inputStyling = {
-      position: "absolute", 
-      top: "80", 
-      marginLeft: "4"
-    }
-
-    const workBoxStyling = {
-      position: "absolute", 
-      top: "364", 
-      marginLeft: "2"
-    }
-
     const { handleSubmit, previousPage } = this.props
     return (
       <form onSubmit={handleSubmit}>
@@ -56,34 +74,29 @@ class FormFive extends Component {
             userMarker={this.props.userMarker}
             component={Maps} 
             zoom={8}
-            center={{ lat: 51.537452, lng: -0.497681}} //VIEW BOX ONLY
+            center={{ lat: 51.537452, lng: -0.497681}}
             containerElement={<div style={{height: 100+"%"}} />}
             mapElement={<div style={{height: 100+"%"}} />}
           />
-        <div style={inputStyling}>
-          <Field 
+          {this.state.displayBoxes && <MapsAutocompleteParent
             userMarker={this.props.userMarker}
             createRoutesAndDuration={this.props.createRoutesAndDuration}
             name="address"
             type="text"
             component={MapsAutocomplete}
-            updateMarker={this.props.updateMarker} //CAN DEFFO PASS TO FIELD!!
-          />
-        </div>
-
-        {this.props.display_work_box && <div style={workBoxStyling}>
-                  <Field 
-                    routes={this.props.routes}
-                    durations={this.props.durations}
-                    workMarkers={this.props.workMarkers}
-                    zoom={8}
-                    userMarker={this.props.userMarker}
-                    createRoutesAndDuration={this.props.createRoutesAndDuration}
-                    component={workBox}
-                    updateMarker={this.props.updateMarker} //CAN DEFFO PASS TO FIELD!!
-                  />
-                </div>}
-
+            updateMarker={this.props.updateMarker}
+          />}
+          {this.state.displayBoxes && <WorkBoxParent 
+            display_work_box={this.props.display_work_box}
+            routes={this.props.routes}
+            durations={this.props.durations}
+            workMarkers={this.props.workMarkers}
+            zoom={8}
+            userMarker={this.props.userMarker}
+            createRoutesAndDuration={this.props.createRoutesAndDuration}
+            component={workBox}
+            updateMarker={this.props.updateMarker}
+          />}
       </Row>
       <Row center="xs">
         <Col xs={12} sm={6} md={3} lg={5}>
@@ -111,4 +124,4 @@ export default reduxForm({
   destroyOnUnmount: false,
   forceUnregisterOnUnmount: true, // <------ unregister fields on unmount
   validate
-})(FormFive)
+})(MapParent)

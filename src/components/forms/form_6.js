@@ -4,21 +4,13 @@ import validate from './validate'
 import renderField from './renderField'
 import RaisedButton from 'material-ui/RaisedButton'
 import styles from './form_material_styles'
-import { Grid, Row, Col } from 'react-flexbox-grid';
-
-
-
-
-
+import { Row, Col } from 'react-flexbox-grid'
 
 const renderRadioError = ({ input, meta: { touched, error } }) => (
   <div style={{color: "red"}}>
     {touched ? <span>{error}</span> : ""}
   </div>
 )
-
-
-
 
 const FormSixthPage = props => {
   const { handleSubmit, previousPage } = props
@@ -43,8 +35,6 @@ const FormSixthPage = props => {
                 <Field name="student" component={renderRadioError} />
               </div>
             </div>
-
-
             <div style={{marginTop: "50px"}}>
               <label>Is this your first job in the UK?</label>
               <div style={{marginTop: "5px"}}>
@@ -61,8 +51,6 @@ const FormSixthPage = props => {
                 <Field name="first_work_in_uk" component={renderRadioError} />
               </div>
             </div>
-
-
             <div style={{marginTop: "50px"}}>
               <label>Are you currently self employed?</label>
               <div style={{marginTop: "5px"}}>
@@ -79,8 +67,6 @@ const FormSixthPage = props => {
                 <Field name="self_employed" component={renderRadioError} />
               </div>
             </div>
-
-            
           </Col>
         </Row>
       </Row>

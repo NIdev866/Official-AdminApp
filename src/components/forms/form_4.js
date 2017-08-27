@@ -4,8 +4,7 @@ import validate from './validate'
 import renderField from './renderField'
 import RaisedButton from 'material-ui/RaisedButton'
 import styles from './form_material_styles'
-import { Grid, Row, Col } from 'react-flexbox-grid';
-
+import { Row, Col } from 'react-flexbox-grid'
 
 const FormSecondPage = props => {
   const { handleSubmit, previousPage } = props

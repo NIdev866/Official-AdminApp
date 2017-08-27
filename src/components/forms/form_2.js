@@ -4,15 +4,9 @@ import validate from './validate'
 import renderField from './renderField'
 import RaisedButton from 'material-ui/RaisedButton'
 import styles from './form_material_styles'
-import { Grid, Row, Col } from 'react-flexbox-grid';
-
-
-
+import { Row, Col } from 'react-flexbox-grid';
 import submit from "./submit"
-
-
 const ageRanges = ['16-23', '24-31', '32-39', '40-47', '48+']
-
 
 const renderAgeSelector = ({ input, meta: { touched, error } }) => (
   <div>
@@ -34,9 +28,6 @@ const renderGenderError = ({ input, meta: { touched, error } }) => (
     {touched ? <span>{error}</span> : ""}
   </div>
 )
-
-
-
 
 const FormSecondPage = props => {
   const { handleSubmit, previousPage } = props
@@ -66,14 +57,12 @@ const FormSecondPage = props => {
               <Field name="gender" component={renderGenderError} />
             </div>
           </div>
-
           <Field
             name="nationality"
             type="text"
             component={renderField}
             label="Nationality"
           />
-          
         </Col>
       </Row>
     </Row>

@@ -1,0 +1,36 @@
+{
+  "applicants": [
+    { "first_name": "Industrial",
+      "last_name": "FOOOO",
+      "age_range": "16-23",
+      "gender": "male",
+      "nationality": "Country",
+      "mobile_number": 1234,
+      "landline_number": 1234,
+      "email": "foo@foo.com",
+      "address": "999 belmont SL2-1ST UK",
+      "student": "Yes",
+      "first_work_in_uk": "No",
+      "self_employed": "No",
+      "willing_to_travel": "No",
+      "when_can_start": "This Sunday",
+      "CV": ""
+    },
+    { "first_name": "Indufwefefstrial",
+      "last_name": "FOOOO",
+      "age_range": "16-23",
+      "gender": "male",
+      "nationality": "Country",
+      "mobile_number": 1234,
+      "landline_number": 1234,
+      "email": "foo@foo.com",
+      "address": "999 belmont SL2-1ST UK",
+      "student": "Yes",
+      "first_work_in_uk": "No",
+      "self_employed": "No",
+      "willing_to_travel": "No",
+      "when_can_start": "This Sunday",
+      "CV": ""
+    }
+  ]
+}

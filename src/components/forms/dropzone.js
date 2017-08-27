@@ -1,14 +1,11 @@
 import React from "react"
 import Dropzone from 'react-dropzone'
-import { Field, reduxForm } from 'redux-form'
+import { reduxForm } from 'redux-form'
 import validate from './validate'
 
-
 class Basic extends React.Component {
-
   constructor(props) {
     super(props)
-
     const { input: { value, onChange } } = this.props
     if(value){
       this.state = { files: value }
@@ -17,25 +14,20 @@ class Basic extends React.Component {
     }
     this.onDrop = this.onDrop.bind(this)
   }
-
   onDrop(files) {
     const { value, onChange } = this.props.input
-
     this.setState({
         files
       }, ()=>{
         onChange(this.state.files)
-      })
+    })
   }
-
   render() {
-
     const boxStyling = {
       display: "block",
       margin: "auto",
       width: "200px"
     }
-
     const ulStyling = {
       overflowWrap: "break-word",
       listStyle: "none",
@@ -44,7 +36,6 @@ class Basic extends React.Component {
       marginLeft: "-15px",
       marginTop: "45px"
     }
-
     return (
       <section>
         <div className="dropzone" style={boxStyling}>
@@ -62,7 +53,7 @@ class Basic extends React.Component {
           </Dropzone>
         </div>
       </section>
-    );
+    )
   }
 }
 

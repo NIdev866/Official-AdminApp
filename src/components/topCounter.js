@@ -19,6 +19,11 @@ const emptyBg = {
   backgroundColor: "#fff"
 }
 
+const arrows = {
+  display: "inline-block",
+  margin: "-6px"
+}
+
 class TopCounter extends Component {
   render(){
     const bgColorOne = this.props.finishedStep <= 1 ? emptyBg : colouredBg
@@ -29,9 +34,13 @@ class TopCounter extends Component {
     return(
       <div style={{margin: "20px"}}>
         <div style={{...circleStyle, ...bgColorOne}} ><h4 style={{"marginTop": "2px"}}>1</h4></div>
+        <div style={arrows}>&#10140;</div>
         <div style={{...circleStyle, ...bgColorTwo}}><h4 style={{"marginTop": "2px"}}>2</h4></div>
+        <div style={arrows}>&#10140;</div>
         <div style={{...circleStyle, ...bgColorThree}}><h4 style={{"marginTop": "2px"}}>3</h4></div>
+        <div style={arrows}>&#10140;</div>
         <div style={{...circleStyle, ...bgColorFour}}><h4 style={{"marginTop": "2px"}}>4</h4></div>
+        <div style={arrows}>&#10140;</div>
         <div style={{...circleStyle, ...bgColorFive}}><h4 style={{"marginTop": "2px"}}>5</h4></div>
       </div>
     )}

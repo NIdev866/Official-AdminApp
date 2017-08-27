@@ -1,19 +1,14 @@
 import React, { Component } from "react"
 import { withGoogleMap, GoogleMap, Marker, DirectionsRenderer } from "react-google-maps"
-import _ from "lodash";
-
-import geolib from "geolib" //distance calculator (straight line in meters though)
-
+import _ from "lodash"
 
 class Map extends Component {
-
   render(){
     const allMarkers = [
-      ...this.props.workMarkers, //this.props.userMarker
+      ...this.props.workMarkers,
     ]
     let mappedMarkers = []
     if(!this.props.routes){
-
       mappedMarkers = allMarkers.map((venue, i) => {
         const marker = {
           position: {
@@ -29,24 +24,14 @@ class Map extends Component {
         )
       })
     }
-
     let mappedRoutes = []
-
     if(this.props.routes === {} || this.props.routes){
-
       mappedRoutes = this.props.routes.map((venue, i) => {
-
-/*        var node = document.createElement("LI");                 // Create a <li> node
-        var textnode = document.createTextNode(JSON.stringify(this.props.directions[0]));         // Create a text node
-        node.appendChild(textnode);                              // Append the text to <li>
-        document.getElementById("root").appendChild(node);     // Append <li> to <ul> with id="myList"
-*/    
         return (
           <DirectionsRenderer directions={venue} />
         )
       })
     }
-
     return(
       <GoogleMap
         defaultZoom={this.props.zoom}

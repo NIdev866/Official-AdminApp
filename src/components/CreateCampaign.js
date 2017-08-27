@@ -8,17 +8,13 @@ import FormSixthPage from "./forms/form_6"
 import FormSeventhPage from "./forms/form_7"
 import FormEithPage from "./forms/form_8"
 import RaisedButton from 'material-ui/RaisedButton'
-import Animation from 'react-addons-css-transition-group'
-import { Grid, Row, Col } from 'react-flexbox-grid';
+import { Grid, Row, Col } from 'react-flexbox-grid'
 import styles from './forms/form_material_styles'
 import TopCounter from "./topCounter"
-
+import Animation from 'react-addons-css-transition-group'
 import { config } from "dotenv"
 config()
-
-
 const google = window.google
-
 
 class CreateCampaign extends Component {
   constructor(props) {
@@ -29,8 +25,8 @@ class CreateCampaign extends Component {
     this.createRoutesAndDuration = this.createRoutesAndDuration.bind(this)
     this.handleWorkBoxDisplay = this.handleWorkBoxDisplay.bind(this)
     this.state = {
+      slide: "toLeft",
       page: 1,
-      slide: false,
       userMarker: {
         position: {
           lat: 0,
@@ -40,7 +36,7 @@ class CreateCampaign extends Component {
       workMarkers: [
         {
           name: "Ub8 hardcoded address",
-          position: {   //UB6-8UH, ADD EXTRA TO THIS ARRAY
+          position: {   //UB6-8UH (hardcoded required)
             lat: 51.54318,
             lng: -0.359016
           }
@@ -72,37 +68,35 @@ class CreateCampaign extends Component {
       routes: null,
       display_work_box: false, //change to false after production
       durations: null,  //THIS WILL CONTAIN DistanceMatrixService() results
-
     }
   }
-
   nextPage() {
-    this.setState({ page: this.state.page + 1, slide: true })
+    this.setState({ 
+      page: this.state.page + 1,
+      slide: "toLeft"
+    })
   }
-
   previousPage() {
-    this.setState({ page: this.state.page - 1 })
+    this.setState({ 
+      page: this.state.page - 1,
+      slide: "toRight"
+    })
   }
-
   updateMarker(newMarker={}){
     this.setState({
       userMarker: newMarker
     })
   }
-
   handleWorkBoxDisplay(value){
     this.setState({
       display_work_box: value
     })
   }
-
   createRoutesAndDuration(){
-
     let destinationsArray = []
     destinationsArray = this.state.workMarkers.map((venue, i) => {
       return venue.position
     })
-
     this.setState({
       origin: this.state.userMarker.position,
       destination: destinationsArray,
@@ -110,22 +104,16 @@ class CreateCampaign extends Component {
     }, () => {
       let routesArray = []
       let durationsArray = []
-
       let lengthToMap = this.state.destination.length
       let routesMappedAlready = 0
       let durationsMappedAlready = 0
-
-
       this.state.destination.map((venue, i) => {
-
-
         const RoutesService = new google.maps.DirectionsService();
         RoutesService.route({
           origin: this.state.origin,
           destination: venue,
           travelMode: google.maps.TravelMode.DRIVING,
         }, (result, status) => { 
-
           if(this.state.userMarker.position.lat !== 0){
             routesArray.push(result)
             this.handleWorkBoxDisplay(true)
@@ -133,27 +121,20 @@ class CreateCampaign extends Component {
           else{
             this.handleWorkBoxDisplay(false)
           }
-
           routesMappedAlready++
-
           if(routesMappedAlready === lengthToMap){
             setRoutes()
           }
-
           if(status === google.maps.DirectionsStatus.OK) {
             console.log("okay")
-
           }else{
             console.error(`error fetching directions ${result}`);
           }
         })
-
         const DurationService = new google.maps.DistanceMatrixService();
-
         const destinationsToGetDistance = this.state.workMarkers.map((value)=>{
           return value.position
         })
-
         DurationService.getDistanceMatrix({
             origins: [this.state.userMarker.position],
             destinations: destinationsToGetDistance,
@@ -161,32 +142,20 @@ class CreateCampaign extends Component {
             avoidHighways: false,
             avoidTolls: false,
           }, (result, status) => { 
-
-/*            var node = document.createElement("LI");                 // Create a <li> node
-            var textnode = document.createTextNode(JSON.stringify(result));         // Create a text node
-            node.appendChild(textnode);                              // Append the text to <li>
-            document.getElementById("root").appendChild(node);     // Append <li> to <ul> with id="myList"*/
-
-
           if(this.state.userMarker.position.lat !== 0){
             durationsArray.push(result)
           }
-
           durationsMappedAlready++
-
           if(durationsMappedAlready === lengthToMap){
             setDurations()
           }
-
           if(status === google.maps.DirectionsStatus.OK) {
             console.log("okay")
-
           }else{
             console.error(`error fetching directions ${result}`);
           }
         });
       })
-
       let setRoutes = ()=>{
         if(routesArray.length >= 1){
           this.setState({
@@ -194,7 +163,6 @@ class CreateCampaign extends Component {
           }, ()=>{})
         }
       }
-
       let setDurations = ()=>{
         if(durationsArray.length >= 1){
           this.setState({
@@ -204,13 +172,10 @@ class CreateCampaign extends Component {
       }
     })
   }
-
   render() {
     const { onSubmit } = this.props
     const { page } = this.state
-
     return (
-
       <Grid className='form-container'>
         <Row center="xs">
           <Col xs={13} sm={12} md={2} lg={8}>
@@ -234,13 +199,13 @@ class CreateCampaign extends Component {
               label="APPLY"
               onClick={this.nextPage}/>}
               <Animation
-                  transitionName='fade'
-                  transitionEnterTimeout={500}
-                  transitionLeaveTimeout={500}
-                  transitionAppear={true}
-                  transitionAppearTimeout={500}
+                transitionName={this.state.slide}
+                transitionEnterTimeout={500}
+                transitionLeaveTimeout={500}
+                transitionAppear={true}
+                transitionAppearTimeout={500}
               >
-                {page === 2222 &&
+                {page === 2 &&
                   <FormFirstPage 
                     previousPage={this.previousPage}
                     onSubmit={this.nextPage} 
@@ -260,7 +225,7 @@ class CreateCampaign extends Component {
                     previousPage={this.previousPage}
                     onSubmit={this.nextPage}
                   />}
-                {page === 2 &&
+                {page === 6 &&
                   <FormFifthPage
                     display_work_box={this.state.display_work_box}
                     distances={this.state.distances}
@@ -288,7 +253,7 @@ class CreateCampaign extends Component {
                     previousPage={this.previousPage}
                     onSubmit={onSubmit}
                   />}
-              </Animation>
+            </Animation>
           </Col>
         </Row>
       </Grid>

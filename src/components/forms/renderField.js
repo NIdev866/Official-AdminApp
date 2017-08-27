@@ -1,6 +1,7 @@
 import React from 'react'
 import TextField from 'material-ui/TextField'
 import {blue500, grey400} from 'material-ui/styles/colors'
+import Animation from 'react-addons-css-transition-group'
 
 const styles = {
   floatingLabelStyle: {
@@ -12,21 +13,28 @@ const styles = {
 };
 
 const renderField = ({ input, label, type, meta: { touched, error } }) => {
-
   return(
-    <div>
-      <TextField
-        floatingLabelText={label}
-        floatingLabelStyle={styles.floatingLabelStyle}
-        floatingLabelFocusStyle={styles.floatingLabelFocusStyle}
-        fullWidth={true}
-        primary={true}
-        {...input}
-      />
-      <div style={{color: "red"}}>
-        {touched ? <span>{error}</span> : ""}
+    <Animation
+    transitionName='fade'
+    transitionEnterTimeout={500}
+    transitionLeaveTimeout={500}
+    transitionAppear={true}
+    transitionAppearTimeout={500}
+    >
+      <div>
+        <TextField
+          floatingLabelText={label}
+          floatingLabelStyle={styles.floatingLabelStyle}
+          floatingLabelFocusStyle={styles.floatingLabelFocusStyle}
+          fullWidth={true}
+          primary={true}
+          {...input}
+        />
+        <div style={{color: "red"}}>
+          {touched ? <span>{error}</span> : ""}
+        </div>
       </div>
-    </div>
+    </Animation>
   )
 }
 

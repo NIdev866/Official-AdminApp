@@ -1,13 +1,13 @@
 import { SubmissionError } from 'redux-form'
+import database from "./applicantdb.json"
 
 const sleep = ms => new Promise(resolve => setTimeout(resolve, ms))
 
 function submit(values) {
   return sleep(1000) // simulate server latency
     .then(() => {
-
-
-        window.alert(`You submitted:\n\n${JSON.stringify(values, null, 2)}`)
+      database.applicants.push(values) //not working (security issue). backend needed.
+      window.alert(`You submitted:\n\n${JSON.stringify(values, null, 2)}`)
     })
 }
 
