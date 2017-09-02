@@ -12,7 +12,7 @@ const styles = {
   }
 };
 
-const renderField = ({ input, label, type, meta: { touched, error } }) => {
+const renderField = ({ input, label, type, meta: { dirty, touched, error } }) => {
   return(
     <Animation
     transitionName='fade'
@@ -31,7 +31,7 @@ const renderField = ({ input, label, type, meta: { touched, error } }) => {
           {...input}
         />
         <div style={{color: "red"}}>
-          {touched ? <span>{error}</span> : ""}
+          {(dirty || touched) ? <span>{error}</span> : ""}
         </div>
       </div>
     </Animation>

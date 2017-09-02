@@ -87,23 +87,38 @@ class SimpleForm extends React.Component {
       type: "text",
       value: this.state.address,
       onChange: this.onChange,
-      placeholder: 'Your address (Required)',
+      placeholder: 'Postcode (Required)',
       autoFocus: true,
       name: 'Demo__input',
       id: "my-input-id",
     }
+
+    const errorStyling = {
+      position: "absolute",
+      display: "inline",
+      backgroundColor: "white",
+      marginLeft: "100px",
+      marginTop: "-28px",
+      width: "70px"
+    }
+
+    const { meta: { touched, dirty, error } } = this.props
+
     return (
       <div>
-        <PlacesAutocomplete 
-          onSelect={this.handleSelect}
-          styles={myStyles} 
-          inputProps={inputProps} 
-          onEnterKeyDown={this.handleSelect}
-        />
-        {this.state.loading ? <div style={{backgroundColor: "white"}}>Loading...</div> : null}
-        {!this.state.loading && this.state.geocodeResults ?
-              <div className='geocoding-results'>{this.state.geocodeResults}</div> :
-            null}
+        <div>
+          <PlacesAutocomplete 
+            onSelect={this.handleSelect}
+            styles={myStyles} 
+            inputProps={inputProps} 
+            onEnterKeyDown={this.handleSelect}
+          />
+          {this.state.loading ? <div style={{backgroundColor: "white"}}>Loading...</div> : null}
+          {!this.state.loading && this.state.geocodeResults ?
+                <div className='geocoding-results'>{this.state.geocodeResults}</div> :
+              null}
+        </div>
+        {(dirty || touched) ? <div style={errorStyling}>{error}</div> : ""}
       </div>
     )
   }

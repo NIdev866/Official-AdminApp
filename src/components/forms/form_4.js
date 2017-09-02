@@ -13,12 +13,12 @@ const FormSecondPage = props => {
       <Row style={{height: 360}}>
         <Row center="xs">
           <Col xs={10} sm={6} md={3} lg={5}>
-            <Field name="emailOne" type="emailOne" component={renderField} label="Email" />
+            <Field name="email" type="email" component={renderField} label="Email" />
           </Col>
         </Row>
         <Row center="xs">
           <Col xs={10} sm={6} md={3} lg={5}>
-            <Field name="emailTwo" type="emailTwo" component={renderField} label="Repeat Email" />
+            <Field name="emailCopy" type="emailCopy" component={renderField} label="Repeat Email" />
           </Col>
         </Row>
       </Row>

@@ -2,9 +2,17 @@ const validate = values => {
   const errors = {}
   if (!values.firstName) {
     errors.firstName = 'Required'
+  }else if(values.firstName.length > 12) {
+    errors.firstName = 'Input too long'
+  }else if(values.firstName.match(/[0-9]/g)){
+    errors.firstName = "Invalid first name"
   }
   if (!values.lastName) {
     errors.lastName = 'Required'
+  }else if(values.lastName.length > 12) {
+    errors.lastName = 'Input too long'
+  }else if(values.lastName.match(/[0-9]/g)){
+    errors.lastName = "Invalid last name"
   }
   if (!values.ageRange) {
     errors.ageRange = "Required"
@@ -26,22 +34,33 @@ const validate = values => {
     errors.mobileNumber = ""
     errors.landlineNumber = "Invalid number"
   }
-  if (!values.emailOne) {
-    errors.emailOne = 'Required'
-  } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.emailOne)) {
-    errors.emailOne = 'Invalid email address'
+  if (!values.email) {
+    errors.email = 'Required'
+  } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)) {
+    errors.email = 'Invalid email address'
+  }else if(values.email.length > 17) {
+    errors.email = 'Input too long'
   }
-  if (!values.emailTwo) {
-    errors.emailTwo = 'Required'
-  } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.emailTwo)) {
-    errors.emailTwo = 'Invalid email address'
+  if (!values.emailCopy) {
+    errors.emailCopy = 'Required'
+  } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.emailCopy)) {
+    errors.emailCopy = 'Invalid email address'
+  }else if(values.emailCopy.length > 17) {
+    errors.emailCopy = 'Input too long'
+  }else if (values.email !== values.emailCopy) {
+    errors.emailCopy = 'Emails don\'t match'
+  }else if(!values.email) {
+    errors.emailCopy = ''}
+  if(errors.email === "Required" && errors.emailCopy === "Emails don\'t match"){
+    errors.emailCopy = ""
   }
-  if (values.emailOne !== values.emailTwo) {
-    errors.emailOne = ''
-    errors.emailTwo = 'Emails don\'t match'
+  if(errors.email === "Invalid email address" && errors.emailCopy === "Emails don\'t match"){
+    errors.emailCopy = ""
   }
   if(!values.address){
     errors.address = 'Required'
+  }else if(values.address.length > 12){
+    errors.address = 'Too long'
   }
   if (!values.student) {
     errors.student = 'Required'

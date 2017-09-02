@@ -37,7 +37,7 @@ class Map extends Component {
         defaultZoom={this.props.zoom}
         defaultCenter={this.props.center}
         onMarkerClick={_.noop}
-        options={{streetViewControl: false, mapTypeControl: false}}>
+        options={{streetViewControl: false, mapTypeControl: false, zoomControl: false}}>
         {mappedMarkers}
         {mappedRoutes}
       </GoogleMap>

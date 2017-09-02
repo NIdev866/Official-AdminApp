@@ -205,7 +205,7 @@ class CreateCampaign extends Component {
                 transitionAppear={true}
                 transitionAppearTimeout={500}
               >
-                {page === 2 &&
+                {page === 22222 &&
                   <FormFirstPage 
                     previousPage={this.previousPage}
                     onSubmit={this.nextPage} 
@@ -225,7 +225,7 @@ class CreateCampaign extends Component {
                     previousPage={this.previousPage}
                     onSubmit={this.nextPage}
                   />}
-                {page === 6 &&
+                {page === 2 &&
                   <FormFifthPage
                     display_work_box={this.state.display_work_box}
                     distances={this.state.distances}

@@ -86,6 +86,14 @@ class MapParent extends Component {
             component={MapsAutocomplete}
             updateMarker={this.props.updateMarker}
           />}
+          {this.state.displayBoxes && <MapsAutocompleteParent
+            userMarker={this.props.userMarker}
+            createRoutesAndDuration={this.props.createRoutesAndDuration}
+            name="address"
+            type="text"
+            component={MapsAutocomplete}
+            updateMarker={this.props.updateMarker}
+          />}
           {this.state.displayBoxes && <WorkBoxParent 
             display_work_box={this.props.display_work_box}
             routes={this.props.routes}
