@@ -205,7 +205,7 @@ class CreateCampaign extends Component {
                 transitionAppear={true}
                 transitionAppearTimeout={500}
               >
-                {page === 22222 &&
+                {page === 2222 &&
                   <FormFirstPage 
                     previousPage={this.previousPage}
                     onSubmit={this.nextPage} 

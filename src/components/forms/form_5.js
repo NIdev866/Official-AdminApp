@@ -30,10 +30,43 @@ const WorkBoxParent = (props)=>{
   )
 }
 
-const MapsAutocompleteParent = (props)=>{
+const houseNumberInput = (props) => {
+
+    const houseNumberDivStyling = {
+      position: "absolute", 
+      top: "76", 
+      padding: "4px",
+      zIndex: "1",
+    }
+
+    const textBoxStyling = {
+      width: "176px",
+      padding: "4px"
+    }
+
+    const { meta: { touched, dirty, error } } = props
+
+    const errorStyling = {
+      position: "absolute",
+      display: "inline",
+      backgroundColor: "white",
+      width: "70px",
+      marginTop: "4px",
+      color: "red"
+    }
+
+    return (
+      <div style={houseNumberDivStyling}>
+        <input type="text" style={textBoxStyling} placeholder="House Number (Required)" {...props.input}/>
+        {(dirty || touched) ? <div style={errorStyling}>{error}</div> : ""}
+      </div>
+    )
+  }
+
+const MapsAutocompleteParent = props =>{
   const inputStyling = {
     position: "absolute", 
-    top: "80", 
+    top: "110", 
     marginLeft: "4"
   }
   return(
@@ -61,10 +94,11 @@ class MapParent extends Component {
       this.setState({
         displayBoxes: true
       })
-    },700)
+    },950)
   }
   render(){
     const { handleSubmit, previousPage } = this.props
+
     return (
       <form onSubmit={handleSubmit}>
         <Row style={{height: 360}}>
@@ -81,18 +115,15 @@ class MapParent extends Component {
           {this.state.displayBoxes && <MapsAutocompleteParent
             userMarker={this.props.userMarker}
             createRoutesAndDuration={this.props.createRoutesAndDuration}
-            name="address"
+            name="postcode"
             type="text"
             component={MapsAutocomplete}
             updateMarker={this.props.updateMarker}
           />}
-          {this.state.displayBoxes && <MapsAutocompleteParent
-            userMarker={this.props.userMarker}
-            createRoutesAndDuration={this.props.createRoutesAndDuration}
-            name="address"
+          {this.state.displayBoxes && <Field 
+            name="houseNumber"
             type="text"
-            component={MapsAutocomplete}
-            updateMarker={this.props.updateMarker}
+            component={houseNumberInput}
           />}
           {this.state.displayBoxes && <WorkBoxParent 
             display_work_box={this.props.display_work_box}

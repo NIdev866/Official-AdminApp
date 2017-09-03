@@ -77,8 +77,9 @@ class SimpleForm extends React.Component {
   }
   render() {
     const myStyles = {
-      input: { padding: "6px"},
-      autocompleteContainer: { backgroundColor: 'green', width: "100%"},
+      input: { padding: "6px", width: "176px"},
+      autocompleteContainer: { 
+      zIndex: "99999", backgroundColor: 'green', width: "100%"},
       autocompleteItem: { color: '#000', fontSize: "12px", padding: "3px" },
       autocompleteItemActive: { color: '#00BCD4' },
       googleLogoImage: { width: "100px"}
@@ -99,7 +100,8 @@ class SimpleForm extends React.Component {
       backgroundColor: "white",
       marginLeft: "100px",
       marginTop: "-28px",
-      width: "70px"
+      width: "70px",
+      color: "red"
     }
 
     const { meta: { touched, dirty, error } } = this.props

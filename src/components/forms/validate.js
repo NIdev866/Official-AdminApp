@@ -57,10 +57,15 @@ const validate = values => {
   if(errors.email === "Invalid email address" && errors.emailCopy === "Emails don\'t match"){
     errors.emailCopy = ""
   }
-  if(!values.address){
-    errors.address = 'Required'
-  }else if(values.address.length > 12){
-    errors.address = 'Too long'
+  if(!values.postcode){
+    errors.postcode = 'Required'
+  }else if(values.postcode.length > 12){
+    errors.postcode = 'Too long'
+  }
+  if(!values.houseNumber){
+    errors.houseNumber = 'Required'
+  }else if(values.houseNumber.length > 6){
+    errors.houseNumber = 'Too long'
   }
   if (!values.student) {
     errors.student = 'Required'
@@ -78,7 +83,7 @@ const validate = values => {
     errors.when_can_start = 'Required'
   }
   if (!values.CV) {
-    errors.CV = 'Required'
+    errors.CV = 'Selection Required'
   }
   return errors
 }
