@@ -13,6 +13,12 @@ import styles from './forms/form_material_styles'
 import TopCounter from "./topCounter"
 import Animation from 'react-addons-css-transition-group'
 import { config } from "dotenv"
+import JobCards from "./jobCards"
+
+
+
+
+
 config()
 const google = window.google
 
@@ -174,71 +180,20 @@ class CreateCampaign extends Component {
     })
   }
   render() {
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/*
-
-// add the double-click event listener
-google.maps.event.addListener(this.state.userMarker.position, 'dblclick', function(event){
-    map = marker.getMap();    
-    map.setCenter(overlay.getPosition()); // set map center to marker position
-    smoothZoom(map, 12, map.getZoom()); // call smoothZoom, parameters map, final zoomLevel, and starting zoom level
-});
-
-
-// the smooth zoom function
-function smoothZoom (map, max, cnt) {
-    if (cnt >= max) {
-        return;
+    const footerStyle = {
+      textAlign: "center",
+      position: "fixed",
+      left: "0",
+      bottom: "0",
+      paddingBottom: "2px",
+      minHeight: "40px",
+      width: "100%",
+      borderTop: "1px solid",
+      borderColor: "#DCDCDC",
+      backgroundColor: "white",
+      zIndex: "8000",
+      overflow: "hidden"
     }
-    else {
-        z = google.maps.event.addListener(map, 'zoom_changed', function(event){
-            google.maps.event.removeListener(z);
-            smoothZoom(map, max, cnt + 1);
-        });
-        setTimeout(function(){map.setZoom(cnt)}, 80); // 80ms is what I found to work well on my system -- it might not work well on all systems
-    }
-}  */
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     const { onSubmit } = this.props
     const { page } = this.state
     return (
@@ -248,7 +203,9 @@ function smoothZoom (map, max, cnt) {
             {page === 1 && 
               <div>
                 <h2>PLEASE APPLY FOR THIS JOB BY REGISTERING WITH US.</h2>
-                <h3>*select jobs you wish to apply for*</h3>
+                <h3>Select maximum 3 job boxes to apply for them.<br/>
+                    Click on the job to read more about it</h3>
+                <JobCards />
               </div>
             }
             {page > 1 && 
@@ -259,11 +216,11 @@ function smoothZoom (map, max, cnt) {
         </Row>
         <Row center="xs">
           <Col xs={12} sm={12} md={2} lg={8}>
-            {page === 1 && 
+            {page === 1 && <div style={footerStyle}>
               <RaisedButton primary={true} 
               style={styles.raisedButtonStyle}
               label="APPLY"
-              onClick={this.nextPage}/>}
+              onClick={this.nextPage}/></div>}
               <Animation
                 transitionName={this.state.slide}
                 transitionEnterTimeout={500}
@@ -330,5 +287,7 @@ function smoothZoom (map, max, cnt) {
 CreateCampaign.propTypes = {
   onSubmit: PropTypes.func.isRequired
 }
+
+
 
 export default CreateCampaign

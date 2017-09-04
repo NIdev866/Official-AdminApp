@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React from 'react'
 import { Field, reduxForm } from 'redux-form'
 import validate from './validate'
 import renderField from './renderField'
@@ -9,13 +9,6 @@ import submit from "./submit"
 import { RadioButton } from 'material-ui/RadioButton'
 import { RadioButtonGroup, SelectField } from "redux-form-material-ui"
 import MenuItem from 'material-ui/MenuItem'
-
-
-
-
-
-
-import CircularProgress from 'material-ui/CircularProgress'
 
 
 
@@ -284,49 +277,32 @@ const renderError = ({ input, meta: { touched, error } }) => (
   </div>
 )
 
-class FormSecondPage extends Component {
-
-
-  constructor(props){
-    super(props)
-    this.state = {
-      loader: false
-    }
-    this.handleLoaderState = this.handleLoaderState.bind(this)
+const FormSecondPage = props => {
+  const { handleSubmit, previousPage } = props
+  const radiosParentDiv = {
+    textAlign: "center",
+    margin: "0 auto",
+    width: "300px",
+    marginTop: "30px",
   }
-
-  handleLoaderState(){
-    this.setState({loader: true}, ()=>{
-      setTimeout(()=>{this.setState({loader:false})}, 1000)
-    })
+  const genderParentStyle = {
+    display: "inline-block",
+    width: "300px",
+    position: "relative",
   }
-
-  render(){
-    const { handleSubmit, previousPage } = this.props
-    const radiosParentDiv = {
-      textAlign: "center",
-      margin: "0 auto",
-      width: "300px",
-      marginTop: "30px",
-    }
-    const genderParentStyle = {
-      display: "inline-block",
-      width: "300px",
-      position: "relative",
-    }
-    const genderStyle = {
-      display: "inline-block",
-      width: "45px",
-      marginRight: "30px"
-    }
-    const genderStyle2 = {
-      display: "inline-block",
-      width: "45px",
-      marginLeft: "30px"
-    }
-    return (
-      <form onSubmit={handleSubmit}>
-        <div style={{marginTop: "20px"}}>
+  const genderStyle = {
+    display: "inline-block",
+    width: "45px",
+    marginRight: "30px"
+  }
+  const genderStyle2 = {
+    display: "inline-block",
+    width: "45px",
+    marginLeft: "30px"
+  }
+  return (
+    <form onSubmit={handleSubmit}>
+      <div style={{marginTop: "20px"}}>
           <div style={{marginTop: "30px", marginBottom: "33px"}}>
             <div style={{marginBottom: "-30px"}}>Gender</div>
             <div style={radiosParentDiv}>
@@ -340,60 +316,59 @@ class FormSecondPage extends Component {
               <Field name="gender" component={renderError} />
             </div>
           </div>
-          <div style={{marginBottom: "20px"}}>
-            <Field name="ageRange" component={SelectField} 
-                  selectedMenuItemStyle={{color: "#00BCD4"}} 
-                  underlineStyle={{display: "none"}} errorStyle={{display: "none"}} 
-                  hintText="Select your age group">
-              <MenuItem value="18-21" primaryText="I'm between 18-21 yrs old"/>
-              <MenuItem value="21-29" primaryText="I'm between 21-29 yrs old"/>
-              <MenuItem value="30-39" primaryText="I'm between 30-39 yrs old"/>
-              <MenuItem value="40-49" primaryText="I'm between 40-49 yrs old"/>
-              <MenuItem value="50-59" primaryText="I'm between 50-59 yrs old"/>
-            </Field>
-            <Field name="ageRange" component={renderError} />
-          </div>
-          <div onClick={this.handleLoaderState}>
-            <Field name="nationality" component={SelectField} 
-                  hintText="Select your nationality" 
-                  selectedMenuItemStyle={{color: "#00BCD4"}} 
-                  underlineStyle={{display: "none"}} 
-                  errorStyle={{display: "none"}}>
-              {countries.map(country => <MenuItem value={country.name} primaryText={country.name}/>)}
-            </Field>
-          </div>
-
-
-
-
-
-          {this.state.loader && <span style={{marginLeft: "300px"}}><CircularProgress /></span>}
-
-
-
-
-
-
-          <Field name="nationality" component={renderError} />
+        <div style={{marginBottom: "20px"}}>
+          <Field name="ageRange" component={SelectField} 
+                selectedMenuItemStyle={{color: "#00BCD4"}} 
+                underlineStyle={{display: "none"}} errorStyle={{display: "none"}} 
+                hintText="Select your age group">
+            <MenuItem value="18-21" primaryText="I'm between 18-21 yrs old"/>
+            <MenuItem value="21-29" primaryText="I'm between 21-29 yrs old"/>
+            <MenuItem value="30-39" primaryText="I'm between 30-39 yrs old"/>
+            <MenuItem value="40-49" primaryText="I'm between 40-49 yrs old"/>
+            <MenuItem value="50-59" primaryText="I'm between 50-59 yrs old"/>
+          </Field>
+          <Field name="ageRange" component={renderError} />
         </div>
-        <Col xs={12} sm={6} md={3} lg={5} style={{marginTop: "113px"}}>
-          <RaisedButton
-            type="button"
-            label="Prev"
-            primary={true}
-            onClick={previousPage}
-            style={styles.raisedButtonStyle}
-          />
-          <RaisedButton
-            type="submit"
-            label="Next"
-            primary={true}
-            style={styles.raisedButtonStyle}
-          />
-        </Col>
-      </form>
-    )
-  }
+        <Field name="nationality" component={SelectField} 
+              hintText="Select your nationality" 
+              selectedMenuItemStyle={{color: "#00BCD4"}} 
+              underlineStyle={{display: "none"}} 
+              errorStyle={{display: "none"}}>
+
+
+
+
+
+          {countries.map(country => <MenuItem value={country.name} primaryText={country.name}/>)}
+        
+
+
+
+
+
+
+
+
+        </Field>
+        <Field name="nationality" component={renderError} />
+      </div>
+      <Col xs={12} sm={6} md={3} lg={5} style={{marginTop: "113px"}}>
+        <RaisedButton
+          type="button"
+          label="Prev"
+          primary={true}
+          onClick={previousPage}
+          style={styles.raisedButtonStyle}
+        />
+        <RaisedButton
+          type="submit"
+          label="Next"
+          primary={true}
+          style={styles.raisedButtonStyle}
+        />
+      </Col>
+    </form>
+  )
 }
 
 export default reduxForm({
