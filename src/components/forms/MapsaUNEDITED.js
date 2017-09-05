@@ -5,8 +5,22 @@ import { connect } from "react-redux"
 import jobsDb from "../../jobs.json"
 
 class MapComponent extends Component {
+  constructor(props){
+    super(props)
+    let jobsSelected = this.props.jobsSelectedValues
+    let postcodes = []
+    for(let i = 0; i < jobsSelected.length; i++){
+      for(let j = 0; j < jobsDb.length; j++){
+        if(jobsSelected[i] === jobsDb[j].id)
+          postcodes.push(jobsDb[j]["work_postalcode"])
+      }
+    }
+    this.state = {
+      postcodesArray: postcodes
+    }
+  }
   render(){
-/*    const allMarkers = [
+    const allMarkers = [
       ...this.props.workMarkers,
     ]
     let mappedMarkers = []
@@ -25,7 +39,7 @@ class MapComponent extends Component {
           />
         )
       })
-    }*/
+    }
     let mappedRoutes = []
     if(this.props.routes === {} || this.props.routes){
       mappedRoutes = this.props.routes.map((venue, i) => {
@@ -34,12 +48,17 @@ class MapComponent extends Component {
         )
       })
     }
+    var node = document.createElement("LI");                 // Create a <li> node
+var textnode = document.createTextNode(JSON.stringify(this.state.postcodesArray));         // Create a text node
+node.appendChild(textnode);                              // Append the text to <li>
+document.getElementById("root").appendChild(node);     // Append <li> to <ul> with id="myList"
     return(
       <GoogleMap
         defaultZoom={this.props.zoom}
         defaultCenter={this.props.center}
         onMarkerClick={_.noop}
         options={{streetViewControl: false, mapTypeControl: false, zoomControl: false}}>
+        {mappedMarkers}
         {mappedRoutes}
       </GoogleMap>
     )

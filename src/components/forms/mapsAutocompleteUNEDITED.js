@@ -1,7 +1,7 @@
 import React from 'react'
 import PlacesAutocomplete, { geocodeByAddress, getLatLng } from 'react-places-autocomplete'
 
-class MapsAutocomplete extends React.Component {
+class SimpleForm extends React.Component {
   constructor(props) {
     super(props)
     const { input: { value, onChange } } = this.props
@@ -19,7 +19,7 @@ class MapsAutocomplete extends React.Component {
         loading: false
       }
     }
-    this.enterPressed = (address) => {
+    this.onChange = (address) => {
       this.setState({ address })
       onChange(address)
     }
@@ -37,11 +37,12 @@ class MapsAutocomplete extends React.Component {
     geocodeByAddress(address)
       .then((results) => getLatLng(results[0]))
       .then(({ lat, lng }) => {
+        document.write('Success Yay', { lat, lng })
         this.setState({
           geocodeResults: this.renderGeocodeSuccess(lat, lng),
           loading: false
         })
-        this.handleUpdatingUserMarker(lat, lng)
+        this.handleUpdatingMarker(lat, lng)
       })
       .catch((error) => {
         console.log('Oh no!', error)
@@ -49,17 +50,17 @@ class MapsAutocomplete extends React.Component {
           geocodeResults: this.renderGeocodeFailure(error),
           loading: false
         })
-      this.handleUpdatingUserMarker(0, 0)
+      this.handleUpdatingMarker(0, 0)
       })
   }
-  handleUpdatingUserMarker(lat, lng){
+  handleUpdatingMarker(lat, lng){
     const { createRoutesAndDuration } = this.props
     let newMarker = {
       position: {
         lat, lng
       }
     }
-    this.props.updateUserMarker(newMarker)
+    this.props.updateMarker(newMarker)
     createRoutesAndDuration()
   }
   renderGeocodeSuccess(lat, lng) {}
@@ -75,7 +76,7 @@ class MapsAutocomplete extends React.Component {
     )
   }
   render() {
-    const styleObj = {
+    const myStyles = {
       input: { padding: "6px", width: "176px"},
       autocompleteContainer: { 
       zIndex: "99999", backgroundColor: 'green', width: "100%"},
@@ -86,14 +87,14 @@ class MapsAutocomplete extends React.Component {
     const inputProps = {
       type: "text",
       value: this.state.address,
-      onChange: this.enterPressed,
+      onChange: this.onChange,
       placeholder: 'Postcode (Required)',
       autoFocus: true,
       name: 'Demo__input',
       id: "my-input-id",
     }
 
-    const errorStyle = {
+    const errorStyling = {
       position: "absolute",
       display: "inline",
       backgroundColor: "white",
@@ -102,13 +103,15 @@ class MapsAutocomplete extends React.Component {
       width: "70px",
       color: "red"
     }
+
     const { meta: { touched, dirty, error } } = this.props
+
     return (
       <div>
         <div>
           <PlacesAutocomplete 
             onSelect={this.handleSelect}
-            styles={styleObj} 
+            styles={myStyles} 
             inputProps={inputProps} 
             onEnterKeyDown={this.handleSelect}
           />
@@ -117,10 +120,10 @@ class MapsAutocomplete extends React.Component {
                 <div className='geocoding-results'>{this.state.geocodeResults}</div> :
               null}
         </div>
-        {(dirty || touched) ? <div style={errorStyle}>{error}</div> : ""}
+        {(dirty || touched) ? <div style={errorStyling}>{error}</div> : ""}
       </div>
     )
   }
 }
 
-export default MapsAutocomplete
+export default SimpleForm

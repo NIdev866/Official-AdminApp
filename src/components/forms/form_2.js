@@ -9,20 +9,7 @@ import submit from "./submit"
 import { RadioButton } from 'material-ui/RadioButton'
 import { RadioButtonGroup, SelectField } from "redux-form-material-ui"
 import MenuItem from 'material-ui/MenuItem'
-
-
-
-
-
-
 import CircularProgress from 'material-ui/CircularProgress'
-
-
-
-
-
-
-
 
 const countries = [
 {"name": "Afghanistan"},

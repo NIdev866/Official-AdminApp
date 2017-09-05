@@ -17,18 +17,20 @@ import JobCards from "./jobCards"
 
 
 
-import MapPageWrapper from "./forms/mapPageWrapper"
-
-
 
 
 config()
+const google = window.google
+
+
 class CreateCampaign extends Component {
   constructor(props) {
     super(props)
     this.nextPage = this.nextPage.bind(this)
     this.previousPage = this.previousPage.bind(this)
-    this.updateUserMarker = this.updateUserMarker.bind(this)
+    this.updateMarker = this.updateMarker.bind(this)
+    this.createRoutesAndDuration = this.createRoutesAndDuration.bind(this)
+    this.handleWorkBoxDisplay = this.handleWorkBoxDisplay.bind(this)
     this.state = {
       slide: "toLeft",
       page: 1,
@@ -37,7 +39,42 @@ class CreateCampaign extends Component {
           lat: 0,
           lng: 0
         }
-      }
+      },
+      workMarkers: [
+        {
+          name: "Ub8 hardcoded address",
+          position: {   //UB6-8UH (hardcoded required)
+            lat: 51.54318,
+            lng: -0.359016
+          }
+        },
+        {
+          name: "test of a very long employment place name",
+          position: {        //SL4
+            lat: 51.460677,
+            lng: -0.648235
+          }
+        },
+        {
+          name: "manchester work",
+          position: {
+            lat: 53.483959,
+            lng: -2.244644
+          }
+        },
+        {
+          name: "farnham shop",
+          position: { 
+            lat: 51.524832,
+            lng: -0.615393
+          }
+        },
+      ],
+      origin: null,
+      destination: null,
+      routes: null,
+      display_work_box: false, //change to false after production
+      durations: null,  //THIS WILL CONTAIN DistanceMatrixService() results
     }
   }
   nextPage() {
@@ -52,9 +89,94 @@ class CreateCampaign extends Component {
       slide: "toRight"
     })
   }
-  updateUserMarker(newMarker={}){
+  updateMarker(newMarker={}){
     this.setState({
       userMarker: newMarker
+    })
+  }
+  handleWorkBoxDisplay(value){
+    this.setState({
+      display_work_box: value
+    })
+  }
+  createRoutesAndDuration(){
+    let destinationsArray = []
+    destinationsArray = this.state.workMarkers.map((venue, i) => {
+      return venue.position
+    })
+    this.setState({
+      origin: this.state.userMarker.position,
+      destination: destinationsArray,
+      routes: null,
+    }, () => {
+      let routesArray = []
+      let durationsArray = []
+      let lengthToMap = this.state.destination.length
+      let routesMappedAlready = 0
+      let durationsMappedAlready = 0
+      this.state.destination.map((venue, i) => {
+        const RoutesService = new google.maps.DirectionsService();
+        RoutesService.route({
+          origin: this.state.origin,
+          destination: venue,
+          travelMode: google.maps.TravelMode.DRIVING,
+        }, (result, status) => { 
+          if(this.state.userMarker.position.lat !== 0){
+            routesArray.push(result)
+            this.handleWorkBoxDisplay(true)
+          }
+          else{
+            this.handleWorkBoxDisplay(false)
+          }
+          routesMappedAlready++
+          if(routesMappedAlready === lengthToMap){
+            setRoutes()
+          }
+          if(status === google.maps.DirectionsStatus.OK) {
+            console.log("okay")
+          }else{
+            console.error(`error fetching directions ${result}`);
+          }
+        })
+        const DurationService = new google.maps.DistanceMatrixService();
+        const destinationsToGetDistance = this.state.workMarkers.map((value)=>{
+          return value.position
+        })
+        DurationService.getDistanceMatrix({
+            origins: [this.state.userMarker.position],
+            destinations: destinationsToGetDistance,
+            travelMode: 'DRIVING',
+            avoidHighways: false,
+            avoidTolls: false,
+          }, (result, status) => { 
+          if(this.state.userMarker.position.lat !== 0){
+            durationsArray.push(result)
+          }
+          durationsMappedAlready++
+          if(durationsMappedAlready === lengthToMap){
+            setDurations()
+          }
+          if(status === google.maps.DirectionsStatus.OK) {
+            console.log("okay")
+          }else{
+            console.error(`error fetching directions ${result}`);
+          }
+        });
+      })
+      let setRoutes = ()=>{
+        if(routesArray.length >= 1){
+          this.setState({
+            routes: routesArray,
+          }, ()=>{})
+        }
+      }
+      let setDurations = ()=>{
+        if(durationsArray.length >= 1){
+          this.setState({
+            durations: durationsArray,
+          }, ()=>{})
+        }
+      }
     })
   }
   render() {
@@ -126,25 +248,19 @@ class CreateCampaign extends Component {
                     previousPage={this.previousPage}
                     onSubmit={this.nextPage}
                   />}
-
-
-
-
-
-
                 {page === 2 &&
-                  <MapPageWrapper 
+                  <FormFifthPage
+                    display_work_box={this.state.display_work_box}
+                    distances={this.state.distances}
+                    createRoutesAndDuration={this.createRoutesAndDuration}
+                    routes={this.state.routes}
+                    durations={this.state.durations}
                     previousPage={this.previousPage}
                     onSubmit={this.nextPage}
                     userMarker={this.state.userMarker}
-                    updateUserMarker={this.updateUserMarker}
+                    workMarkers={this.state.workMarkers}
+                    updateMarker={this.updateMarker}
                   />}
-
-
-
-
-
-
                 {page === 7 &&
                   <FormSixthPage 
                     previousPage={this.previousPage}

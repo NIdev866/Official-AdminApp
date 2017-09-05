@@ -6,12 +6,15 @@ import { Field, FieldArray, reduxForm } from 'redux-form'
 import { connect } from "react-redux"
 import { getFormValues } from 'redux-form'
 
-class jobsSelected extends Component{
+class CheckboxComponent extends Component{
   constructor(props){
     super(props)
     this.state = {
       checked: false
     }
+    this.seeIfDisabled = this.seeIfDisabled.bind(this)
+    this.updateCheck = this.updateCheck.bind(this)
+    this.props.fields.remove(0)
   }
   updateCheck() {
     this.setState((oldState) => {
@@ -20,9 +23,11 @@ class jobsSelected extends Component{
       }
     }, ()=>{
       if(this.state.checked){
+        this.props.countBoxesTicked(true)
         this.props.fields.push(this.props.jobSelected)
       }
       else if(!this.state.checked){
+        this.props.countBoxesTicked(false)
         this.props.jobsSelectedValues.map((singleField, index)=>{
           if(this.props.jobSelected === singleField){
             this.props.fields.remove(index)
@@ -31,11 +36,20 @@ class jobsSelected extends Component{
       }
     })
   }
+  seeIfDisabled(){
+    if(this.props.boxesTicked < 3){
+      return false
+    }
+    else if(this.props.boxesTicked >= 3 && !this.state.checked){
+      return true
+    }
+  }
   render(){
     return(
       <div>
         <Checkbox 
           disableTouchRipple
+          disabled={this.seeIfDisabled()}
           onCheck={this.updateCheck.bind(this)}
         />
       </div>
@@ -43,7 +57,7 @@ class jobsSelected extends Component{
   }
 }
 
-jobsSelected = connect(
+CheckboxComponent = connect(
   state => {
     if(state.form.wizard.values){
       return{
@@ -51,9 +65,24 @@ jobsSelected = connect(
       }
     }
   }
-)(jobsSelected)
+)(CheckboxComponent)
 
 class CardExampleExpandable extends Component{
+  constructor(props){
+    super(props)
+    this.state = {
+      boxesTicked: 0,
+    }
+    this.countBoxesTicked = this.countBoxesTicked.bind(this)
+  }
+  countBoxesTicked(value){
+    if(value){
+      this.setState({boxesTicked: this.state.boxesTicked+1})
+    }
+    else{
+      this.setState({boxesTicked: this.state.boxesTicked-1})
+    }
+  }
   render(){
     const tickButtonStyle = {
       position: "Absolute",
@@ -74,8 +103,10 @@ class CardExampleExpandable extends Component{
             <div style={tickButtonStyle}>
               <FieldArray 
                 name="jobsSelected" 
-                component={jobsSelected}
+                component={CheckboxComponent}
                 jobSelected={job.id}
+                countBoxesTicked={this.countBoxesTicked}
+                boxesTicked={this.state.boxesTicked}
               />
             </div>
             <Card style={cardStyle}>

@@ -19,27 +19,16 @@ const WorkBoxParent = (props)=>{
     {props.display_work_box && <Field 
         routes={props.routes}
         durations={props.durations}
+        workMarkers={props.workMarkers}
         zoom={props.zoom}
         userMarker={props.userMarker}
+        createRoutesAndDuration={props.createRoutesAndDuration}
         component={workBox}
+        updateMarker={props.updateMarker}
       />}
     </div>
   )
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 const houseNumberInput = (props) => {
 
@@ -74,20 +63,6 @@ const houseNumberInput = (props) => {
     )
   }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 const MapsAutocompleteParent = props =>{
   const inputStyling = {
     position: "absolute", 
@@ -99,33 +74,20 @@ const MapsAutocompleteParent = props =>{
         <Field 
           userMarker={props.userMarker}
           createRoutesAndDuration={props.createRoutesAndDuration}
-          name="postcode"
-          type="text"
+          name={props.name}
+          type={props.type}
           component={MapsAutocomplete}
-          updateUserMarker={props.updateUserMarker} //CAN DEFFO PASS TO FIELD!!
+          updateMarker={props.updateMarker} //CAN DEFFO PASS TO FIELD!!
         />
       </div>
     )
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 class MapParent extends Component {
   constructor(props){
     super(props)
     this.state = {
+      markerOn: false,
       displayBoxes: false
     }
     setTimeout(()=>{
@@ -142,6 +104,7 @@ class MapParent extends Component {
         <Row style={{height: 360}}>
           <Field 
             routes={this.props.routes}
+            workMarkers={this.props.workMarkers}
             userMarker={this.props.userMarker}
             component={Maps} 
             zoom={8}
@@ -149,12 +112,14 @@ class MapParent extends Component {
             containerElement={<div style={{height: 100+"%"}} />}
             mapElement={<div style={{height: 100+"%"}} />}
           />
-          {this.state.displayBoxes && 
-            <MapsAutocompleteParent
-              userMarker={this.props.userMarker}
-              createRoutesAndDuration={this.props.createRoutesAndDuration}
-              updateUserMarker={this.props.updateUserMarker}
-            />}
+          {this.state.displayBoxes && <MapsAutocompleteParent
+            userMarker={this.props.userMarker}
+            createRoutesAndDuration={this.props.createRoutesAndDuration}
+            name="postcode"
+            type="text"
+            component={MapsAutocomplete}
+            updateMarker={this.props.updateMarker}
+          />}
           {this.state.displayBoxes && <Field 
             name="houseNumber"
             type="text"
@@ -164,9 +129,12 @@ class MapParent extends Component {
             display_work_box={this.props.display_work_box}
             routes={this.props.routes}
             durations={this.props.durations}
+            workMarkers={this.props.workMarkers}
             zoom={8}
             userMarker={this.props.userMarker}
+            createRoutesAndDuration={this.props.createRoutesAndDuration}
             component={workBox}
+            updateMarker={this.props.updateMarker}
           />}
       </Row>
       <Row center="xs">
