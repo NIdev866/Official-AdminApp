@@ -14,9 +14,6 @@ import TopCounter from "./topCounter"
 import Animation from 'react-addons-css-transition-group'
 import { config } from "dotenv"
 import JobCards from "./jobCards"
-
-
-
 import MapPageWrapper from "./forms/mapPageWrapper"
 
 
@@ -106,7 +103,7 @@ class CreateCampaign extends Component {
                 transitionAppear={true}
                 transitionAppearTimeout={500}
               >
-                {page === 22222 &&
+                {page === 2 &&
                   <FormFirstPage 
                     previousPage={this.previousPage}
                     onSubmit={this.nextPage} 
@@ -126,25 +123,13 @@ class CreateCampaign extends Component {
                     previousPage={this.previousPage}
                     onSubmit={this.nextPage}
                   />}
-
-
-
-
-
-
-                {page === 2 &&
+                {page === 6 &&
                   <MapPageWrapper 
                     previousPage={this.previousPage}
                     onSubmit={this.nextPage}
                     userMarker={this.state.userMarker}
                     updateUserMarker={this.updateUserMarker}
                   />}
-
-
-
-
-
-
                 {page === 7 &&
                   <FormSixthPage 
                     previousPage={this.previousPage}

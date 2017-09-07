@@ -9,6 +9,7 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
 import reducers from './reducers';
 import CreateCampaign from './components/CreateCampaign';
 import injectTapEventPlugin from 'react-tap-event-plugin'
+import AdminParent from "./adminApp/AdminParent"
 
 injectTapEventPlugin();
 
@@ -23,6 +24,7 @@ ReactDOM.render(
     <MuiThemeProvider>
       <BrowserRouter>
         <div>
+          <Route path="/admin" component={AdminParent} />
           <Route path="/register" component={CreateCampaign} />
         </div>
       </BrowserRouter>

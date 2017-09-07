@@ -27,66 +27,33 @@ const WorkBoxParent = (props)=>{
   )
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 const houseNumberInput = (props) => {
-
-    const houseNumberDivStyling = {
-      position: "absolute", 
-      top: "76", 
-      padding: "4px",
-      zIndex: "1",
-    }
-
-    const textBoxStyling = {
-      width: "176px",
-      padding: "4px"
-    }
-
-    const { meta: { touched, dirty, error } } = props
-
-    const errorStyling = {
-      position: "absolute",
-      display: "inline",
-      backgroundColor: "white",
-      width: "70px",
-      marginTop: "4px",
-      color: "red"
-    }
-
-    return (
-      <div style={houseNumberDivStyling}>
-        <input type="text" style={textBoxStyling} placeholder="House Number (Required)" {...props.input}/>
-        {(dirty || touched) ? <div style={errorStyling}>{error}</div> : ""}
-      </div>
-    )
+  const houseNumberDivStyling = {
+    position: "absolute", 
+    top: "76", 
+    padding: "4px",
+    zIndex: "1",
   }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+  const textBoxStyling = {
+    width: "176px",
+    padding: "4px"
+  }
+  const { meta: { touched, dirty, error } } = props
+  const errorStyling = {
+    position: "absolute",
+    display: "inline",
+    backgroundColor: "white",
+    width: "70px",
+    marginTop: "4px",
+    color: "red"
+  }
+  return (
+    <div style={houseNumberDivStyling}>
+      <input type="text" style={textBoxStyling} placeholder="House Number (Required)" {...props.input}/>
+      {(dirty || touched) ? <div style={errorStyling}>{error}</div> : ""}
+    </div>
+  )
+}
 
 const MapsAutocompleteParent = props =>{
   const inputStyling = {
@@ -95,32 +62,18 @@ const MapsAutocompleteParent = props =>{
     marginLeft: "4"
   }
   return(
-      <div style={inputStyling}>
-        <Field 
-          userMarker={props.userMarker}
-          createRoutesAndDuration={props.createRoutesAndDuration}
-          name="postcode"
-          type="text"
-          component={MapsAutocomplete}
-          updateUserMarker={props.updateUserMarker} //CAN DEFFO PASS TO FIELD!!
-        />
-      </div>
-    )
+    <div style={inputStyling}>
+      <Field 
+        userMarker={props.userMarker}
+        createRoutesAndDuration={props.createRoutesAndDuration}
+        name="postcode"
+        type="text"
+        component={MapsAutocomplete}
+        updateUserMarker={props.updateUserMarker} //CAN DEFFO PASS TO FIELD!!
+      />
+    </div>
+  )
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 class MapParent extends Component {
   constructor(props){
@@ -136,7 +89,6 @@ class MapParent extends Component {
   }
   render(){
     const { handleSubmit, previousPage } = this.props
-
     return (
       <form onSubmit={handleSubmit}>
         <Row style={{height: 360}}>

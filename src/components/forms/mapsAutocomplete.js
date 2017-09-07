@@ -53,14 +53,13 @@ class MapsAutocomplete extends React.Component {
       })
   }
   handleUpdatingUserMarker(lat, lng){
-    const { createRoutesAndDuration } = this.props
     let newMarker = {
       position: {
         lat, lng
       }
     }
     this.props.updateUserMarker(newMarker)
-    createRoutesAndDuration()
+    this.props.createRoutesAndDuration()
   }
   renderGeocodeSuccess(lat, lng) {}
   renderGeocodeFailure(err) {

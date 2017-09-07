@@ -7,10 +7,6 @@ import styles from './form_material_styles'
 import { Row, Col } from 'react-flexbox-grid'
 import MapsAutocomplete from "./mapsAutocomplete"
 import workBox from "./workBox"
-
-
-
-
 import { connect } from "react-redux"
 import jobsDb from "../../jobs.json"
 import FormFive from "./form_5"
@@ -49,103 +45,69 @@ class MapPageWrapper extends Component {
         let geocodedPostcodesArray = this.state.geocodedPostcodesArrayState.slice()
         geocodedPostcodesArray.push(results[0].geometry.location)
         this.setState({ geocodedPostcodesArrayState: geocodedPostcodesArray }, ()=>{
-          
+          this.setState({
+            origin: this.props.userMarker.position,
+            destination: this.state.geocodedPostcodesArrayState,
+            routes: null,
+          }, () => {
+            let routesArray = []
+            let durationsArray = []
+            let lengthToMap = this.state.destination.length
+            let routesMappedAlready = 0
+            let durationsMappedAlready = 0
+            this.state.destination.map((venue, i) => {
+              const RoutesService = new google.maps.DirectionsService();
+              RoutesService.route({
+                origin: this.state.origin,
+                destination: venue,
+                travelMode: google.maps.TravelMode.DRIVING,
+              }, (result, status) => { 
+                if(this.props.userMarker.position.lat !== 0){
+                  routesArray.push(result)
+                }
+                routesMappedAlready++
+                if(routesMappedAlready === lengthToMap){
+                  setRoutes()
+                }
+              })
+              const DurationService = new google.maps.DistanceMatrixService();
+              DurationService.getDistanceMatrix({
+                  origins: [this.props.userMarker.position],
+                  destinations: this.state.geocodedPostcodesArrayState,
+                  travelMode: 'DRIVING',
+                  avoidHighways: false,
+                  avoidTolls: false,
+                }, (result, status) => { 
+                if(this.props.userMarker.position.lat !== 0){
+                  durationsArray.push(result)
+                }
+                durationsMappedAlready++
+                if(durationsMappedAlready === lengthToMap){
+                  setDurations()
+                }
+              })
+            })
+            let setRoutes = ()=>{
+              if(routesArray.length >= 1){
+                this.setState({
+                  routes: routesArray,
+                })
+              }
+            }
+            let setDurations = ()=>{
+              if(durationsArray.length >= 1){
+                this.setState({
+                  durations: durationsArray,
+                })
+              }
+            }
+          })
         })
         }
       })
     }
-
-
-
-
-    this.setState({
-      origin: this.props.userMarker.position,
-      destination: this.state.geocodedPostcodesArrayState,
-      routes: null,
-    }, () => {
-
-
-      let routesArray = []
-      let durationsArray = []
-      let lengthToMap = this.state.destination.length
-      let routesMappedAlready = 0
-      let durationsMappedAlready = 0
-      this.state.destination.map((venue, i) => {
-        const RoutesService = new google.maps.DirectionsService();
-        RoutesService.route({
-          origin: this.state.origin,
-          destination: venue,
-          travelMode: google.maps.TravelMode.DRIVING,
-        }, (result, status) => { 
-          if(this.props.userMarker.position.lat !== 0){
-            routesArray.push(result)
-            this.handleWorkBoxDisplay(true)
-          }
-          else{
-            this.handleWorkBoxDisplay(false)
-          }
-          routesMappedAlready++
-          if(routesMappedAlready === lengthToMap){
-            setRoutes()
-          }
-          if(status === google.maps.DirectionsStatus.OK) {
-            console.log("okay")
-          }else{
-            console.error(`error fetching directions ${result}`);
-          }
-        })
-        const DurationService = new google.maps.DistanceMatrixService();
-        const destinationsToGetDistance = this.state.workMarkers.map((value)=>{
-          return value.position
-        })
-        DurationService.getDistanceMatrix({
-            origins: [this.props.userMarker.position],
-            destinations: destinationsToGetDistance,
-            travelMode: 'DRIVING',
-            avoidHighways: false,
-            avoidTolls: false,
-          }, (result, status) => { 
-          if(this.props.userMarker.position.lat !== 0){
-            durationsArray.push(result)
-          }
-          durationsMappedAlready++
-          if(durationsMappedAlready === lengthToMap){
-            setDurations()
-          }
-          if(status === google.maps.DirectionsStatus.OK) {
-            console.log("okay")
-          }else{
-            console.error(`error fetching directions ${result}`);
-          }
-        });
-      })
-      let setRoutes = ()=>{
-        if(routesArray.length >= 1){
-          this.setState({
-            routes: routesArray,
-          }, ()=>{})
-        }
-      }
-      let setDurations = ()=>{
-        if(durationsArray.length >= 1){
-          this.setState({
-            durations: durationsArray,
-          }, ()=>{})
-        }
-      }
-    })
   }
-
   render(){
-    
-        var node = document.createElement("LI");                 // Create a <li> node
-        var textnode = document.createTextNode(JSON.stringify(this.state));         // Create a text node
-        node.appendChild(textnode);                              // Append the text to <li>
-        document.getElementById("root").appendChild(node);     // Append <li> to <ul> with id="myList
-  
-
-
-
     const { handleSubmit, previousPage } = this.props
     return (
       <FormFive
@@ -154,7 +116,7 @@ class MapPageWrapper extends Component {
         routes={this.state.routes}
         durations={this.state.durations}
         previousPage={this.props.previousPage}
-        onSubmit={this.props.nextPage}
+        onSubmit={this.props.onSubmit}
         userMarker={this.props.userMarker}
         updateUserMarker={this.props.updateUserMarker}
       />
