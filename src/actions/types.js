@@ -1,0 +1,1 @@
+export const SUBMIT_BANK_DETAILS = 'submit_bank_details'

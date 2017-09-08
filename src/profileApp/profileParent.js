@@ -1,22 +1,29 @@
 import React, { Component, PropTypes } from 'react'
 import { Grid, Row, Col } from 'react-flexbox-grid'
 import Nav from "./components/nav"
-import { BrowserRouter, Route, Link, Switch } from 'react-router-dom'
 import Progress from "./components/progress"
 
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import { Redirect } from 'react-router'
+
+import { connect } from 'react-redux';
+import * as actions from '../actions/all_actions';
 
 class AdminParent extends Component {
   render(){
     return(
-      <BrowserRouter>
+      <div>
+        {!this.props.bankDetailsSubmitted && <Redirect to="/profile/jobs"/>}
         <Nav />
-        <Switch>
-          <Route path="/progress" component={Progress} />
-        </Switch>
-      </BrowserRouter>
+      </div>
     )
   }
 }
 
+function mapStateToProps(state){
+  return{
+    bankDetailsSubmitted: state.main.bankDetailsSubmitted
+  }
+}
 
-export default AdminParent
+export default connect(mapStateToProps, actions)(AdminParent);

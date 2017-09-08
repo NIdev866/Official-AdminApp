@@ -20,7 +20,7 @@ import MapPageWrapper from "./forms/mapPageWrapper"
 
 
 config()
-class CreateCampaign extends Component {
+class JobseekerRegisterParent extends Component {
   constructor(props) {
     super(props)
     this.nextPage = this.nextPage.bind(this)
@@ -153,10 +153,10 @@ class CreateCampaign extends Component {
   }
 }
 
-CreateCampaign.propTypes = {
+JobseekerRegisterParent.propTypes = {
   onSubmit: PropTypes.func.isRequired
 }
 
 
 
-export default CreateCampaign
+export default JobseekerRegisterParent

@@ -6,7 +6,7 @@ import FormFourthPage from "./forms/form_4"
 import FormFifthPage from "./forms/form_5"
 import RaisedButton from 'material-ui/RaisedButton'
 import { Grid, Row, Col } from 'react-flexbox-grid'
-import styles from '../components/forms/form_material_styles'
+import styles from './forms/form_material_styles'
 import TopCounter from "./topCounter"
 import Animation from 'react-addons-css-transition-group'
 

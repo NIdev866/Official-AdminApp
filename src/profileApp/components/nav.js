@@ -19,7 +19,7 @@ class Nav extends Component{
             </div>
           </div>
           <div style={{fontSize: "14px", float: "right", display: "inline-block", width: "120px", height: "39px"}}>
-            <NavLink style={{marginRight: "3px", borderRadius: "50%", overflow: "hidden", border: "1px solid", position: "relative", marginTop: "2px", display: "inline-block", width: "39px", height: "39px", textDecoration: "none", color: "black"}} to="/profile/profile" activeStyle={{borderColor: "#00BCD4", textDecoration: "none"}}>
+            <NavLink style={{marginRight: "3px", borderRadius: "50%", overflow: "hidden", border: "1px solid", position: "relative", marginTop: "2px", display: "inline-block", width: "39px", height: "39px", textDecoration: "none", color: "black"}} to="/profile/myprofile" activeStyle={{borderColor: "#00BCD4", textDecoration: "none"}}>
                   <img src={require("../profile.png")} height="39px" width="39px"/>
             </NavLink>
             <div style={{position: "relative", borderLeft: "1px solid rgb(202,202,202)", borderRight: "1px solid rgb(202,202,202)", marginTop: "2px", display: "inline-block", width: "60%", height: "39px"}}>
