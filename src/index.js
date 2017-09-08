@@ -10,6 +10,7 @@ import reducers from './reducers';
 import CreateCampaign from './components/CreateCampaign';
 import injectTapEventPlugin from 'react-tap-event-plugin'
 import AdminParent from "./adminApp/AdminParent"
+import ProfileParent from "./profileApp/profileParent"
 
 injectTapEventPlugin();
 
@@ -26,6 +27,7 @@ ReactDOM.render(
         <div>
           <Route path="/admin" component={AdminParent} />
           <Route path="/register" component={CreateCampaign} />
+          <Route path="/profile" component={ProfileParent} />
         </div>
       </BrowserRouter>
     </MuiThemeProvider>
