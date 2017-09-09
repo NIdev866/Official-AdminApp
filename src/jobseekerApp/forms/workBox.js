@@ -55,7 +55,7 @@ class workBox extends React.Component {
           height: "23px",
         }
         let durationResult = ""
-        let workName = this.props.workMarkers[i].name
+        let workName = this.props.jobSelectedNamesArray[i]
         if(workName.length > 15){
           workName = workName.substring(0, 15) + "..."
         }

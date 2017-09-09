@@ -16,11 +16,8 @@ import { config } from "dotenv"
 import JobCards from "./jobCards"
 import MapPageWrapper from "./forms/mapPageWrapper"
 
-
-
-
 config()
-class JobseekerRegisterParent extends Component {
+class JobseekerParent extends Component {
   constructor(props) {
     super(props)
     this.nextPage = this.nextPage.bind(this)
@@ -76,7 +73,7 @@ class JobseekerRegisterParent extends Component {
         <Row center="xs">
           <Col xs={13} sm={12} md={2} lg={8}>
             {page === 1 && 
-              <div>
+              <div style={{marginBottom: "20px"}}>
                 <h2>PLEASE APPLY FOR THIS JOB BY REGISTERING WITH US.</h2>
                 <h3>Select maximum 3 job boxes to apply for them.<br/>
                     Click on the job to read more about it</h3>
@@ -153,10 +150,8 @@ class JobseekerRegisterParent extends Component {
   }
 }
 
-JobseekerRegisterParent.propTypes = {
+JobseekerParent.propTypes = {
   onSubmit: PropTypes.func.isRequired
 }
 
-
-
-export default JobseekerRegisterParent
+export default JobseekerParent

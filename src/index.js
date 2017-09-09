@@ -7,13 +7,13 @@ import { BrowserRouter, Route , Switch, Redirect} from 'react-router-dom';
 import promise from 'redux-promise';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
 import reducers from './reducers';
-import JobseekerRegisterParent from './jobseekerRegisterApp/jobseekerRegisterParent';
+import JobseekerParent from './jobseekerApp/jobseekerParent';
 import injectTapEventPlugin from 'react-tap-event-plugin'
 import AdminParent from "./adminApp/AdminParent"
-import ProfileParent from "./profileApp/profileParent"
-import Progress from "./profileApp/components/progress"
-import Myprofile from "./profileApp/components/myprofile"
-import Jobs from "./profileApp/components/jobs"
+import WorkerParent from "./workerApp/workerParent"
+import Progress from "./workerApp/components/progress"
+import Myprofile from "./workerApp/components/myprofile"
+import Jobs from "./workerApp/components/jobs"
 
 injectTapEventPlugin();
 
@@ -28,11 +28,11 @@ ReactDOM.render(
       <BrowserRouter>
         <div>
           <Route path="/admin" component={AdminParent} />
-          <Route path="/register" component={JobseekerRegisterParent} />
-          <Route path="/profile" component={ProfileParent} />
-          <Route path="/profile/progress" component={Progress}/>
-          <Route path="/profile/jobs" component={Jobs}/>
-          <Route path="/profile/myprofile" component={Myprofile}/>
+          <Route path="/jobseeker" component={JobseekerParent} />
+          <Route path="/worker" component={WorkerParent} />
+          <Route path="/worker/progress" component={Progress}/>
+          <Route path="/worker/jobs" component={Jobs}/>
+          <Route path="/worker/myprofile" component={Myprofile}/>
         </div>
       </BrowserRouter>
     </MuiThemeProvider>

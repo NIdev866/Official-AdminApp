@@ -22,11 +22,11 @@ const WorkBoxParent = (props)=>{
         zoom={props.zoom}
         userMarker={props.userMarker}
         component={workBox}
+        jobSelectedNamesArray={props.jobSelectedNamesArray}
       />}
     </div>
   )
 }
-
 const houseNumberInput = (props) => {
   const houseNumberDivStyling = {
     position: "absolute", 
@@ -94,6 +94,7 @@ class MapParent extends Component {
         <Row style={{height: 360}}>
           <Field 
             routes={this.props.routes}
+            geocodedPostcodesArrayState={this.props.geocodedPostcodesArrayState}
             userMarker={this.props.userMarker}
             component={Maps} 
             zoom={8}
@@ -118,6 +119,7 @@ class MapParent extends Component {
             durations={this.props.durations}
             zoom={8}
             userMarker={this.props.userMarker}
+            jobSelectedNamesArray={this.props.jobSelectedNamesArray}
             component={workBox}
           />}
       </Row>

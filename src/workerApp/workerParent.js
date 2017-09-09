@@ -13,7 +13,7 @@ class AdminParent extends Component {
   render(){
     return(
       <div>
-        {!this.props.bankDetailsSubmitted && <Redirect to="/profile/jobs"/>}
+        {!this.props.bankDetailsSubmitted && <Redirect to="/worker/jobs"/>}
         <Nav />
       </div>
     )

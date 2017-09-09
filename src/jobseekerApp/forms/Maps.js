@@ -6,26 +6,22 @@ import jobsDb from "../../jobs.json"
 
 class MapComponent extends Component {
   render(){
-/*    const allMarkers = [
-      ...this.props.workMarkers,
-    ]
     let mappedMarkers = []
     if(!this.props.routes){
-      mappedMarkers = allMarkers.map((venue, i) => {
-        const marker = {
+      mappedMarkers = this.props.geocodedPostcodesArrayState.map((venue, i) => {
+        let marker = {
           position: {
-            lat: venue.position.lat,
-            lng: venue.position.lng
+            lat: venue.lat,
+            lng: venue.lng
           }
         }
         return (
           <Marker 
-            key={i} 
             {...marker} 
           />
         )
       })
-    }*/
+    }
     let mappedRoutes = []
     if(this.props.routes === {} || this.props.routes){
       mappedRoutes = this.props.routes.map((venue, i) => {
@@ -41,6 +37,7 @@ class MapComponent extends Component {
         onMarkerClick={_.noop}
         options={{streetViewControl: false, mapTypeControl: false, zoomControl: false}}>
         {mappedRoutes}
+        {this.props.geocodedPostcodesArrayState && mappedMarkers}
       </GoogleMap>
     )
   }
