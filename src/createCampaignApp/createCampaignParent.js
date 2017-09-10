@@ -11,7 +11,7 @@ import TopCounter from "./topCounter"
 import Animation from 'react-addons-css-transition-group'
 
 
-class AdminParent extends Component {
+class CreateCampaignParent extends Component {
   constructor(props) {
     super(props)
     this.nextPage = this.nextPage.bind(this)
@@ -85,10 +85,10 @@ class AdminParent extends Component {
   }
 }
 
-AdminParent.propTypes = {
+CreateCampaignParent.propTypes = {
   onSubmit: PropTypes.func.isRequired
 }
 
 
 
-export default AdminParent
+export default CreateCampaignParent

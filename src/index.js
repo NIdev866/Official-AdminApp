@@ -9,7 +9,7 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
 import reducers from './reducers';
 import JobseekerParent from './jobseekerApp/jobseekerParent';
 import injectTapEventPlugin from 'react-tap-event-plugin'
-import AdminParent from "./adminApp/AdminParent"
+import CreateCampaignParent from "./createCampaignApp/createCampaignParent"
 import WorkerParent from "./workerApp/workerParent"
 import Progress from "./workerApp/components/progress"
 import Myprofile from "./workerApp/components/myprofile"
@@ -27,7 +27,7 @@ ReactDOM.render(
     <MuiThemeProvider>
       <BrowserRouter>
         <div>
-          <Route path="/admin" component={AdminParent} />
+          <Route path="/createcampaign" component={CreateCampaignParent} />
           <Route path="/jobseeker" component={JobseekerParent} />
           <Route path="/worker" component={WorkerParent} />
           <Route path="/worker/progress" component={Progress}/>

@@ -9,7 +9,7 @@ import { Redirect } from 'react-router'
 import { connect } from 'react-redux';
 import * as actions from '../actions/all_actions';
 
-class AdminParent extends Component {
+class WorkerParent extends Component {
   render(){
     return(
       <div>
@@ -26,4 +26,4 @@ function mapStateToProps(state){
   }
 }
 
-export default connect(mapStateToProps, actions)(AdminParent);
+export default connect(mapStateToProps, actions)(WorkerParent);
