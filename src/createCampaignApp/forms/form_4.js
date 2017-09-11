@@ -15,10 +15,6 @@ const renderError = ({ input, meta: { touched, error } }) => (
   </div>
 )
 
-
-
-
-
 class PerHourChosen extends Component{
   render(){
     return(
@@ -94,8 +90,6 @@ class AnnuallyChosen extends Component{
     )
   }
 }
-
-
 
 class ParentSalary extends Component{
   constructor(props){

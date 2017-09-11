@@ -14,6 +14,9 @@ import WorkerParent from "./workerApp/workerParent"
 import Progress from "./workerApp/components/progress"
 import Myprofile from "./workerApp/components/myprofile"
 import Jobs from "./workerApp/components/jobs"
+import AddAdminParent from "./addAdminApp/addAdminParent"
+import ApolloClient, { createNetworkInterface } from 'apollo-client'
+import { ApolloProvider } from 'react-apollo'
 
 injectTapEventPlugin();
 
@@ -22,19 +25,27 @@ const store = createStore(reducers, composeEnhancers(
     applyMiddleware(promise)
   ));
 
+const client = new ApolloClient({
+  networkInterface: createNetworkInterface({ uri: 'https://mgtxod3y5k.execute-api.eu-west-1.amazonaws.com/stage2/graphql'}),
+  dataIdFromObject: o => o.id
+})
+
 ReactDOM.render(
-  <Provider store={store}>
-    <MuiThemeProvider>
-      <BrowserRouter>
-        <div>
-          <Route path="/createcampaign" component={CreateCampaignParent} />
-          <Route path="/jobseeker" component={JobseekerParent} />
-          <Route path="/worker" component={WorkerParent} />
-          <Route path="/worker/progress" component={Progress}/>
-          <Route path="/worker/jobs" component={Jobs}/>
-          <Route path="/worker/myprofile" component={Myprofile}/>
-        </div>
-      </BrowserRouter>
-    </MuiThemeProvider>
-  </Provider>
+  <ApolloProvider client={client}>
+    <Provider store={store}>
+      <MuiThemeProvider>
+        <BrowserRouter>
+          <div>
+            <Route path="/addadmin" component={AddAdminParent} />
+            <Route path="/createcampaign" component={CreateCampaignParent} />
+            <Route path="/jobseeker" component={JobseekerParent} />
+            <Route path="/worker" component={WorkerParent} />
+            <Route path="/worker/progress" component={Progress}/>
+            <Route path="/worker/jobs" component={Jobs}/>
+            <Route path="/worker/myprofile" component={Myprofile}/>
+          </div>
+        </BrowserRouter>
+      </MuiThemeProvider>
+    </Provider>
+  </ApolloProvider>
   , document.getElementById('root'));
