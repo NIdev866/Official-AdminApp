@@ -1,5 +1,5 @@
 import { SubmissionError } from 'redux-form'
-import database from "../../jobs.json"
+import database from "../../../jobs.json"
 
 const sleep = ms => new Promise(resolve => setTimeout(resolve, ms))
 

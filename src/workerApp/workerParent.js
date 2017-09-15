@@ -7,7 +7,7 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import { Redirect } from 'react-router'
 
 import { connect } from 'react-redux';
-import * as actions from '../actions/all_actions';
+import * as actions from '../actions';
 
 class WorkerParent extends Component {
   render(){

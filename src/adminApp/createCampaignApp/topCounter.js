@@ -32,7 +32,7 @@ class TopCounter extends Component {
     const bgColorFour = this.props.finishedStep <= 3 ? emptyBg : colouredBg
     const bgColorFive = this.props.finishedStep <= 4 ? emptyBg : colouredBg
     return(
-      <div style={{margin: "20px"}}>
+      <div style={{marginLeft: "0px", width: "210px", overflow: "hidden"}}>
         <div style={{...circleStyle, ...bgColorOne}} ><h4 style={{"marginTop": "2px"}}>1</h4></div>
         <div style={arrows}>&#10140;</div>
         <div style={{...circleStyle, ...bgColorTwo}}><h4 style={{"marginTop": "2px"}}>2</h4></div>

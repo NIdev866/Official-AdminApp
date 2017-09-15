@@ -3,7 +3,7 @@ import RaisedButton from 'material-ui/RaisedButton'
 import styles from './form_material_styles'
 
 import { connect } from 'react-redux';
-import * as actions from '../../actions/all_actions';
+import * as actions from '../../actions';
 
 class Myprofile extends Component{
   render(){

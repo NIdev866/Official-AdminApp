@@ -3,7 +3,7 @@ import Dialog from 'material-ui/Dialog';
 import FlatButton from 'material-ui/FlatButton';
 import RaisedButton from 'material-ui/RaisedButton';
 import { connect } from 'react-redux';
-import * as actions from '../../actions/all_actions';
+import * as actions from '../../actions';
 import { Link } from "react-router-dom"
 import JobCards from "./jobCards"
 

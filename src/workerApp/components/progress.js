@@ -3,7 +3,7 @@ import Dialog from 'material-ui/Dialog';
 import FlatButton from 'material-ui/FlatButton';
 import { connect } from 'react-redux';
 import { Link } from "react-router-dom"
-import * as actions from '../../actions/all_actions';
+import * as actions from '../../actions';
 
 class Progress extends Component{
   render(){
