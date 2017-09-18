@@ -1,12 +1,12 @@
 import React, { Component} from 'react'
-import { Field, reduxForm } from 'redux-form'
+import { Field, reduxForm, formValueSelector } from 'redux-form'
 import validate from './validate'
 import RaisedButton from 'material-ui/RaisedButton'
 import styles from './form_material_styles'
 import { Row, Col } from 'react-flexbox-grid'
 import { RadioButtonGroup, SelectField } from "redux-form-material-ui"
 import MenuItem from 'material-ui/MenuItem'
-import { fetchJobSectors } from '../../../actions'
+import { fetchJobSectors, setStateOfSelectedJobSector, loadJobTitleDropdown } from '../../../actions'
 import { connect } from 'react-redux'
 
 const renderError = ({ input, meta: { touched, error } }) => (
@@ -15,7 +15,46 @@ const renderError = ({ input, meta: { touched, error } }) => (
   </div>
 )
 
+
+
+class JobTitleSelector extends Component{
+  render(){
+    return(
+      <div>
+        <Field name="job_title_from_db" component={SelectField} 
+            selectedMenuItemStyle={{color: "#00BCD4"}} 
+            underlineStyle={{display: "none"}} errorStyle={{display: "none"}} 
+            hintText="Job Title">
+
+          {this.props.jobTitlesFromMySector && this.props.jobTitlesFromMySector.map((jobTitle)=>{
+            return <MenuItem value={jobTitle} primaryText={jobTitle}/>
+          })}
+        </Field>
+        <Field name="job_title_from_db" component={renderError} />
+      </div>
+    )
+  }
+}
+
+
+
 class FormFirstPage extends Component{
+  constructor(props){
+    super(props)
+    this.jobSectorChosen = this.jobSectorChosen.bind(this)
+  }
+  jobSectorChosen(){
+    if(this.props.job_sector){
+      this.props.setStateOfSelectedJobSector(this.props.job_sector)
+      this.props.loadJobTitleDropdown(this.props.job_sector)
+      return (
+        <JobTitleSelector 
+          job_sector={this.props.job_sector}
+        />
+      )
+    }
+  }
+
   componentWillMount(){
     this.props.fetchJobSectors()
   }
@@ -26,27 +65,25 @@ class FormFirstPage extends Component{
         <Row center="xs" style={{height: 360}}>
           <Col xs={10} sm={10} md={3} lg={5}>
             <div style={{marginTop: "30px", marginBottom: "30px"}}>
-              <Field name="position" component={SelectField} 
+              <Field name="job_sector" component={SelectField} 
                   selectedMenuItemStyle={{color: "#00BCD4"}} 
                   underlineStyle={{display: "none"}} errorStyle={{display: "none"}} 
-                  hintText="Position">
-                <MenuItem value="Warehouse Operative" primaryText="Warehouse Operative"/>
-                <MenuItem value="Cleaner" primaryText="Cleaner"/>
-                <MenuItem value="Forklift driver" primaryText="Forklift driver"/>
-              </Field>
-              <Field name="position" component={renderError} />
-            </div>
-            <Field name="jobType" component={SelectField} 
-                selectedMenuItemStyle={{color: "#00BCD4"}} 
-                underlineStyle={{display: "none"}} errorStyle={{display: "none"}} 
-                hintText="Job type">
-
+                  hintText="Job Sector">
 
                 {this.props.jobSectors && this.props.jobSectors.map((jobSector)=>{
                   return <MenuItem value={jobSector} primaryText={jobSector}/>
                 })}
-
-
+              </Field>
+              <Field name="job_sector" component={renderError} />
+            </div>
+            {this.jobSectorChosen()}
+            <Field name="jobType" component={SelectField} 
+                selectedMenuItemStyle={{color: "#00BCD4"}} 
+                underlineStyle={{display: "none"}} errorStyle={{display: "none"}} 
+                hintText="Job type">
+              <MenuItem value="Full-time" primaryText="Full-time"/>
+              <MenuItem value="Part-time" primaryText="Part-time"/>
+              <MenuItem value="Temporary" primaryText="Temporary"/>
             </Field>
             <Field name="jobType" component={renderError} />
           </Col>
@@ -73,15 +110,29 @@ class FormFirstPage extends Component{
 
 function mapStateToProps(state) {
   return {
-    jobSectors: state.api.jobSectors
+    jobSectors: state.creating_campaign.jobSectors,
+    selectedJobSector: state.creating_campaign.selectedJobSector,
+    jobTitlesFromMySector: state.creating_campaign.jobTitlesFromMySector
   };
 }
 
-export default reduxForm({
+FormFirstPage = reduxForm({
   form: 'admin', // <------ same form name
   destroyOnUnmount: false, // <------ preserve form data
   forceUnregisterOnUnmount: true, // <------ unregister fields on unmount
   validate
 })(
-  connect(mapStateToProps, { fetchJobSectors })(FormFirstPage)
+  connect(mapStateToProps, { fetchJobSectors, setStateOfSelectedJobSector, loadJobTitleDropdown })(FormFirstPage)
 )
+
+const selector = formValueSelector('admin') // <-- same as form name
+FormFirstPage = connect(
+  state => {
+    const job_sector = selector(state, 'job_sector')
+    return {
+      job_sector
+    }
+  }
+)(FormFirstPage)
+
+export default FormFirstPage

@@ -8,12 +8,14 @@ import {
   UNAUTH_USER, 
   AUTH_ERROR,
   CLEAR_AUTH_ERROR,
-  JOB_SECTORS
+  JOB_SECTORS,
+  SELECTED_JOB_SECTOR,
+  JOB_TITLES_FROM_MY_SECTOR
 } from './types.js';
 
 
 
-const ROOT_URL = 'http://localhost:3000';
+const ROOT_URL = 'http://localhost:3090';
 
 export function submitBankDetails(){
   return { 
@@ -27,18 +29,43 @@ export function submitBankDetails(){
 
 
 
+
 export function fetchJobSectors(){
-  return function(dispatch) {
-    axios.get(`${ROOT_URL}/createCampaign/fetchJobSectors`)
+  return function(dispatch){
+    axios.get(`${ROOT_URL}/create-campaign/fetch-job-sectors`)
+      .then(response => {
+        dispatch({ type: JOB_SECTORS, payload: response.data });
+      })
+      .catch(()=>{
+        console.log("error in fetching job sectors")
+
+      })
+  }
+}
+
+export function setStateOfSelectedJobSector(sector){
+  return { 
+    type: SELECTED_JOB_SECTOR, 
+    payload: sector
+  }
+}
+
+export function loadJobTitleDropdown(jobSector){
+  return function(dispatch){
+    axios.post(`${ROOT_URL}/create-campaign/fetch-job-titles`, { jobSector })
       .then(response => {
         console.log(response)
-        dispatch({ type: JOB_SECTORS, payload: response });
+        dispatch({ type: JOB_TITLES_FROM_MY_SECTOR, payload: response.data})
       })
-      .catch(() => {
-        dispatch('couldnt fetch job sectors');
-      });
-  };
+      .catch(()=>{
+        console.log("error in fetching job titles")
+
+      })
+  }
 }
+
+
+
 
 
 
