@@ -9,8 +9,8 @@ class App extends Component {
     return (
       <div style={{maxWidth: "500px", margin: "0 auto"}}>
         <Header />
-        {!this.props.authenticated && <Redirect to="/admin/signin"/>}
-        {this.props.authenticated && <CreateCampaignParent />}
+        {this.props.authenticated && <Redirect to="/admin/signin"/>}
+        {!this.props.authenticated && <CreateCampaignParent />}
       </div>
     );
   }

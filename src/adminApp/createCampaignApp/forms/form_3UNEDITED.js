@@ -6,8 +6,6 @@ import styles from './form_material_styles'
 import { Row, Col } from 'react-flexbox-grid'
 import { RadioButtonGroup, SelectField } from "redux-form-material-ui"
 import MenuItem from 'material-ui/MenuItem'
-import { fetchJobSectors } from '../../../actions'
-import { connect } from 'react-redux'
 
 const renderError = ({ input, meta: { touched, error } }) => (
   <div style={{color: "red"}}>
@@ -16,11 +14,8 @@ const renderError = ({ input, meta: { touched, error } }) => (
 )
 
 class FormFirstPage extends Component{
-  componentWillMount(){
-    this.props.fetchJobSectors()
-  }
-  render(){
-    const { handleSubmit, previousPage } = this.props
+ render(){
+  const { handleSubmit, previousPage } = this.props
     return (
       <form onSubmit={handleSubmit}>
         <Row center="xs" style={{height: 360}}>
@@ -40,13 +35,9 @@ class FormFirstPage extends Component{
                 selectedMenuItemStyle={{color: "#00BCD4"}} 
                 underlineStyle={{display: "none"}} errorStyle={{display: "none"}} 
                 hintText="Job type">
-
-
-                {this.props.jobSectors && this.props.jobSectors.map((jobSector)=>{
-                  return <MenuItem value={jobSector} primaryText={jobSector}/>
-                })}
-
-
+              <MenuItem value="Full-time" primaryText="Full-time"/>
+              <MenuItem value="Part-time" primaryText="Part-time"/>
+              <MenuItem value="Temporary" primaryText="Temporary"/>
             </Field>
             <Field name="jobType" component={renderError} />
           </Col>
@@ -71,17 +62,9 @@ class FormFirstPage extends Component{
   }
 }
 
-function mapStateToProps(state) {
-  return {
-    jobSectors: state.api.jobSectors
-  };
-}
-
 export default reduxForm({
   form: 'admin', // <------ same form name
   destroyOnUnmount: false, // <------ preserve form data
   forceUnregisterOnUnmount: true, // <------ unregister fields on unmount
   validate
-})(
-  connect(mapStateToProps, { fetchJobSectors })(FormFirstPage)
-)
+})(FormFirstPage)

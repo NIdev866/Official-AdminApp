@@ -8,17 +8,44 @@ import {
   UNAUTH_USER, 
   AUTH_ERROR,
   CLEAR_AUTH_ERROR,
+  JOB_SECTORS
 } from './types.js';
 
 
 
-const ROOT_URL = 'http://localhost:3090';
+const ROOT_URL = 'http://localhost:3000';
 
 export function submitBankDetails(){
   return { 
     type: SUBMIT_BANK_DETAILS
   }
 }
+
+
+
+
+
+
+
+export function fetchJobSectors(){
+  return function(dispatch) {
+    axios.get(`${ROOT_URL}/createCampaign/fetchJobSectors`)
+      .then(response => {
+        console.log(response)
+        dispatch({ type: JOB_SECTORS, payload: response });
+      })
+      .catch(() => {
+        dispatch('couldnt fetch job sectors');
+      });
+  };
+}
+
+
+
+
+
+
+
 
 export function signinUser({ email, password }) {
   return function(dispatch) {
