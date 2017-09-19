@@ -8,14 +8,14 @@ import {
   UNAUTH_USER, 
   AUTH_ERROR,
   CLEAR_AUTH_ERROR,
-  JOB_SECTORS,
+  NESTED_JOB_SECTORS,
   SELECTED_JOB_SECTOR,
   JOB_TITLES_FROM_MY_SECTOR
 } from './types.js';
 
 
 
-const ROOT_URL = 'http://localhost:3090';
+const ROOT_URL = 'http://localhost:3000';
 
 export function submitBankDetails(){
   return { 
@@ -30,11 +30,11 @@ export function submitBankDetails(){
 
 
 
-export function fetchJobSectors(){
+export function fetchNestedJobSectors(){
   return function(dispatch){
-    axios.get(`${ROOT_URL}/create-campaign/fetch-job-sectors`)
+    axios.get(`${ROOT_URL}/create-campaign/get-nested-job-sectors`)
       .then(response => {
-        dispatch({ type: JOB_SECTORS, payload: response.data });
+        dispatch({ type: NESTED_JOB_SECTORS, payload: response.data });
       })
       .catch(()=>{
         console.log("error in fetching job sectors")

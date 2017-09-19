@@ -10,8 +10,8 @@ const validate = values => {
   }else if(values.jobDescription.length > 100) {
     errors.jobDescription = 'Description too long'
   }
-  if (!values.job_sector){
-    errors.job_sector = 'Required'
+  if (!values.nested_job_sector_title){
+    errors.nested_job_sector_title = 'Required'
   }
   if (!values.jobType){
     errors.jobType = 'Required'

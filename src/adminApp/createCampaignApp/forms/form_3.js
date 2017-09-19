@@ -6,8 +6,15 @@ import styles from './form_material_styles'
 import { Row, Col } from 'react-flexbox-grid'
 import { RadioButtonGroup, SelectField } from "redux-form-material-ui"
 import MenuItem from 'material-ui/MenuItem'
-import { fetchJobSectors, setStateOfSelectedJobSector, loadJobTitleDropdown } from '../../../actions'
+import { fetchNestedJobSectors, setStateOfSelectedJobSector, loadJobTitleDropdown } from '../../../actions'
 import { connect } from 'react-redux'
+
+
+
+import _ from "lodash"
+
+
+
 
 const renderError = ({ input, meta: { touched, error } }) => (
   <div style={{color: "red"}}>
@@ -44,19 +51,14 @@ class FormFirstPage extends Component{
     this.jobSectorChosen = this.jobSectorChosen.bind(this)
   }
   jobSectorChosen(){
-    if(this.props.job_sector){
-      this.props.setStateOfSelectedJobSector(this.props.job_sector)
-      this.props.loadJobTitleDropdown(this.props.job_sector)
+    if(this.props.nested_job_sector_title){
+      this.props.setStateOfSelectedJobSector(this.props.nested_job_sector_title)
+      this.props.loadJobTitleDropdown(this.props.nested_job_sector_title)
       return (
         <JobTitleSelector 
-          job_sector={this.props.job_sector}
-        />
-      )
-    }
   }
-
   componentWillMount(){
-    this.props.fetchJobSectors()
+    this.props.fetchNestedJobSectors()
   }
   render(){
     const { handleSubmit, previousPage } = this.props
@@ -65,16 +67,21 @@ class FormFirstPage extends Component{
         <Row center="xs" style={{height: 360}}>
           <Col xs={10} sm={10} md={3} lg={5}>
             <div style={{marginTop: "30px", marginBottom: "30px"}}>
-              <Field name="job_sector" component={SelectField} 
+              <Field name="nested_job_sector_title" component={SelectField} 
                   selectedMenuItemStyle={{color: "#00BCD4"}} 
                   underlineStyle={{display: "none"}} errorStyle={{display: "none"}} 
                   hintText="Job Sector">
+              {this.props.nestedJobSectors && this.props.nestedJobSectors.jobSectors.map((nestedJobSector)=>{
+                return <MenuItem value={nestedJobSector.sector_title} primaryText={nestedJobSector.sector_title}/>
+              })
 
-                {this.props.jobSectors && this.props.jobSectors.map((jobSector)=>{
-                  return <MenuItem value={jobSector} primaryText={jobSector}/>
-                })}
-              </Field>
-              <Field name="job_sector" component={renderError} />
+
+/*              {this.props.nestedJobSectors && this.props.nestedJobSectors.jobSectors.map((nestedJobSector)=>{
+                return <MenuItem value={nestedJobSector.sector_title} primaryText={nestedJobSector.sector_title}/>
+              })}*/
+            }
+              </Field>    
+              <Field name="nested_job_sector_title" component={renderError} />
             </div>
             {this.jobSectorChosen()}
             <Field name="jobType" component={SelectField} 
@@ -110,7 +117,7 @@ class FormFirstPage extends Component{
 
 function mapStateToProps(state) {
   return {
-    jobSectors: state.creating_campaign.jobSectors,
+    nestedJobSectors: state.creating_campaign.nestedJobSectors,
     selectedJobSector: state.creating_campaign.selectedJobSector,
     jobTitlesFromMySector: state.creating_campaign.jobTitlesFromMySector
   };
@@ -122,15 +129,15 @@ FormFirstPage = reduxForm({
   forceUnregisterOnUnmount: true, // <------ unregister fields on unmount
   validate
 })(
-  connect(mapStateToProps, { fetchJobSectors, setStateOfSelectedJobSector, loadJobTitleDropdown })(FormFirstPage)
+  connect(mapStateToProps, { fetchNestedJobSectors, setStateOfSelectedJobSector, loadJobTitleDropdown })(FormFirstPage)
 )
 
 const selector = formValueSelector('admin') // <-- same as form name
 FormFirstPage = connect(
   state => {
-    const job_sector = selector(state, 'job_sector')
+    const nested_job_sector_title = selector(state, 'nested_job_sector_title')
     return {
-      job_sector
+      nested_job_sector_title
     }
   }
 )(FormFirstPage)
