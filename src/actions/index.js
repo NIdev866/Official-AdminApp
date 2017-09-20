@@ -8,9 +8,7 @@ import {
   UNAUTH_USER, 
   AUTH_ERROR,
   CLEAR_AUTH_ERROR,
-  NESTED_JOB_SECTORS,
-  SELECTED_JOB_SECTOR,
-  JOB_TITLES_FROM_MY_SECTOR
+  NESTED_JOB_SECTORS
 } from './types.js';
 
 
@@ -36,34 +34,12 @@ export function fetchNestedJobSectors(){
       .then(response => {
         dispatch({ type: NESTED_JOB_SECTORS, payload: response.data });
       })
-      .catch(()=>{
-        console.log("error in fetching job sectors")
+      .catch((err)=>{
+        console.log(err)
 
       })
   }
 }
-
-export function setStateOfSelectedJobSector(sector){
-  return { 
-    type: SELECTED_JOB_SECTOR, 
-    payload: sector
-  }
-}
-
-export function loadJobTitleDropdown(jobSector){
-  return function(dispatch){
-    axios.post(`${ROOT_URL}/create-campaign/fetch-job-titles`, { jobSector })
-      .then(response => {
-        console.log(response)
-        dispatch({ type: JOB_TITLES_FROM_MY_SECTOR, payload: response.data})
-      })
-      .catch(()=>{
-        console.log("error in fetching job titles")
-
-      })
-  }
-}
-
 
 
 
@@ -82,7 +58,7 @@ export function signinUser({ email, password }) {
         dispatch({ type: AUTH_USER });
         localStorage.setItem('token', response.data.token);
       })
-      .catch(() => {
+      .catch((err) => {
         dispatch(authError('Bad Sign-in Information'));
       });
   };
@@ -96,8 +72,8 @@ export function signupUser({ email, password }) {
         dispatch({ type: AUTH_USER });
         localStorage.setItem('token', response.data.token);
       })
-      .catch(error => {
-        dispatch(authError(error.response.data.error));
+      .catch(err => {
+        dispatch(authError(err));
       });
   };
 }

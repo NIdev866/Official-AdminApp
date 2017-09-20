@@ -57,12 +57,12 @@ class CreateCampaignParent extends Component {
                 <FormFirstPage 
                   onSubmit={this.nextPage} 
                 />}
-              {page === 2 && 
+              {page === 22222 && 
                 <FormSecondPage 
                   previousPage={this.previousPage}
                   onSubmit={this.nextPage} 
                 />}              
-              {page === 3 && 
+              {page === 2 && 
                 <FormThirdPage 
                   previousPage={this.previousPage}
                   onSubmit={this.nextPage} 

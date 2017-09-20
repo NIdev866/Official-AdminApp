@@ -6,14 +6,8 @@ import styles from './form_material_styles'
 import { Row, Col } from 'react-flexbox-grid'
 import { RadioButtonGroup, SelectField } from "redux-form-material-ui"
 import MenuItem from 'material-ui/MenuItem'
-import { fetchNestedJobSectors, setStateOfSelectedJobSector, loadJobTitleDropdown } from '../../../actions'
+import { fetchNestedJobSectors } from '../../../actions'
 import { connect } from 'react-redux'
-
-
-
-import _ from "lodash"
-
-
 
 
 const renderError = ({ input, meta: { touched, error } }) => (
@@ -24,38 +18,47 @@ const renderError = ({ input, meta: { touched, error } }) => (
 
 
 
-class JobTitleSelector extends Component{
-  render(){
-    return(
-      <div>
-        <Field name="job_title_from_db" component={SelectField} 
-            selectedMenuItemStyle={{color: "#00BCD4"}} 
-            underlineStyle={{display: "none"}} errorStyle={{display: "none"}} 
-            hintText="Job Title">
-
-          {this.props.jobTitlesFromMySector && this.props.jobTitlesFromMySector.map((jobTitle)=>{
-            return <MenuItem value={jobTitle} primaryText={jobTitle}/>
-          })}
-        </Field>
-        <Field name="job_title_from_db" component={renderError} />
-      </div>
-    )
-  }
-}
-
 
 
 class FormFirstPage extends Component{
   constructor(props){
     super(props)
+    this.state = {
+      dropDownLoaded: false,
+    }
     this.jobSectorChosen = this.jobSectorChosen.bind(this)
+    this.renderNestedJobSectors = this.renderNestedJobSectors.bind(this)
+    this.jobTitleSelector = this.jobTitleSelector.bind(this)
+  }
+  jobTitleSelector(){
+    if(this.props.nestedJobSectors){
+      this.props.nestedJobSectors.map((nestedJobSector)=>{
+
+        console.log(nestedJobSector)
+      //if(nestedJobSector)
+      //return <MenuItem value={nestedJobSector.jobTitle} primaryText={nestedJobSector.jobTitle}/>
+
+      })
+
+    }
+
   }
   jobSectorChosen(){
-    if(this.props.nested_job_sector_title){
-      this.props.setStateOfSelectedJobSector(this.props.nested_job_sector_title)
-      this.props.loadJobTitleDropdown(this.props.nested_job_sector_title)
-      return (
-        <JobTitleSelector 
+    if(this.props.nested_job_sector_title && !this.state.dropDownLoaded){
+      this.setState({
+        dropDownLoaded:true
+      })
+      this.jobTitleSelector()
+    }
+  }
+  renderNestedJobSectors(){
+    if(this.props.nestedJobSectors){
+      return this.props.nestedJobSectors.map((nestedJobSector)=>{
+        return <MenuItem key={nestedJobSector.sector_id} value={nestedJobSector.sector_title} primaryText={nestedJobSector.sector_title}/>
+      })
+    }else{
+      console.log('renderNestedJobSectors')
+    }
   }
   componentWillMount(){
     this.props.fetchNestedJobSectors()
@@ -71,15 +74,7 @@ class FormFirstPage extends Component{
                   selectedMenuItemStyle={{color: "#00BCD4"}} 
                   underlineStyle={{display: "none"}} errorStyle={{display: "none"}} 
                   hintText="Job Sector">
-              {this.props.nestedJobSectors && this.props.nestedJobSectors.jobSectors.map((nestedJobSector)=>{
-                return <MenuItem value={nestedJobSector.sector_title} primaryText={nestedJobSector.sector_title}/>
-              })
-
-
-/*              {this.props.nestedJobSectors && this.props.nestedJobSectors.jobSectors.map((nestedJobSector)=>{
-                return <MenuItem value={nestedJobSector.sector_title} primaryText={nestedJobSector.sector_title}/>
-              })}*/
-            }
+              {this.renderNestedJobSectors()}
               </Field>    
               <Field name="nested_job_sector_title" component={renderError} />
             </div>
@@ -117,9 +112,7 @@ class FormFirstPage extends Component{
 
 function mapStateToProps(state) {
   return {
-    nestedJobSectors: state.creating_campaign.nestedJobSectors,
-    selectedJobSector: state.creating_campaign.selectedJobSector,
-    jobTitlesFromMySector: state.creating_campaign.jobTitlesFromMySector
+    nestedJobSectors: state.creating_campaign.nestedJobSectors
   };
 }
 
@@ -129,7 +122,7 @@ FormFirstPage = reduxForm({
   forceUnregisterOnUnmount: true, // <------ unregister fields on unmount
   validate
 })(
-  connect(mapStateToProps, { fetchNestedJobSectors, setStateOfSelectedJobSector, loadJobTitleDropdown })(FormFirstPage)
+  connect(mapStateToProps, { fetchNestedJobSectors })(FormFirstPage)
 )
 
 const selector = formValueSelector('admin') // <-- same as form name
