@@ -1,5 +1,5 @@
 import React, { Component} from 'react'
-import { Field, reduxForm, formValueSelector } from 'redux-form'
+import { Field, reduxForm, formValueSelector, change } from 'redux-form'
 import validate from './validate'
 import renderField from './renderField'
 import RaisedButton from 'material-ui/RaisedButton'
@@ -23,6 +23,7 @@ class FormFirstPage extends Component{
     this.jobSectorChosen = this.jobSectorChosen.bind(this)
     this.renderNestedJobSectors = this.renderNestedJobSectors.bind(this)
     this.jobTitleSelector = this.jobTitleSelector.bind(this)
+    this.getLatAndLngOfCompany = this.getLatAndLngOfCompany.bind(this)
   }
 
   renderCompanies(){
@@ -36,6 +37,16 @@ class FormFirstPage extends Component{
 
 
 
+  getLatAndLngOfCompany(){
+    if(this.props.company_id){
+
+      let chosenCompanyLat = this.props.companies.filter(el=>el.company_id === this.props.company_id)[0].lat
+      let chosenCompanyLng = this.props.companies.filter(el=>el.company_id === this.props.company_id)[0].lng
+
+      this.props.dispatch(change('admin', 'lng', chosenCompanyLng));
+      this.props.dispatch(change('admin', 'lat', chosenCompanyLat));
+    }
+  }
 
 
 /*job_title_id & employer suck out
@@ -43,18 +54,10 @@ class FormFirstPage extends Component{
 Zostac w admin app zrob section ‘activeCampaigns’ 
 
 
-
-
-
-
-
-
 od 2 punk jest advert I description oba w 2 , w troojce jest cry part time etc I salaries, w 4 quiz questions dummy I w 5 extra space dummy with submit, w 3 submit teraz 
 
 3 fetch employers for dropdown
 4 save to redux job_title_id and employer_id on TOP of the form
-
-
 
 
 {
@@ -78,29 +81,15 @@ WSZYSTKIE UNDERSCORE
 DATEPICKER Z MATERIAL_UI NA PEWNO!!!! (albo cos co wyglada ladnie jak dziala z redux-formem.)
 
 
-
-
-
 job_title_id & employer suck out
 
 Zostac w admin app zrob section ‘activeCampaigns’ 
-
-
-
-
-
-
 
 
 od 2 punk jest advert I description oba w 2 , w troojce jest cry part time etc I salaries, w 4 quiz questions dummy I w 5 extra space dummy with submit, w 3 submit teraz 
 
 3 fetch employers for dropdown
 4 save to redux job_title_id and employer_id on TOP of the form
-
-
-
-
-
 
 {
   ‘campaign_name’:’mom jobAdvertTitle’,
@@ -119,42 +108,34 @@ PAGE 5 IS DUMMY FOR QUIZ
 WSZYSTKIE UNDERSCORE
 }
 
-
-
-
-
-
-
 FILTER OPTION FOR JOBSEEKER
 
-
 FILTER OPTION FOR JOBSEEKER*/
-
-
-
-
-
-
-
-
-
-
 
 
   jobSectorChosen(){
 
     if(this.props.nested_job_sector_id){
+
+  
+
+      //this.props.dispatch(change('admin', 'campaign_name', 'Bob'));
+
+
+
+
+
       let chosenJobSectorHasJobTitles = this.props.nestedJobSectors.filter(el=>el.sector_id === this.props.nested_job_sector_id)[0].job_titles
       if(chosenJobSectorHasJobTitles){
         return( 
           <div>
-            <Field name="job_title_list" component={SelectField} 
+            <Field name="job_id" component={SelectField} 
                 selectedMenuItemStyle={{color: "#00BCD4"}} 
                 underlineStyle={{display: "none"}} errorStyle={{display: "none"}} 
                 hintText="Job Title">
             {this.jobTitleSelector()}
             </Field>   
-            <Field name="job_title_list" component={renderError} />
+            <Field name="job_id" component={renderError} />
           </div>
         )
       }
@@ -197,6 +178,9 @@ FILTER OPTION FOR JOBSEEKER*/
 
   render(){
     const { handleSubmit, previousPage } = this.props
+    if(this.props.company_id){
+      this.getLatAndLngOfCompany()
+    }
     return (
       <form onSubmit={handleSubmit}>
           <Row center="xs" style={{height: 360}}>

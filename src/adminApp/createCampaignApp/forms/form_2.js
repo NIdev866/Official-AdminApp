@@ -15,14 +15,14 @@ class FormFirstPage extends Component{
           <Row center="xs" style={{height: 360}}>
             <Col xs={10} sm={10} md={3} lg={5}>
                 <Field
-                  name="jobAdvertTitle"
+                  name="campaign_name"
                   type="text"
                   component={renderField}
-                  label="Job Advert Title"
+                  label="Job Campaign Name"
                 />
 
                 <Field
-                  name="jobDescription"
+                  name="job_description"
                   type="text"
                   component={renderDescriptionBox}
                   label="Job Description"

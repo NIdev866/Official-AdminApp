@@ -27,7 +27,7 @@ class PerHourChosen extends Component{
       £
         <span style={{display: "inline-block", width: "150px", marginLeft: "5px"}}>
         <Field
-          name="salaryPerHour"
+          name="salary"
           type="text"
           component={renderField}
           label="Enter salary"
@@ -46,7 +46,7 @@ class WeeklyChosen extends Component{
       £
         <span style={{display: "inline-block", width: "150px", marginLeft: "5px"}}>
         <Field
-          name="salaryWeekly"
+          name="salary"
           type="text"
           component={renderField}
           label="Enter salary"
@@ -65,7 +65,7 @@ class MonthlyChosen extends Component{
       £
         <span style={{display: "inline-block", width: "150px", marginLeft: "5px"}}>
         <Field
-          name="salaryMonthly"
+          name="salary"
           type="text"
           component={renderField}
           label="Enter salary"
@@ -84,7 +84,7 @@ class AnnuallyChosen extends Component{
       £
         <span style={{display: "inline-block", width: "150px", marginLeft: "5px"}}>
         <Field
-          name="salaryAnnually"
+          name="salary"
           type="text"
           component={renderField}
           label="Enter salary"
@@ -107,16 +107,16 @@ class FormFirstPage extends Component{
   }
 
   salaryTypeChosen(){
-    if(this.props.salaryType === "annually"){
+    if(this.props.salary_type === "annually"){
       return <AnnuallyChosen/>
     }
-    else if(this.props.salaryType === "monthly"){
+    else if(this.props.salary_type === "monthly"){
         return <MonthlyChosen/>
     }
-    else if(this.props.salaryType === "weekly"){
+    else if(this.props.salary_type === "weekly"){
       return <WeeklyChosen/>
     }
-    else if(this.props.salaryType === "perHour"){
+    else if(this.props.salary_type === "perHour"){
       return <PerHourChosen/>
     }
   }
@@ -128,7 +128,7 @@ class FormFirstPage extends Component{
       <form onSubmit={handleSubmit}>
         <Row center="xs" style={{height: 360}}>
           <Col xs={10} sm={10} md={3} lg={5}>
-            <Field name="jobType" component={SelectField} 
+            <Field name="job_type" component={SelectField} 
                 selectedMenuItemStyle={{color: "#00BCD4"}} 
                 underlineStyle={{display: "none"}} errorStyle={{display: "none"}} 
                 hintText="Job type">
@@ -136,9 +136,9 @@ class FormFirstPage extends Component{
               <MenuItem value="Part-time" primaryText="Part-time"/>
               <MenuItem value="Temporary" primaryText="Temporary"/>
             </Field>
-            <Field name="jobType" component={renderError} />
+            <Field name="job_type" component={renderError} />
                         <div style={{marginTop: "30px", marginBottom: "30px"}}>
-              <Field name="salaryType" component={SelectField} 
+              <Field name="salary_type" component={SelectField} 
                   selectedMenuItemStyle={{color: "#00BCD4"}} 
                   underlineStyle={{display: "none"}} errorStyle={{display: "none"}} 
                   hintText="Salary type">
@@ -147,7 +147,7 @@ class FormFirstPage extends Component{
                 <MenuItem value="weekly" primaryText="Weekly"/>
                 <MenuItem value="perHour" primaryText="Per Hour"/>
               </Field>
-              <Field name="salaryType" component={renderError} />
+              <Field name="salary_type" component={renderError} />
             </div>
             {this.salaryTypeChosen()}
           </Col>
@@ -188,9 +188,9 @@ FormFirstPage = reduxForm({
 const selector = formValueSelector('admin') // <-- same as form name
 FormFirstPage = connect(
   state => {
-    const salaryType = selector(state, 'salaryType')
+    const salary_type = selector(state, 'salary_type')
     return {
-      salaryType
+      salary_type
     }
   }
 )(FormFirstPage)
