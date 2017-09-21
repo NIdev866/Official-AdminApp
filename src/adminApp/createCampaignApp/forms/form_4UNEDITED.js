@@ -6,19 +6,14 @@ import styles from './form_material_styles'
 import { Row, Col } from 'react-flexbox-grid'
 import { RadioButtonGroup, SelectField } from "redux-form-material-ui"
 import MenuItem from 'material-ui/MenuItem'
-import { connect } from 'react-redux'
-import submit from "./submit"
+import { connect } from "react-redux"
 import renderField from './renderField'
-
 
 const renderError = ({ input, meta: { touched, error } }) => (
   <div style={{color: "red"}}>
     {touched ? <span>{error}</span> : ""}
   </div>
 )
-
-
-
 
 class PerHourChosen extends Component{
   render(){
@@ -96,16 +91,11 @@ class AnnuallyChosen extends Component{
   }
 }
 
-
-
-
-class FormFirstPage extends Component{
-
+class ParentSalary extends Component{
   constructor(props){
     super(props)
     this.salaryTypeChosen = this.salaryTypeChosen.bind(this)
   }
-
   salaryTypeChosen(){
     if(this.props.salaryType === "annually"){
       return <AnnuallyChosen/>
@@ -120,24 +110,13 @@ class FormFirstPage extends Component{
       return <PerHourChosen/>
     }
   }
-
-
   render(){
     const { handleSubmit, previousPage } = this.props
     return (
       <form onSubmit={handleSubmit}>
         <Row center="xs" style={{height: 360}}>
           <Col xs={10} sm={10} md={3} lg={5}>
-            <Field name="jobType" component={SelectField} 
-                selectedMenuItemStyle={{color: "#00BCD4"}} 
-                underlineStyle={{display: "none"}} errorStyle={{display: "none"}} 
-                hintText="Job type">
-              <MenuItem value="Full-time" primaryText="Full-time"/>
-              <MenuItem value="Part-time" primaryText="Part-time"/>
-              <MenuItem value="Temporary" primaryText="Temporary"/>
-            </Field>
-            <Field name="jobType" component={renderError} />
-                        <div style={{marginTop: "30px", marginBottom: "30px"}}>
+            <div style={{marginTop: "30px", marginBottom: "30px"}}>
               <Field name="salaryType" component={SelectField} 
                   selectedMenuItemStyle={{color: "#00BCD4"}} 
                   underlineStyle={{display: "none"}} errorStyle={{display: "none"}} 
@@ -162,7 +141,7 @@ class FormFirstPage extends Component{
           />
           <RaisedButton
             type="submit"
-            label="SUBMIT"
+            label="Next"
             primary={true}
             style={styles.raisedButtonStyle}
           />
@@ -172,27 +151,21 @@ class FormFirstPage extends Component{
   }
 }
 
-
-
-
-
-
-FormFirstPage = reduxForm({
+ParentSalary = reduxForm({
   form: 'admin',
   destroyOnUnmount: false, // <------ preserve form data
   forceUnregisterOnUnmount: true, // <------ unregister fields on unmount
-  onSubmit: submit,
   validate
-})(FormFirstPage)
+})(ParentSalary)
 
 const selector = formValueSelector('admin') // <-- same as form name
-FormFirstPage = connect(
+ParentSalary = connect(
   state => {
     const salaryType = selector(state, 'salaryType')
     return {
       salaryType
     }
   }
-)(FormFirstPage)
+)(ParentSalary)
 
-export default FormFirstPage
+export default ParentSalary

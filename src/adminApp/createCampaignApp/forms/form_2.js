@@ -1,6 +1,7 @@
 import React, { Component} from 'react'
 import { Field, reduxForm } from 'redux-form'
 import validate from './validate'
+import renderField from './renderField'
 import renderDescriptionBox from './renderDescriptionBox'
 import RaisedButton from 'material-ui/RaisedButton'
 import styles from './form_material_styles'
@@ -13,6 +14,13 @@ class FormFirstPage extends Component{
       <form onSubmit={handleSubmit}>
           <Row center="xs" style={{height: 360}}>
             <Col xs={10} sm={10} md={3} lg={5}>
+                <Field
+                  name="jobAdvertTitle"
+                  type="text"
+                  component={renderField}
+                  label="Job Advert Title"
+                />
+
                 <Field
                   name="jobDescription"
                   type="text"

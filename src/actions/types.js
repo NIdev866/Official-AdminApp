@@ -6,3 +6,4 @@ export const AUTH_ERROR = 'auth_error';
 export const CLEAR_AUTH_ERROR = "clear_auth_error"
 
 export const NESTED_JOB_SECTORS = "nested_job_sectors"
+export const COMPANIES = 'companies'

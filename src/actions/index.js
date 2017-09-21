@@ -8,7 +8,8 @@ import {
   UNAUTH_USER, 
   AUTH_ERROR,
   CLEAR_AUTH_ERROR,
-  NESTED_JOB_SECTORS
+  NESTED_JOB_SECTORS,
+  COMPANIES
 } from './types.js';
 
 
@@ -33,6 +34,19 @@ export function fetchNestedJobSectors(){
     axios.get(`${ROOT_URL}/create-campaign/get-nested-job-sectors`)
       .then(response => {
         dispatch({ type: NESTED_JOB_SECTORS, payload: response.data });
+      })
+      .catch((err)=>{
+        console.log(err)
+
+      })
+  }
+}
+
+export function fetchCompanies(){
+  return function(dispatch){
+    axios.get(`${ROOT_URL}/admin/companies`)
+      .then(response => {
+        dispatch({ type: COMPANIES, payload: response.data });
       })
       .catch((err)=>{
         console.log(err)
