@@ -28,13 +28,14 @@ class FormFirstPage extends Component{
 
   renderCompanies(){
     if(this.props.companies){
+
+      console.log(this.props.companies)
+
       return this.props.companies.map((nestedCompany)=>{
         return <MenuItem key={nestedCompany.company_id} value={nestedCompany.company_id} primaryText={nestedCompany.company_name}/>
       })
     }
   }
-  //funkcja ktora bieze z redux storu, wybrana companies_id i na tej podstawie filter do wyciagniecia lat i lng z tej comapanies i zapisac w redux-form lat,lng
-
 
 
   getLatAndLngOfCompany(){
@@ -48,81 +49,9 @@ class FormFirstPage extends Component{
     }
   }
 
-
-/*job_title_id & employer suck out
-
-Zostac w admin app zrob section ‘activeCampaigns’ 
-
-
-od 2 punk jest advert I description oba w 2 , w troojce jest cry part time etc I salaries, w 4 quiz questions dummy I w 5 extra space dummy with submit, w 3 submit teraz 
-
-3 fetch employers for dropdown
-4 save to redux job_title_id and employer_id on TOP of the form
-
-
-{
-  ‘campaign_name’:’mom jobAdvertTitle’,
-  ‘company_id’:’25’
-, ‘job_id’:’mom job_title_list’,
-  ‘job_description’:’blabal’
-  ‘job_type’:’Part-time’.  (Enum - in db has a choice has to be the same)
-  ‘salary_type’:’tea enum annually etc’
-  ‘salary’:’moo salaryAnually HAS TO BE THE SAME ALL THE TIME’
-  ‘lat’:’z db’,
-  ‘lng’:’z database’,
-  ’job_start_date’:’date picker’, both in page 4
-  ‘job_advert_finish_date’:’datepicker’ both in page 4
-PAGE 4 IS 2 TIME PICKERS
-PAGE 5 IS DUMMY FOR QUIZ
-WSZYSTKIE UNDERSCORE
-}
-
-
-DATEPICKER Z MATERIAL_UI NA PEWNO!!!! (albo cos co wyglada ladnie jak dziala z redux-formem.)
-
-
-job_title_id & employer suck out
-
-Zostac w admin app zrob section ‘activeCampaigns’ 
-
-
-od 2 punk jest advert I description oba w 2 , w troojce jest cry part time etc I salaries, w 4 quiz questions dummy I w 5 extra space dummy with submit, w 3 submit teraz 
-
-3 fetch employers for dropdown
-4 save to redux job_title_id and employer_id on TOP of the form
-
-{
-  ‘campaign_name’:’mom jobAdvertTitle’,
-  ‘company_id’:’25’
-, ‘job_id’:’mom job_title_list’,
-  ‘job_description’:’blabal’
-  ‘job_type’:’Part-time’.  (Enum - in db has a choice has to be the same)
-  ‘salary_type’:’tea enum annually etc’
-  ‘salary’:’moo salaryAnually HAS TO BE THE SAME ALL THE TIME’
-  ‘lat’:’z db’,
-  ‘lng’:’z database’,
-  ’job_start_date’:’date picker’, both in page 4
-  ‘job_advert_finish_date’:’datepicker’ both in page 4
-PAGE 4 IS 2 TIME PICKERS
-PAGE 5 IS DUMMY FOR QUIZ
-WSZYSTKIE UNDERSCORE
-}
-
-FILTER OPTION FOR JOBSEEKER
-
-FILTER OPTION FOR JOBSEEKER*/
-
-
   jobSectorChosen(){
 
     if(this.props.nested_job_sector_id){
-
-  
-
-      //this.props.dispatch(change('admin', 'campaign_name', 'Bob'));
-
-
-
 
 
       let chosenJobSectorHasJobTitles = this.props.nestedJobSectors.filter(el=>el.sector_id === this.props.nested_job_sector_id)[0].job_titles
@@ -171,7 +100,7 @@ FILTER OPTION FOR JOBSEEKER*/
     })
   }
 
-  componentWillMount(){
+  componentDidMount(){
     this.props.fetchCompanies()
     this.props.fetchNestedJobSectors()
   }

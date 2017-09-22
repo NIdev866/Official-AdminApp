@@ -9,7 +9,8 @@ import {
   AUTH_ERROR,
   CLEAR_AUTH_ERROR,
   NESTED_JOB_SECTORS,
-  COMPANIES
+  COMPANIES,
+  ALL_CAMPAIGNS
 } from './types.js';
 
 
@@ -21,10 +22,6 @@ export function submitBankDetails(){
     type: SUBMIT_BANK_DETAILS
   }
 }
-
-
-
-
 
 
 
@@ -47,6 +44,23 @@ export function fetchCompanies(){
     axios.get(`${ROOT_URL}/admin/companies`)
       .then(response => {
         dispatch({ type: COMPANIES, payload: response.data });
+      })
+      .catch((err)=>{
+        console.log(err)
+
+      })
+  }
+}
+
+
+
+
+export function fetchAllCampaigns(){
+  return function(dispatch){
+    axios.get(`${ROOT_URL}/campaigns/all`)
+      .then(response => {
+        console.log('BLAHHHH')
+        dispatch({ type: ALL_CAMPAIGNS, payload: response.data });
       })
       .catch((err)=>{
         console.log(err)

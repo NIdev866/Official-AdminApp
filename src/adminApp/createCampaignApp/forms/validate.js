@@ -1,5 +1,14 @@
 const validate = values => {
   const errors = {}
+  if (!values.job_id){
+    errors.job_id = 'Required'
+  }
+  if (!values.company_id){
+    errors.company_id = 'Required'
+  }
+  if (!values.nested_job_sector_id){
+    errors.nested_job_sector_id = 'Required'
+  }
   if (!values.campaign_name) {
     errors.campaign_name = 'Required'
   }else if(values.campaign_name.length > 30) {
@@ -9,6 +18,10 @@ const validate = values => {
     errors.job_description = 'Required'
   }else if(values.job_description.length > 100) {
     errors.job_description = 'Description too long'
+  }  if (!values.location) {
+    errors.location = 'Required'
+  }else if(values.location.length > 50) {
+    errors.location = 'Description too long'
   }
   if (!values.job_sector_id){
     errors.job_sector_id = 'Required'

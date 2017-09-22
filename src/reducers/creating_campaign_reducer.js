@@ -1,6 +1,6 @@
 import { 
   NESTED_JOB_SECTORS,
-  COMPANIES
+  COMPANIES,
 } from '../actions/types';
 
 export default function(state = {}, action) {

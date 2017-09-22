@@ -70,22 +70,9 @@ class formFive extends Component{
       <form onSubmit={handleSubmit}>
         <Row center="xs" style={{height: 360}}>
           <Col xs={10} sm={10} md={3} lg={5}>
-            <Field
-              name="jobPostcode"
-              type="text"
-              component={renderField}
-              label="Job Postcode"
-            />
-            <div style={{marginTop: "30px", zIndex: "999999"}}>
-              <Field
-                name="startDate"
-                type="text"
-                component={DatePickerParent}
-                format={null}
-                autoOk={true}
-                label="Start date"
-              />
-            </div>
+
+          <h1>QUIZ</h1>
+
           </Col>
         </Row>
         <Row center="xs">

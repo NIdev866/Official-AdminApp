@@ -20,12 +20,17 @@ class FormFirstPage extends Component{
                   component={renderField}
                   label="Job Campaign Name"
                 />
-
                 <Field
                   name="job_description"
                   type="text"
                   component={renderDescriptionBox}
                   label="Job Description"
+                />
+                <Field
+                  name="location"
+                  type="text"
+                  component={renderField}
+                  label="Job Location"
                 />
             </Col>
           </Row>

@@ -65,8 +65,7 @@ class CreateCampaignParent extends Component {
               {page === 3 && 
                 <FormThirdPage 
                   previousPage={this.previousPage}
-                  //onSubmit={this.nextPage} 
-                  onSubmit={onSubmit} 
+                  onSubmit={this.nextPage} 
                 />}
               {page === 4 && 
                 <FormFourthPage 
@@ -76,7 +75,7 @@ class CreateCampaignParent extends Component {
               {page === 5 && 
                 <FormFifthPage 
                   previousPage={this.previousPage}
-                  //onSubmit={onSubmit} 
+                  onSubmit={onSubmit} 
                 />}
             </Animation>
           </Col>

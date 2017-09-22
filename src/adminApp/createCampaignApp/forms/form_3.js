@@ -7,7 +7,6 @@ import { Row, Col } from 'react-flexbox-grid'
 import { RadioButtonGroup, SelectField } from "redux-form-material-ui"
 import MenuItem from 'material-ui/MenuItem'
 import { connect } from 'react-redux'
-import submit from "./submit"
 import renderField from './renderField'
 
 
@@ -39,6 +38,25 @@ class PerHourChosen extends Component{
   }
 }
 
+class DailyChosen extends Component{
+  render(){
+    return(
+      <span>
+      £
+        <span style={{display: "inline-block", width: "150px", marginLeft: "5px"}}>
+        <Field
+          name="salary"
+          type="text"
+          component={renderField}
+          label="Enter salary"
+        />
+        </span>
+        Per Day
+      </span>
+    )
+  }
+}
+
 class WeeklyChosen extends Component{
   render(){
     return(
@@ -58,7 +76,7 @@ class WeeklyChosen extends Component{
   }
 }
 
-class MonthlyChosen extends Component{
+class PerAnnumChosen extends Component{
   render(){
     return(
       <span>
@@ -71,26 +89,7 @@ class MonthlyChosen extends Component{
           label="Enter salary"
         />
         </span>
-        Per Month
-      </span>
-    )
-  }
-}
-
-class AnnuallyChosen extends Component{
-  render(){
-    return(
-      <span>
-      £
-        <span style={{display: "inline-block", width: "150px", marginLeft: "5px"}}>
-        <Field
-          name="salary"
-          type="text"
-          component={renderField}
-          label="Enter salary"
-        />
-        </span>
-        Per Year
+        Per Annum
       </span>
     )
   }
@@ -107,16 +106,16 @@ class FormFirstPage extends Component{
   }
 
   salaryTypeChosen(){
-    if(this.props.salary_type === "annually"){
-      return <AnnuallyChosen/>
+    if(this.props.salary_type === "PER_ANNUM"){
+      return <PerAnnumChosen/>
     }
-    else if(this.props.salary_type === "monthly"){
-        return <MonthlyChosen/>
+    else if(this.props.salary_type === "PER_WEEK"){
+        return <WeeklyChosen/>
     }
-    else if(this.props.salary_type === "weekly"){
-      return <WeeklyChosen/>
+    else if(this.props.salary_type === "PER_DAY"){
+      return <DailyChosen/>
     }
-    else if(this.props.salary_type === "perHour"){
+    else if(this.props.salary_type === "PER_HOUR"){
       return <PerHourChosen/>
     }
   }
@@ -132,9 +131,10 @@ class FormFirstPage extends Component{
                 selectedMenuItemStyle={{color: "#00BCD4"}} 
                 underlineStyle={{display: "none"}} errorStyle={{display: "none"}} 
                 hintText="Job type">
-              <MenuItem value="Full-time" primaryText="Full-time"/>
-              <MenuItem value="Part-time" primaryText="Part-time"/>
-              <MenuItem value="Temporary" primaryText="Temporary"/>
+              <MenuItem value="FULL_TIME" primaryText="Full-time"/>
+              <MenuItem value="PART_TIME" primaryText="Part-time"/>
+              <MenuItem value="TEMPORARY" primaryText="Temporary"/>
+              <MenuItem value="CONTRACT" primaryText="Contract"/>
             </Field>
             <Field name="job_type" component={renderError} />
                         <div style={{marginTop: "30px", marginBottom: "30px"}}>
@@ -142,10 +142,10 @@ class FormFirstPage extends Component{
                   selectedMenuItemStyle={{color: "#00BCD4"}} 
                   underlineStyle={{display: "none"}} errorStyle={{display: "none"}} 
                   hintText="Salary type">
-                <MenuItem value="annually" primaryText="Annually"/>
-                <MenuItem value="monthly" primaryText="Monthly"/>
-                <MenuItem value="weekly" primaryText="Weekly"/>
-                <MenuItem value="perHour" primaryText="Per Hour"/>
+                <MenuItem value="PER_ANNUM" primaryText="Per Annum"/>
+                <MenuItem value="PER_WEEK" primaryText="Per Week"/>
+                <MenuItem value="PER_DAY" primaryText="Per Day"/>
+                <MenuItem value="PER_HOUR" primaryText="Per Hour"/>
               </Field>
               <Field name="salary_type" component={renderError} />
             </div>
@@ -162,7 +162,7 @@ class FormFirstPage extends Component{
           />
           <RaisedButton
             type="submit"
-            label="SUBMIT"
+            label="Next"
             primary={true}
             style={styles.raisedButtonStyle}
           />
@@ -181,7 +181,6 @@ FormFirstPage = reduxForm({
   form: 'admin',
   destroyOnUnmount: false, // <------ preserve form data
   forceUnregisterOnUnmount: true, // <------ unregister fields on unmount
-  onSubmit: submit,
   validate
 })(FormFirstPage)
 
