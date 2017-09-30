@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-class ClientsTabParent extends Component {
+class ClientsTabParent extends Component {  
   render() {
     return (
       <div>CLIETNSSSS</div>

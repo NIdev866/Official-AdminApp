@@ -7,19 +7,13 @@ import { BrowserRouter, Route , Switch, Redirect } from 'react-router-dom';
 import promise from 'redux-promise';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
 import reducers from './reducers';
-import DesktopAdminParent from './adminApp/desktopAdminParent';
-import MobileAdminParent from './adminApp/mobileAdminParent';
 import injectTapEventPlugin from 'react-tap-event-plugin'
 import reduxThunk from 'redux-thunk';
-
-
-
 import CreateCampaignParent from "./adminApp/createCampaignApp/createCampaignParent"
 
 
+import AdminParent from "./adminApp/adminParent"
 
-
-var deviceDetect = require('device-detect')();
 
 
 
@@ -45,10 +39,7 @@ ReactDOM.render(
       <BrowserRouter>
         <div>
           <Switch>
-            <Route exact path="/" component={
-              deviceDetect.device == "Windows" || 
-              deviceDetect.device == "Macintosh" ||
-              deviceDetect.device == "Linux" ? MobileAdminParent : MobileAdminParent /*MobileAdminParent*/} />
+            <Route exact path="/" component={AdminParent} />
             <Route path='/hue' component={Dupa} />
             <Route path="/create-campaign" component={CreateCampaignParent} />
           </Switch>
