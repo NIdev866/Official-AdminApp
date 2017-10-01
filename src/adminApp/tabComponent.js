@@ -76,8 +76,8 @@ class TabComponent extends Component {
       wholeComponentStyle = {
         borderBottom: "1px solid #CCCCCC", 
         position: "relative", 
-        width: "100vw", 
-        margin: "0 auto", 
+        width: "90%", 
+        margin: "0 30px", 
         height: '50px'
       }
     }
@@ -112,14 +112,18 @@ class TabComponent extends Component {
             index={this.state.slideIndex}
             onChangeIndex={this.handleSwipeChange}
           >
-
-            {/*this.handleWhichTab()*/}
-
-            <WorkforceTabParent workforceClick={this.props.workforceClick}/>
-            <ApplicantsTabParent applicantsClick={this.props.applicantsClick}/>
-            <ClientsTabParent clientsClick={this.props.clientsClick}/>
-            <StatisticsTabParent statisticsClick={this.props.statisticsClick}/>
-
+            <div style={{padding: '0 10px', width: 'calc(100% - 20px)'}}>
+              <WorkforceTabParent workforceClick={this.props.workforceClick}/>
+            </div>
+            <div style={{padding: '0 10px', width: 'calc(100% - 20px)'}}>
+              <ApplicantsTabParent applicantsClick={this.props.applicantsClick}/>
+            </div>
+            <div style={{padding: '0 10px', width: 'calc(100% - 20px)'}}>
+              <ClientsTabParent clientsClick={this.props.clientsClick}/>
+            </div>
+            <div style={{padding: '0 10px', width: 'calc(100% - 20px)'}}>
+              <StatisticsTabParent statisticsClick={this.props.statisticsClick}/>
+            </div>
           </SwipeableViews>
 
         </div>

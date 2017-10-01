@@ -65,7 +65,6 @@ class AdminParent extends Component {
     }
   }
   applicantsClick(){
-    console.log("HIUUUS")
     if(this.state.slider == "closed"){
       this.setState({tabOpen: "applicants", slider: "open"})
     }
@@ -276,7 +275,7 @@ class AdminParent extends Component {
           </div>
         }
         {this.state.screenWidth > 700 &&
-          <div style={{width: "40%", float: "right"}}>
+          <div style={{width: "calc(40% - 1px)", float: "right", borderLeft: '1px solid grey'}}>
             <TabComponent
               slider={this.state.slider}
               workforceClick={this.workforceClick}

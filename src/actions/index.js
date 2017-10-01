@@ -1,24 +1,44 @@
 import React from 'react';
 import axios from 'axios';
+import _ from 'lodash'
 
 import { SUBMIT_BANK_DETAILS } from './types.js';
 
-import { 
-  AUTH_USER, 
-  UNAUTH_USER, 
+import {
+  AUTH_USER,
+  UNAUTH_USER,
   AUTH_ERROR,
   CLEAR_AUTH_ERROR,
   NESTED_JOB_SECTORS,
   COMPANIES,
-  ALL_CAMPAIGNS
+  ALL_CAMPAIGNS,
+  ALL_JOBSEEKERS_BY_CAMPAIGN,
+  UPDATE_JOBSEEKERSTATUS_TO_SELECTED,
+  NEST_JOBSEEKERS_INTO_CAMPAIGNS,
+  CLEAR_ALL_JOBSEEKERS_STATE
 } from './types.js';
+
+
+
+/*============================================
+
+REASON FOR SUCH SHORT SYNTAX ON ACTIONS:
+
+
+in the main index.js file 'promise' middleware from
+'redux-promise' is used which allows for not having
+to use 'then' and 'catch' of typical promise and
+does everything magically in the background.
+
+
+=============================================*/
 
 
 
 const ROOT_URL = 'http://localhost:3000';
 
 export function submitBankDetails(){
-  return { 
+  return {
     type: SUBMIT_BANK_DETAILS
   }
 }
@@ -52,6 +72,60 @@ export function fetchCompanies(){
   }
 }
 
+/*export function fetchAllJobseekersByCampaignId(campaign_id){
+  return function(dispatch){
+    const request = axios.get(`${ROOT_URL}/campaigns/jobseekers/${campaign_id}`)
+    dispatch({ type: ALL_JOBSEEKERS_BY_CAMPAIGN, payload: request });
+  }
+}*/
+
+// export function fetchAllJobseekersByCampaignId(campaign_id){
+//   //console.log('FROM ACTION FOR CAMPAIGN ' + campaign_id);
+//   return function(dispatch){
+
+//     axios.get(`${ROOT_URL}/campaigns/jobseekers/${campaign_id}`)
+//       .then(response => {
+//         //TO DZIALA, POKAZUJE ZE JEST ZAWSZE TYLKO JEDEN LUB 2 JOBSEEKEROW, PER CAMPAIGN
+//         //response.data.map(jobseeker=>console.log('FROM PROMISE IN ACTION FOR CAMPAIGN: ' + jobseeker.campaign_id))
+      
+//         dispatch({ type: ALL_JOBSEEKERS_BY_CAMPAIGN, payload: response.data });
+//       })
+//       .catch((err)=>{
+//         console.log('FROM ACTION: ' + err)
+//       })
+//   }
+// }
+
+
+
+
+
+
+/*export const updateJobseekerJobStatus = ({job_status, jobseeker_id, campaign_id})=>{
+
+  //return axios.put(`${ROOT_URL}/jobseeker/select`, {job_status: job_status, params:{jobseeker_id: jobseeker_id, campaign_id: campaign_id}})
+  return axios.put(`${ROOT_URL}/jobseeker/select?jobseeker_id=${jobseeker_id}&campaign_id=${campaign_id}`, {job_status})
+  .then((res)=>{
+    console.log(res)
+  })
+  .catch((err)=>{
+    console.log({'ERROR FROM ACTION': err})
+  })
+}*/
+
+
+export const updateJobseekerJobStatus = ({job_status, jobseeker_id, campaign_id})=>(
+  dispatch=>dispatch({ type: UPDATE_JOBSEEKERSTATUS_TO_SELECTED, 
+  payload: axios.put(`${ROOT_URL}/jobseeker/select?jobseeker_id=${jobseeker_id}&campaign_id=${campaign_id}`, {job_status}) })
+)
+
+
+
+
+
+
+
+
 
 
 
@@ -59,7 +133,6 @@ export function fetchAllCampaigns(){
   return function(dispatch){
     axios.get(`${ROOT_URL}/campaigns/all`)
       .then(response => {
-        console.log('BLAHHHH')
         dispatch({ type: ALL_CAMPAIGNS, payload: response.data });
       })
       .catch((err)=>{
@@ -69,6 +142,23 @@ export function fetchAllCampaigns(){
   }
 }
 
+export const fetchAllJobseekersByCampaignId = campaign_id=>(
+  dispatch=>dispatch({ type: ALL_JOBSEEKERS_BY_CAMPAIGN, 
+  payload: axios.get(`${ROOT_URL}/campaigns/jobseekers/${campaign_id}`) })
+)
+
+export const nestJobseekersIntoCampaigns = ()=>{
+  return {
+    type: NEST_JOBSEEKERS_INTO_CAMPAIGNS
+  }
+}
+
+
+export const clearAllJobseekersState = ()=>{
+  return {
+    type: CLEAR_ALL_JOBSEEKERS_STATE
+  }
+}
 
 
 
