@@ -71,7 +71,9 @@ class formFive extends Component{
         <Row center="xs" style={{height: 360}}>
           <Col xs={10} sm={10} md={3} lg={5}>
 
-          <h1>QUIZ</h1>
+          <h1>FINALIZATION</h1>
+
+          <p>After submitting, applicants will automatically be able to apply for this position.</p>
 
           </Col>
         </Row>

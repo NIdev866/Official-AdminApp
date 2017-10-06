@@ -10,6 +10,11 @@ export const NESTED_JOB_SECTORS = "nested_job_sectors"
 export const COMPANIES = 'companies'
 
 export const ALL_CAMPAIGNS = 'all_campaigns'
-export const UPDATE_JOBSEEKERSTATUS_TO_SELECTED = 'update_jobseekerstatus_to_selected'
 export const NEST_JOBSEEKERS_INTO_CAMPAIGNS = 'nest_jobseekers_into_campaigns'
 export const CLEAR_ALL_JOBSEEKERS_STATE = 'clear_all_jobseekers_state'
+
+
+export const UPDATE_JOBSEEKERSTATUS_TO_SELECTED = 'update_jobseekerstatus_to_selected'
+export const LOCALLY_UPDATE_JOBSEEKERSTATUS_TO_SELECTED = 'locally_update_jobseekerstatus_to_selected'
+
+export const WORKFORCE = 'workforce'

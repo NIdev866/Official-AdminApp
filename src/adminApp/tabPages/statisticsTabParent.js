@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 class StatisticsTabParent extends Component {
   render() {
     return (
-      <div>STATISISTCS</div>
+      <div style={{marginTop: '30px'}} >FEATURE COMING SOON</div>
     )
   }
 }

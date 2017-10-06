@@ -14,8 +14,10 @@ import {
   ALL_CAMPAIGNS,
   ALL_JOBSEEKERS_BY_CAMPAIGN,
   UPDATE_JOBSEEKERSTATUS_TO_SELECTED,
+  LOCALLY_UPDATE_JOBSEEKERSTATUS_TO_SELECTED,
   NEST_JOBSEEKERS_INTO_CAMPAIGNS,
-  CLEAR_ALL_JOBSEEKERS_STATE
+  CLEAR_ALL_JOBSEEKERS_STATE,
+  WORKFORCE
 } from './types.js';
 
 
@@ -35,20 +37,17 @@ does everything magically in the background.
 
 
 
+
+
 const ROOT_URL = 'http://localhost:3000';
 
-export function submitBankDetails(){
-  return {
-    type: SUBMIT_BANK_DETAILS
-  }
-}
 
 
 
 
 export function fetchNestedJobSectors(){
   return function(dispatch){
-    axios.get(`${ROOT_URL}/create-campaign/get-nested-job-sectors`)
+    axios.get(`${ROOT_URL}/admin/get-nested-job-sectors`)
       .then(response => {
         dispatch({ type: NESTED_JOB_SECTORS, payload: response.data });
       })
@@ -58,6 +57,62 @@ export function fetchNestedJobSectors(){
       })
   }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+export function fetchWorkforce(){
+  return function(dispatch){
+    axios.get(`${ROOT_URL}/workforce/all`)
+      .then(response => {
+        dispatch({ type: WORKFORCE, payload: response.data });
+      })
+      .catch((err)=>{
+        console.log(err)
+
+      })
+  }
+}
+
+
+
+//'GET admin/workforce/all'
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 export function fetchCompanies(){
   return function(dispatch){
@@ -72,61 +127,11 @@ export function fetchCompanies(){
   }
 }
 
-/*export function fetchAllJobseekersByCampaignId(campaign_id){
-  return function(dispatch){
-    const request = axios.get(`${ROOT_URL}/campaigns/jobseekers/${campaign_id}`)
-    dispatch({ type: ALL_JOBSEEKERS_BY_CAMPAIGN, payload: request });
-  }
-}*/
-
-// export function fetchAllJobseekersByCampaignId(campaign_id){
-//   //console.log('FROM ACTION FOR CAMPAIGN ' + campaign_id);
-//   return function(dispatch){
-
-//     axios.get(`${ROOT_URL}/campaigns/jobseekers/${campaign_id}`)
-//       .then(response => {
-//         //TO DZIALA, POKAZUJE ZE JEST ZAWSZE TYLKO JEDEN LUB 2 JOBSEEKEROW, PER CAMPAIGN
-//         //response.data.map(jobseeker=>console.log('FROM PROMISE IN ACTION FOR CAMPAIGN: ' + jobseeker.campaign_id))
-      
-//         dispatch({ type: ALL_JOBSEEKERS_BY_CAMPAIGN, payload: response.data });
-//       })
-//       .catch((err)=>{
-//         console.log('FROM ACTION: ' + err)
-//       })
-//   }
-// }
-
-
-
-
-
-
-/*export const updateJobseekerJobStatus = ({job_status, jobseeker_id, campaign_id})=>{
-
-  //return axios.put(`${ROOT_URL}/jobseeker/select`, {job_status: job_status, params:{jobseeker_id: jobseeker_id, campaign_id: campaign_id}})
-  return axios.put(`${ROOT_URL}/jobseeker/select?jobseeker_id=${jobseeker_id}&campaign_id=${campaign_id}`, {job_status})
-  .then((res)=>{
-    console.log(res)
-  })
-  .catch((err)=>{
-    console.log({'ERROR FROM ACTION': err})
-  })
-}*/
-
 
 export const updateJobseekerJobStatus = ({job_status, jobseeker_id, campaign_id})=>(
   dispatch=>dispatch({ type: UPDATE_JOBSEEKERSTATUS_TO_SELECTED, 
   payload: axios.put(`${ROOT_URL}/jobseeker/select?jobseeker_id=${jobseeker_id}&campaign_id=${campaign_id}`, {job_status}) })
 )
-
-
-
-
-
-
-
-
-
 
 
 export function fetchAllCampaigns(){
@@ -158,61 +163,4 @@ export const clearAllJobseekersState = ()=>{
   return {
     type: CLEAR_ALL_JOBSEEKERS_STATE
   }
-}
-
-
-
-
-
-
-
-
-
-export function signinUser({ email, password }) {
-  return function(dispatch) {
-    axios.post(`${ROOT_URL}/signin`, { email, password })
-      .then(response => {
-        localStorage.setItem('admin_email', email);
-        dispatch({ type: AUTH_USER });
-        localStorage.setItem('token', response.data.token);
-      })
-      .catch((err) => {
-        dispatch(authError('Bad Sign-in Information'));
-      });
-  };
-}
-
-export function signupUser({ email, password }) {
-  return function(dispatch) {
-    axios.post(`${ROOT_URL}/signup`, { email, password })
-      .then(response => {
-        localStorage.setItem('admin_email', email);
-        dispatch({ type: AUTH_USER });
-        localStorage.setItem('token', response.data.token);
-      })
-      .catch(err => {
-        dispatch(authError(err));
-      });
-  };
-}
-
-export function signoutUser(error) {
-  localStorage.removeItem('token');
-  localStorage.removeItem('admin_email');
-  return {
-    type: UNAUTH_USER
-  };
-}
-
-export function authError(error) {
-  return {
-    type: AUTH_ERROR,
-    payload: error
-  };
-}
-
-export function clearAuthError(error) {
-  return {
-    type: CLEAR_AUTH_ERROR
-  };
 }

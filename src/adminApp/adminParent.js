@@ -18,6 +18,8 @@ import ContentAdd from 'material-ui/svg-icons/content/add';
 import MapComponent from "./mapComponent"
 import TabComponent from "./tabComponent"
 
+import globalThemes from '../style/globalThemes.js'
+import globalFonts from '../style/globalFonts.js'
 
 
 config()
@@ -171,7 +173,7 @@ class AdminParent extends Component {
       adTextStyle = {
         position: 'absolute',
         bottom: '51px', 
-        right: 'calc(45vw + 9px)',
+        right: 'calc(45vw + 11px)',
         zIndex: '4',
         pointerEvents: "none", 
         fontSize: "11px",
@@ -216,7 +218,7 @@ class AdminParent extends Component {
       adTextStyle = {
         position: 'absolute',
         bottom: '81px', 
-        right: '29px',
+        right: '31px',
         zIndex: '4',
         pointerEvents: "none", 
         fontSize: "11px",
@@ -252,7 +254,7 @@ class AdminParent extends Component {
       }
     }
     return (
-      <div style={{position: "relative", width: "100vw", height: "100vh", overflow: "hidden"}}>
+      <div style={{position: "relative", width: "100vw", height: "100vh", overflow: "hidden", backgroundColor: globalThemes.blueGrey500, fontFamily: globalFonts.Abel}}>
         <ReactResizeDetector handleWidth handleHeight onResize={this._onResize} />
         {this.state.screenWidth > 700 &&
           <div style={{float: "left", width: "60%", position: "fixed", height: "100vh"}}>

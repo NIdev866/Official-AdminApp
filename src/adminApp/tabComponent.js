@@ -6,14 +6,13 @@ import Animation from 'react-addons-css-transition-group'
 import { config } from "dotenv"
 import {Tabs, Tab} from 'material-ui/Tabs';
 import FontIcon from 'material-ui/FontIcon';
-
 import WorkforceTabParent from "./tabPages/workforceTabParent"
 import ApplicantsTabParent from "./tabPages/applicantsTabParent"
 import ClientsTabParent from "./tabPages/clientsTabParent"
 import StatisticsTabParent from "./tabPages/statisticsTabParent"
-
-
 import SwipeableViews from 'react-swipeable-views';
+
+import globalFonts from '../style/globalFonts.js'
 
 config()
 class TabComponent extends Component {
@@ -78,7 +77,7 @@ class TabComponent extends Component {
         position: "relative", 
         width: "90%", 
         margin: "0 30px", 
-        height: '50px'
+        height: '50px',
       }
     }
 
@@ -98,15 +97,19 @@ class TabComponent extends Component {
     return (
       <div style={{position: "relative"}}>
         <div style={wholeComponentStyle}>
-          <Tabs
-          onChange={this.handleSwipeChange}
-          value={this.state.slideIndex}
-          >
-            <Tab value={0} onActive={this.props.workforceClick} style={{marginTop: '-12px', marginBottom: '-10px'}} icon={<FontIcon className="material-icons">person</FontIcon>} label="WORKFORCE" />
-            <Tab value={1} onActive={this.props.applicantsClick} style={{marginTop: '-12px', marginBottom: '-10px'}} icon={<FontIcon className="material-icons">person_add</FontIcon>} label="APPLICANTS" />
-            <Tab value={2} onActive={this.props.clientsClick} style={{marginTop: '-12px', marginBottom: '-10px'}} icon={<FontIcon className="material-icons">domain</FontIcon>} label="CLIENTS" />
-            <Tab value={3} onActive={this.props.statisticsClick} style={{marginTop: '-12px', marginBottom: '-10px'}} icon={<FontIcon className="material-icons">equalizer</FontIcon>} label="STATISTICS" />
-          </Tabs>
+          <div style={{height: '51px', overflow: 'hidden'}}>
+            <Tabs
+            onChange={this.handleSwipeChange}
+            value={this.state.slideIndex}
+            inkBarStyle={{backgroundColor: 'white'}}
+            style={{borderBottom: '1px solid grey'}}
+            >
+              <Tab value={0} onActive={this.props.workforceClick} style={{fontFamily: globalFonts.Abel, marginTop: '-12px', marginBottom: '-10px'}} icon={<FontIcon className="material-icons">person</FontIcon>} label="WORKFORCE" />
+              <Tab value={1} onActive={this.props.applicantsClick} style={{fontFamily: globalFonts.Abel, marginTop: '-12px', marginBottom: '-10px'}} icon={<FontIcon className="material-icons">person_add</FontIcon>} label="APPLICANTS" />
+              <Tab value={2} onActive={this.props.clientsClick} style={{fontFamily: globalFonts.Abel, marginTop: '-12px', marginBottom: '-10px'}} icon={<FontIcon className="material-icons">domain</FontIcon>} label="CLIENTS" />
+              <Tab value={3} onActive={this.props.statisticsClick} style={{fontFamily: globalFonts.Abel, marginTop: '-12px', marginBottom: '-10px'}} icon={<FontIcon className="material-icons">equalizer</FontIcon>} label="STATISTICS" />
+            </Tabs>
+          </div>
 
           <SwipeableViews
             index={this.state.slideIndex}
